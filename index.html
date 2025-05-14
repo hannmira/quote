@@ -13,6 +13,19 @@
         }
     </style>
     <style>
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Pretendard/Pretendard-Thin.woff2') format('woff2');
+            font-weight: 100;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Pretendard/Pretendard-Light.woff2') format('woff2');
+            font-weight: 300;
+            font-style: normal;
+        }
+
         html,
         body,
         div,
@@ -73,7 +86,7 @@
             height: 410px;
             display: flex;
             align-items: center;
-            font-family: RIDIBatang;
+            font-family: 'RIDIBatang';
             font-size: 25px;
             line-height: 1.6;
             letter-spacing: -1px;
@@ -87,17 +100,19 @@
         .title {
             position: absolute;
             bottom: 33px;
-            font-family: pretendard;
+            font-family: 'Pretendard';
             font-size: 24px;
+            line-height: 1;
             font-weight: 300;
         }
 
         .author {
             position: absolute;
             bottom: 0;
-            font-family: pretendard;
+            font-family: 'Pretendard';
             font-size: 24px;
-            font-weight: 150;
+            line-height: 1;
+            font-weight: 100;
         }
 
         .controls {
@@ -278,11 +293,11 @@
                 `
             },
             GangwonEdu: {
-                fontFamily: 'GangwonEdu_OTFBoldA',
+                fontFamily: 'GangwonEdu_OTFLightA',
                 fontFace: `
 @font-face {
-    font-family: 'GangwonEdu_OTFBoldA';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+    font-family: 'GangwonEdu_OTFLightA';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFLightA.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -348,13 +363,12 @@
                 width: 600 * scale,
                 height: 600 * scale,
                 style: {
-                    transform: `scale(${scale})`,
-                    transformOrigin: 'top left'
+                    zoom: scale
                 }
             })
                 .then(function (dataUrl) {
                     const link = document.createElement('a');
-                    link.download = filename+'.jpg';
+                    link.download = filename + '.jpg';
                     link.href = dataUrl;
                     link.click();
                 })
