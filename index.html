@@ -354,7 +354,7 @@
             })
                 .then(function (dataUrl) {
                     const link = document.createElement('a');
-                    link.download = 'output.jpg';
+                    link.download = filename+'.jpg';
                     link.href = dataUrl;
                     link.click();
                 })
