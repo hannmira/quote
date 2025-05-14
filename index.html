@@ -19,6 +19,7 @@
             font-weight: 100;
             font-style: normal;
         }
+
         @font-face {
             font-family: 'Pretendard';
             src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Pretendard/Pretendard-Light.woff2') format('woff2');
@@ -358,13 +359,14 @@
 
             const scale = 2 / window.devicePixelRatio;
             const node = document.getElementById('result');
+
+            node.style.transform = `scale(${scale})`;
+            node.style.transformOrigin = 'top left';
+
             htmlToImage.toJpeg(node, {
                 quality: 0.95,
-                width: 600 * scale,
-                height: 600 * scale,
-                style: {
-                    zoom: scale
-                }
+                width: 1200,
+                height: 1200
             })
                 .then(function (dataUrl) {
                     const link = document.createElement('a');
@@ -375,6 +377,8 @@
                 .catch(function (error) {
                     console.error('이미지 저장 실패:', error);
                 });
+            node.style.transform = `scale(${1 / scale})`;
+            node.style.transformOrigin = 'top left';
         }
 
         function saveHTML() {
