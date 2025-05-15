@@ -88,7 +88,7 @@
             top: 0;
             left: 0;
         }
-        
+
         .title {
             position: absolute;
             bottom: 66px;
@@ -330,6 +330,43 @@
             }
         };
 
+        // 쿠키 저장 함수
+        function setCookie(name, value, days = 30) {
+            const expires = new Date(Date.now() + days * 864e5).toUTCString();
+            document.cookie = encodeURIComponent(name) + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+        }
+
+        // 쿠키 불러오기 함수
+        function getCookie(name) {
+            return document.cookie.split('; ').reduce((r, v) => {
+                const parts = v.split('=');
+                return parts[0] === encodeURIComponent(name) ? decodeURIComponent(parts[1]) : r
+            }, '');
+        }
+
+        // 모든 입력 요소의 값을 쿠키에 저장
+        function saveInputsToCookies() {
+            const inputs = document.querySelectorAll('input, select, textarea');
+            inputs.forEach(el => {
+                if (el.id) {
+                    setCookie(el.id, el.value);
+                }
+            });
+        }
+
+        // 쿠키에서 입력값 불러와 적용
+        function loadInputsFromCookies() {
+            const inputs = document.querySelectorAll('input, select, textarea');
+            inputs.forEach(el => {
+                if (el.id) {
+                    const value = getCookie(el.id);
+                    if (value !== '') {
+                        el.value = value;
+                    }
+                }
+            });
+        }
+
         function centerQuotesOutput() {
             const containerHeight = document.getElementById('quotes-container').clientHeight;
             const outputHeight = document.getElementById('quotesOutput').clientHeight;
@@ -424,14 +461,17 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            loadInputsFromCookies();  // 쿠키에서 입력값 불러오기
+            applyChanges(); // 초기 적용
+
             const inputs = document.querySelectorAll('input, select, textarea');
             inputs.forEach(el => {
                 const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
-                el.addEventListener(eventType, applyChanges);
+                el.addEventListener(eventType, () => {
+                    applyChanges();          // 시각적 반영
+                    saveInputsToCookies();   // 쿠키 저장
+                });
             });
-
-            // 초기 1회 적용
-            applyChanges();
         });
     </script>
 </body>
