@@ -1,476 +1,486 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=600">
-    <title>발췌 이미지 생성기</title>
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <style id="webfont">
-    </style>
-    <style>
-        @font-face {
-            font-family: 'Pretendard';
-            src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Pretendard/Pretendard-Thin.woff2') format('woff2');
-            font-weight: 100;
-            font-style: normal;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=600">
+<title>발췌 이미지 생성기</title>
+<style id="webfont">
+</style>
+<style>
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Pretendard/Pretendard-Thin.woff2') format('woff2');
+    font-weight: 100;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Pretendard/Pretendard-Light.woff2') format('woff2');
+    font-weight: 200;
+    font-style: normal;
+}
 
-        @font-face {
-            font-family: 'Pretendard';
-            src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Pretendard/Pretendard-Light.woff2') format('woff2');
-            font-weight: 200;
-            font-style: normal;
-        }
+html, body, div, p, fieldset {
+    margin: 0;
+    padding: 0;
+}
 
-        html,
-        body,
-        div,
-        p,
-        fieldset {
-            margin: 0;
-            padding: 0;
-        }
+body {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-family: sans-serif;
+    font-size: 14px;
+}
 
-        body {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            font-family: sans-serif;
-        }
+#result-wrapper {
+    zoom: 0.5;
+}
 
-        div#result_wrapper {
-            zoom: 0.5;
-        }
+#result {
+    position: relative;
+    width: 1200px;
+    height: 1200px;
+    color: white;
+    text-align: justify;
+    overflow: hidden;
+}
 
-        div#result {
-            position: relative;
-            width: 1200px;
-            height: 1200px;
-            color: white;
-            text-align: justify;
-            overflow: hidden;
-        }
+#background-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
 
-        div.background-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
+#background-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-        img#background-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+#container {
+    position: absolute;
+    top: 120px;
+    left: 90px;
+    width: 1020px;
+    height: 960px;
+    z-index: 1;
+}
 
-        .container {
-            z-index: 1;
-            position: absolute;
-            width: 1020px;
-            height: 960px;
-            top: 120px;
-            left: 90px;
-        }
+#quotes-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1020px;
+}
 
-        div#quotes-container {
-            position: absolute;
-            width: 1020px;
-            height: 820px;
-            top: 0;
-            left: 0;
-        }
+#title-container,
+#author-container {
+    position: absolute;
+    font-family: 'Pretendard';
+    font-size: 46px;
+}
 
-        .title {
-            position: absolute;
-            bottom: 66px;
-            font-family: 'Pretendard';
-            font-size: 48px;
-            line-height: 1;
-            font-weight: 200;
-        }
+#title-container {
+    bottom: 60px;
+    line-height: 1.2;
+    font-weight: 200;
+}
 
-        .author {
-            position: absolute;
-            bottom: 0;
-            font-family: 'Pretendard';
-            font-size: 48px;
-            line-height: 1;
-            font-weight: 100;
-        }
+#author-container {
+    bottom: 0;
+    line-height: 1;
+    font-weight: 100;
+}
 
-        .controls {
-            max-width: 600px;
-            position: relative;
-            padding: 20px;
-        }
+.controls {
+    max-width: 600px;
+    position: relative;
+    padding: 20px;
+}
 
-        fieldset {
-            padding: 10px;
-        }
+fieldset {
+    padding: 10px;
+    margin-bottom: 10px;
+}
 
-        label {
-            font-size: 14px;
-            font-weight: 500;
-        }
+label {
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 1px;
+}
 
-        textarea {
-            display: block;
-            width: 520px;
-            margin: 5px 0 12px 0;
-            word-break: break-all;
-        }
+textarea,
+input,
+select {
+    padding: 2px;
+    font-size: 14px;
+}
 
-        label {
-            margin-right: 2px;
-        }
+textarea {
+    display: block;
+    width: 520px;
+    margin: 5px 0 12px 0;
+    word-break: break-word;
+}
+select {
+    margin-bottom: 12px;
+}
 
-        input,
-        select {
-            padding: 2px;
-        }
 
-        select {
-            margin-bottom: 12px;
-        }
+input[type="number"] {
+    appearance: textfield;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+}
 
-        input+label,
-        select+label {
-            margin-left: 20px
-        }
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
 
-        input#title {
-            width: 260px
-        }
+.number-input {
+    display: inline-flex;
+    vertical-align: -5px;
+    border: 1px solid #aaa;
+    box-sizing: border-box;
+}
+.number-input * {
+    box-sizing: border-box;
+}
+.number-input input[type=number] {
+    border: solid #aaa;
+    border-width: 0 1px;
+    width: 40px;
+    text-align: center;
+}
 
-        input#author {
-            width: 120px
-        }
+.number-input button {
+    width: 18px;
+    height: 20px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 12px 12px;
+    -webkit-appearance: none;
+    outline: none;
+}
 
-        input#bgUrl {
-            width: 440px
-        }
+/* Minus button */
+.number-input button.minus {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><rect x='2' y='5.5' width='8' height='1' fill='%23212121'/></svg>");
+}
 
-        input#brightness,
-        input#contrast,
-        input#grayscale,
-        input#saturate,
-        input#quoteSize,
-        input#quoteLineHeight,
-        input#quoteMargin,
-        input#quoteLetterSpacing,
-        input#quoteWordSpacing {
-            width: 40px;
-            text-align: right;
-        }
+/* Plus button */
+.number-input button.plus {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><rect x='2' y='5.5' width='8' height='1' fill='%23212121'/><rect x='5.5' y='2' width='1' height='8' fill='%23212121'/></svg>");
+}
+input#title { width: 260px; }
+input#author { width: 120px; }
+input#bgUrl { width: 440px; }
 
-        select#quoteColor {
-            width: 100px;
-        }
+input#brightness,
+input#contrast,
+input#grayscale,
+input#saturate,
+input#quoteSize,
+input#quoteLineHeight,
+input#quoteMargin,
+input#quoteLetterSpacing,
+input#quoteWordSpacing {
+    width: 30px;
+    text-align: center;
+}
 
-        button {
-            margin: 10px 5px 0 0px;
-            padding: 10px 20px;
-        }
+select#quoteColor {
+    width: 100px;
+}
 
-        button.right {
-            margin-right: 0;
-            float: right;
-        }
-    </style>
+button {
+    margin: 0 5px 0 0;
+    padding: 10px 20px;
+}
+button.right {
+    float: right;
+    margin-right: 0;
+}
+
+div + label {
+    margin-left: 10px;
+}
+input + label,
+select + label {
+    margin-left: 20px;
+}
+</style>
 </head>
 <body>
-    <div id="result_wrapper">
-        <div id="result">
-            <div class="background-layer">
-                <img id="background-img">
+<div id="result-wrapper">
+    <div id="result">
+        <div id="background-layer">
+            <img id="background-img">
+        </div>
+        <div id="container">
+            <div id="quotes-container">
+                <div id="quotesOutput">
+                </div>
             </div>
-            <div class="container">
-                <div id="quotes-container">
-                    <div id="quotesOutput">
-                    </div>
-                </div>
-                <div class="title">
-                    <p id="titleOutput"></p>
-                </div>
-                <div class="author">
-                    <p id="authorOutput"></p>
-                </div>
+            <div id="title-container">
+                <p id="titleOutput"></p>
+            </div>
+            <div id="author-container">
+                <p id="authorOutput"></p>
             </div>
         </div>
     </div>
-    <div class="controls">
-        <fieldset>
-            <label>발췌 문장</label>
-            <textarea id="quotes" rows="7">“지유안 생도! 입관 한 달 만에 최연소 재요(災妖) 제거자가 되신 소감 부탁드립니다!”
+</div>
+<div class="controls">
+    <fieldset>
+        <label>발췌 문장</label>
+        <textarea id="quotes" rows="7">“지유안 생도! 입관 한 달 만에 최연소 재요(災妖) 제거자가 되신 소감 부탁드립니다!”
 
 온갖 대기업 협찬사들의 로고가 빼곡히 프린트된 배경지 앞. 유안이라 불린 자그마한 여자가 폭우처럼 쏟아붓는 플래시 세례의 한중간에 반듯하게 서 있었다.</textarea>
-            <div>
-                <label>글 제목</label>
-                <input id="title" type="text" value="네가 균열에서 희망을 소원한다면 1권">
+        <div>
+            <label>글 제목</label>
+            <input id="title" type="text" value="네가 균열에서 희망을 소원한다면 1권">
 
-                <label>저자 이름</label>
-                <input id="author" type="text" value="KIMARA">
-            </div>
-        </fieldset>
-        <fieldset>
-            <label>배경 이미지 URL</label>
-            <textarea id="bgUrl" rows="3">https://images.unsplash.com/photo-1747193544056-088ffe8969ed?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D</textarea>
-            <form id="imageFilters">
-                <label>밝기</label>
-                <input id="brightness" type="number" value="50" step="10"> %
-                <label>대비</label>
-                <input id="contrast" type="number" value="100" step="10"> %
-                <label>회색조</label>
-                <input id="grayscale" type="number" value="0" step="10"> %
-                <label>채도</label>
-                <input id="saturate" type="number" value="100" step="10"> %
-            </form>
-        </fieldset>
-        <form id="textSettings">
-            <fieldset>
-                <div>
-                    <label>글꼴</label>
-                    <select id="fontSelect">
-                        <option value="ridi">리디바탕</option>
-                        <option value="pretendard">프리텐다드</option>
-                        <option value="GangwonEdu">강원교육모두체</option>
-                        <option value="GangwonEduSaeeum">강원교육새음체</option>
-                        <option value="GowunDodum">고운돋움</option>
-                        <option value="Cafe24Oneprettynight">카페24 고운밤</option>
-                        <option value="HakgyoansimBadasseugiTTF">학교안심 받아쓰기</option>
-                    </select>
-                    <label>글씨 크기</label>
-                    <input id="quoteSize" type="number" value="50"> px
-                    <label>글씨 색</label>
-                    <select id="quoteColor">
-                        <option value="White">White</option>
-                        <option value="Black">Black</option>
-                        <option value="DarkBlue">DarkBlue</option>
-                        <option value="DarkGray">DarkGray</option>
-                        <option value="DarkGreen">DarkGreen</option>
-                        <option value="DarkRed">DarkRed</option>
-                        <option value="LightBlue">LightBlue</option>
-                        <option value="LightGray">LightGray</option>
-                        <option value="LightGreen">LightGreen</option>
-                        <option value="LightPink">LightPink</option>
-                    </select>
-                </div>
-                <div>
-                    <label>줄 높이</label>
-                    <input id="quoteLineHeight" type="number" value="1.6" step="0.1">
-                    <label>문단 간격</label>
-                    <input id="quoteMargin" type="number" value="0.4" step="0.1"> em
-                    <label>자간</label>
-                    <input id="quoteLetterSpacing" type="number" value="-2"> px
-                    <label>단어 간격</label>
-                    <input id="quoteWordSpacing" type="number" value="-2"> px
-                </div>
-            </fieldset>
+            <label>저자 이름</label>
+            <input id="author" type="text" value="KIMARA">
+        </div>
+    </fieldset>
+    <fieldset>
+        <label>배경 이미지 URL</label>
+        <textarea id="bgUrl" rows="3">https://images.unsplash.com/photo-1747193544056-088ffe8969ed?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D</textarea>
+        <form id="imageFilters">
+            <label>밝기</label>
+            <div class="number-input">
+                <button class="minus" onclick="this.parentNode.querySelector('#brightness').stepDown()"></button>
+                <input id="brightness" type="number" value="50" step="10">
+                <button class="plus" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"></button>
+            </div> %
+            <label>대비</label>
+            <div class="number-input">
+                <button class="minus" onclick="this.parentNode.querySelector('#contrast').stepDown()"></button>
+                <input id="contrast" type="number" value="100" step="10">
+                <button class="plus" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"></button>
+            </div> %
+            <label>회색조</label>
+            <div class="number-input">
+                <button class="minus" onclick="this.parentNode.querySelector('#grayscale').stepDown()"></button>
+                <input id="grayscale" type="number" value="0" step="10">
+                <button class="plus" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"></button>
+            </div> %
+            <label>채도</label>
+            <div class="number-input">
+                <button class="minus" onclick="this.parentNode.querySelector('#saturate').stepDown()"></button>
+                <input id="saturate" type="number" value="100" step="10">
+                <button class="plus" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"></button>
+            </div> %
         </form>
-        <button onclick="downloadImage()">이미지로 저장</button>
-        <button onclick="saveHTML()">HTML로 저장</button>
-        <button class="right" onclick="reset()">초기화</button>
+    </fieldset>
+    <form id="textSettings">
+        <fieldset>
+            <div>
+                <label>글꼴</label>
+                <select id="fontSelect">
+                    <option value="ridi">리디바탕</option>
+                    <option value="pretendard">프리텐다드</option>
+                    <option value="GangwonEdu">강원교육모두체</option>
+                    <option value="GangwonEduSaeeum">강원교육새음체</option>
+                    <option value="GowunDodum">고운돋움</option>
+                    <option value="Cafe24Oneprettynight">카페24 고운밤</option>
+                    <option value="HakgyoansimBadasseugiTTF">학교안심 받아쓰기</option>
+                </select>
+                <label>글씨 크기</label>
+                <div class="number-input">
+        <button class="minus" onclick="this.parentNode.querySelector('#quoteSize').stepDown()"></button>
+        <input id="quoteSize" type="number" value="50" step="1">
+        <button class="plus" onclick="this.parentNode.querySelector('#quoteSize').stepUp()"></button>
+                </div> px
+                <label>글씨 색</label>
+                <select id="quoteColor">
+                    <option value="White">White</option>
+                    <option value="Black">Black</option>
+                    <option value="DarkBlue">DarkBlue</option>
+                    <option value="DarkGray">DarkGray</option>
+                    <option value="DarkGreen">DarkGreen</option>
+                    <option value="DarkRed">DarkRed</option>
+                    <option value="LightBlue">LightBlue</option>
+                    <option value="LightGray">LightGray</option>
+                    <option value="LightGreen">LightGreen</option>
+                    <option value="LightPink">LightPink</option>
+                </select>
+            </div>
+<div>
+    <label>줄높이</label>
+    <div class="number-input">
+        <button class="minus" onclick="this.parentNode.querySelector('#quoteLineHeight').stepDown()"></button>
+        <input id="quoteLineHeight" type="number" value="1.6" step="0.1">
+        <button class="plus" onclick="this.parentNode.querySelector('#quoteLineHeight').stepUp()"></button>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.13/dist/html-to-image.min.js"></script>
-    <script>
-        const fontMap = {
-            ridi: {
-                fontFamily: 'RIDIBatang',
-                fontFace: `
+    <label>문단간격</label>
+    <div class="number-input">
+        <button class="minus" onclick="this.parentNode.querySelector('#quoteMargin').stepDown()"></button>
+        <input id="quoteMargin" type="number" value="0.4" step="0.1">
+        <button class="plus" onclick="this.parentNode.querySelector('#quoteMargin').stepUp()"></button>
+    </div> em
+
+    <label>자간</label>
+    <div class="number-input">
+        <button class="minus" onclick="this.parentNode.querySelector('#quoteLetterSpacing').stepDown()"></button>
+        <input id="quoteLetterSpacing" type="number" value="-1" step="1">
+        <button class="plus" onclick="this.parentNode.querySelector('#quoteLetterSpacing').stepUp()"></button>
+    </div> px
+
+    <label>어간</label>
+    <div class="number-input">
+        <button class="minus" onclick="this.parentNode.querySelector('#quoteWordSpacing').stepDown()"></button>
+        <input id="quoteWordSpacing" type="number" value="0" step="1">
+        <button class="plus" onclick="this.parentNode.querySelector('#quoteWordSpacing').stepUp()"></button>
+    </div> px
+</div>
+        </fieldset>
+    </form>
+    <button type="submit" onclick="downloadImage()">이미지로 저장</button>
+    <button type="submit" onclick="saveHTML()">HTML로 저장</button>
+    <button type="submit" class="right" onclick="reset()">초기화</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.13/dist/html-to-image.min.js"></script>
+<script>
+const fontMap = {
+    ridi: ['RIDIBatang', 'projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff'],
+    pretendard: ['Pretendard-Regular', 'Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff'],
+    GangwonEdu: ['GangwonEdu_OTFLightA', 'projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFLightA.woff'],
+    GangwonEduSaeeum: ['GangwonEduSaeeum_OTFMediumA', 'projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff'],
+    GowunDodum: ['GowunDodum', 'projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff'],
+    Cafe24Oneprettynight: ['Cafe24Oneprettynight', 'projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff'],
+    HakgyoansimBadasseugiTTF: ['HakgyoansimBadasseugiTTF', 'projectnoonnu/2408-5@1.0/HakgyoansimBadasseugiTTF-L.woff2']
+};
+
+const buildFontFace = (name, url, format = 'woff') => `
 @font-face {
-    font-family: 'RIDIBatang';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+font-family: '${name}';
+src: url('https://fastly.jsdelivr.net/gh/${url}') format('${format}');
+font-weight: normal;
+font-style: normal;
+}`;
+
+// 쿠키 관련
+function setCookie(name, value, days = 90) {
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
 }
-                `
-            },
-            pretendard: {
-                fontFamily: 'Pretendard-Regular',
-                fontFace: `
-@font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
+
+function getCookie(name) {
+    return document.cookie.split('; ').reduce((res, cookie) => {
+        const [key, val] = cookie.split('=');
+        return key === encodeURIComponent(name) ? decodeURIComponent(val) : res;
+    }, '');
 }
-                `
-            },
-            GangwonEdu: {
-                fontFamily: 'GangwonEdu_OTFLightA',
-                fontFace: `
-@font-face {
-    font-family: 'GangwonEdu_OTFLightA';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFLightA.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+
+// 입력 저장/복원
+function saveInputsToCookies() {
+    document.querySelectorAll('input, select, textarea').forEach(el => {
+        if (el.id) setCookie(el.id, el.value);
+    });
 }
-                `
-            },
-            GangwonEduSaeeum: {
-                fontFamily: 'GangwonEduSaeeum_OTFMediumA',
-                fontFace: `
-@font-face {
-    font-family: 'GangwonEduSaeeum_OTFMediumA';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+
+function loadInputsFromCookies() {
+    document.querySelectorAll('input, select, textarea').forEach(el => {
+        if (el.id) {
+            const value = getCookie(el.id);
+            if (value !== '') el.value = value;
+        }
+    });
 }
-                `
-            },
-            GowunDodum: {
-                fontFamily: 'GowunDodum',
-                fontFace: `
-@font-face {
-    font-family: 'GowunDodum';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+
+// 텍스트 포맷팅
+function formatParagraphs(text) {
+    return text.trim().split('\n').map(line => line.trim()).filter(Boolean).map(line => `<p>${line}</p>`).join('\n');
 }
-                `
-            },
-            Cafe24Oneprettynight: {
-                fontFamily: 'Cafe24Oneprettynight',
-                fontFace: `
-@font-face {
-    font-family: 'Cafe24Oneprettynight';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+
+// 레이아웃 중앙 정렬
+function centerQuotesOutput() {
+    const titleHeight = document.getElementById('title-container').scrollHeight;
+    const containerHeight = 886 - titleHeight;
+    const outputHeight = document.getElementById('quotesOutput').scrollHeight;
+    const marginTop = (containerHeight - outputHeight) / 2;
+
+    document.getElementById('quotes-container').style.height = `${containerHeight}px`;
+    document.getElementById('quotesOutput').style.marginTop = `${marginTop}px`;
 }
-                `
-            },
-            HakgyoansimBadasseugiTTF: {
-                fontFamily: 'HakgyoansimBadasseugiTTF',
-                fontFace: `
-@font-face {
-    font-family: 'HakgyoansimBadasseugiTTF';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimBadasseugiTTF-L.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
+
+// 스타일 반영
+function applyChanges() {
+    const $ = id => document.getElementById(id);
+
+    $('quotesOutput').innerHTML = formatParagraphs($('quotes').value);
+    $('titleOutput').textContent = $('title').value;
+    $('authorOutput').textContent = $('author').value;
+
+    $('background-img').src = $('bgUrl').value;
+    $('background-img').style.filter = `
+brightness(${$('brightness').value}%)
+contrast(${$('contrast').value}%)
+grayscale(${$('grayscale').value}%)
+saturate(${$('saturate').value}%)
+`;
+
+    const [fontName, fontURL] = fontMap[$('fontSelect').value];
+    $('webfont').innerHTML = buildFontFace(fontName, fontURL, fontURL.endsWith('.woff2') ? 'woff2' : 'woff');
+    $('quotes-container').style.fontFamily = fontName;
+
+    $('quotes-container').style.fontSize = $('quoteSize').value + 'px';
+    $('result').style.color = $('quoteColor').value;
+    $('quotes-container').style.lineHeight = $('quoteLineHeight').value;
+    $('quotes-container').style.letterSpacing = $('quoteLetterSpacing').value + 'px';
+    $('quotes-container').style.wordSpacing = $('quoteWordSpacing').value + 'px';
+
+    document.querySelectorAll('#quotesOutput p').forEach(p => {
+        p.style.marginBottom = $('quoteMargin').value + 'em';
+    });
+
+    centerQuotesOutput();
 }
-                `
-            },
-        };
 
-        // 쿠키 저장 함수
-        function setCookie(name, value, days = 90) {
-            const expires = new Date(Date.now() + days * 864e5).toUTCString();
-            document.cookie = encodeURIComponent(name) + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
-        }
+// 이미지 다운로드
+function downloadImage() {
+    const title = document.getElementById('title').value;
+    const para = document.getElementById('quotes').value;
+    const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
 
-        // 쿠키 불러오기 함수
-        function getCookie(name) {
-            return document.cookie.split('; ').reduce((r, v) => {
-                const parts = v.split('=');
-                return parts[0] === encodeURIComponent(name) ? decodeURIComponent(parts[1]) : r
-            }, '');
-        }
+    htmlToImage.toJpeg(document.getElementById('result'), {
+        quality: 0.95,
+        width: 1200,
+        height: 1200,
+        pixelRatio: 1
+    }).then(dataUrl => {
+        const link = document.createElement('a');
+        link.download = `${filename}.jpg`;
+        link.href = dataUrl;
+        link.click();
+    }).catch(error => console.error('이미지 저장 실패:', error));
+}
 
-        // 모든 입력 요소의 값을 쿠키에 저장
-        function saveInputsToCookies() {
-            const inputs = document.querySelectorAll('input, select, textarea');
-            inputs.forEach(el => {
-                if (el.id) {
-                    setCookie(el.id, el.value);
-                }
-            });
-        }
+// HTML 저장
+function saveHTML() {
+    const title = document.getElementById('title').value;
+    const para = document.getElementById('quotes').value;
+    const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
 
-        // 쿠키에서 입력값 불러와 적용
-        function loadInputsFromCookies() {
-            const inputs = document.querySelectorAll('input, select, textarea');
-            inputs.forEach(el => {
-                if (el.id) {
-                    const value = getCookie(el.id);
-                    if (value !== '') {
-                        el.value = value;
-                    }
-                }
-            });
-        }
+    const styleHTML = document.querySelector('#webfont').outerHTML;
+    const wrapperHTML = document.querySelector('#result-wrapper').outerHTML;
 
-        function centerQuotesOutput() {
-            const containerHeight = document.getElementById('quotes-container').clientHeight;
-            const outputHeight = document.getElementById('quotesOutput').clientHeight;
-            const marginTop = (containerHeight - outputHeight) / 2;
-            document.getElementById('quotesOutput').style.marginTop = `${marginTop}px`;
-        }
-
-        function formatParagraphs(text) {
-            return text
-                .trim()
-                .split('\n')
-                .map(line => line.trim())
-                .filter(line => line !== "")
-                .map(line => `<p>${line}</p>`)
-                .join('\n');
-        }
-
-        function applyChanges() {
-            document.getElementById('quotesOutput').innerHTML = formatParagraphs(document.getElementById('quotes').value);
-
-            document.getElementById('titleOutput').textContent = document.getElementById('title').value;
-            document.getElementById('authorOutput').textContent = document.getElementById('author').value;
-
-            document.getElementById('background-img').src = document.getElementById('bgUrl').value;
-            document.getElementById('background-img').style.filter = 'brightness(' + document.getElementById('brightness').value + '%) ' + 'contrast(' + document.getElementById('contrast').value + '%) ' + 'grayscale(' + document.getElementById('grayscale').value + '%) ' + 'saturate(' + document.getElementById('saturate').value + '%)'
-
-            const font = document.getElementById('fontSelect').value;
-            document.getElementById('webfont').innerHTML = fontMap[font].fontFace;
-            document.getElementById('quotes-container').style.fontFamily = fontMap[font].fontFamily;
-
-            document.getElementById('quotes-container').style.fontSize = document.getElementById('quoteSize').value + 'px';
-            document.getElementById('result').style.color = document.getElementById('quoteColor').value;
-            document.getElementById('quotes-container').style.lineHeight = document.getElementById('quoteLineHeight').value;
-            document.getElementById('quotes-container').style.letterSpacing = document.getElementById('quoteLetterSpacing').value + 'px';
-            document.getElementById('quotes-container').style.wordSpacing = document.getElementById('quoteWordSpacing').value + 'px';
-
-            const paragraphs = document.querySelectorAll('#quotesOutput p');
-            paragraphs.forEach(p => {
-                p.style.marginBottom = document.getElementById('quoteMargin').value + 'em';
-            });
-
-            centerQuotesOutput();
-        }
-
-        function downloadImage() {
-            const title = document.getElementById('title').value;
-            const para = document.getElementById('quotes').value;
-            const filename = Array.from(title).slice(0, 10).join('').trim() + '-' + Array.from(para).slice(0, 10).join('').trim();
-
-            const node = document.getElementById('result');
-
-            htmlToImage.toJpeg(node, {
-                quality: 0.95,
-                width: 1200,
-                height: 1200,
-                pixelRatio: 1,
-            })
-                .then(function (dataUrl) {
-                    const link = document.createElement('a');
-                    link.download = filename + '.jpg';
-                    link.href = dataUrl;
-                    link.click();
-                })
-                .catch(function (error) {
-                    console.error('이미지 저장 실패:', error);
-                });
-        }
-
-        function saveHTML() {
-            const title = document.getElementById('title').value;
-            const para = document.getElementById('quotes').value;
-            filename = Array.from(title).slice(0, 10).join('').trim() + '-' + Array.from(para).slice(0, 10).join('').trim()
-
-            const styleHTML = document.querySelector('#webfont').outerHTML;
-            const wrapperHTML = document.querySelector('#result_wrapper').outerHTML;
-
-            const htmlContent = `
+    const htmlContent = `
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -480,120 +490,140 @@
 ${styleHTML}
 <style>
 @font-face {
-font-family: 'Pretendard';
-src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Pretendard/Pretendard-Thin.woff2') format('woff2');
-font-weight: 100;
-font-style: normal;
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Pretendard/Pretendard-Thin.woff2') format('woff2');
+    font-weight: 100;
+    font-style: normal;
 }
 @font-face {
-font-family: 'Pretendard';
-src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Pretendard/Pretendard-Light.woff2') format('woff2');
-font-weight: 200;
-font-style: normal;
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Pretendard/Pretendard-Light.woff2') format('woff2');
+    font-weight: 200;
+    font-style: normal;
 }
-html,
-body,
-div,
-p,
-fieldset {
-margin: 0;
-padding: 0;
+
+html, body, div, p, fieldset {
+    margin: 0;
+    padding: 0;
 }
-div#result_wrapper {
-zoom: 0.5;
+
+#result-wrapper {
+    zoom: 0.5;
 }
-div#result {
-position: relative;
-width: 1200px;
-height: 1200px;
-color: white;
-text-align: justify;
-overflow: hidden;
+
+#result {
+    position: relative;
+    width: 1200px;
+    height: 1200px;
+    color: white;
+    text-align: justify;
+    overflow: hidden;
 }
-div.background-layer {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-z-index: -1;
+
+#background-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
 }
-img#background-img {
-width: 100%;
-height: 100%;
-object-fit: cover;
+
+#background-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
-.container {
-z-index: 1;
-position: absolute;
-width: 1020px;
-height: 960px;
-top: 120px;
-left: 90px;
+
+#container {
+    position: absolute;
+    top: 120px;
+    left: 90px;
+    width: 1020px;
+    height: 960px;
+    z-index: 1;
 }
-div#quotes-container {
-position: absolute;
-width: 1020px;
-height: 820px;
-top: 0;
-left: 0;
+
+#quotes-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1020px;
 }
-.title {
-position: absolute;
-bottom: 66px;
-font-family: 'Pretendard';
-font-size: 48px;
-line-height: 1;
-font-weight: 200;
+
+#title-container,
+#author-container {
+    position: absolute;
+    font-family: 'Pretendard';
+    font-size: 46px;
 }
-.author {
-position: absolute;
-bottom: 0;
-font-family: 'Pretendard';
-font-size: 48px;
-line-height: 1;
-font-weight: 100;
+
+#title-container {
+    bottom: 60px;
+    line-height: 1.2;
+    font-weight: 200;
+}
+
+#author-container {
+    bottom: 0;
+    line-height: 1;
+    font-weight: 100;
 }
 </style>
 </head>
 <body>
 ${wrapperHTML}
 </body>
-</html>
-`;
+</html>`;
 
-            const blob = new Blob([htmlContent], { type: "text/html" });
-            const url = URL.createObjectURL(blob);
+    const blob = new Blob([htmlContent], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
 
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = filename+".html";
-            a.click();
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename + ".html";
+    a.click();
+    URL.revokeObjectURL(url);
+}
 
-            URL.revokeObjectURL(url);
-        }
+// 리셋
+function reset() {
+    document.getElementById('imageFilters').reset();
+    document.getElementById('textSettings').reset();
+    applyChanges();
+    saveInputsToCookies();
+}
 
-        function reset() {
-            document.getElementById('imageFilters').reset();
-            document.getElementById('textSettings').reset();
+// 이벤트 바인딩
+function bindEvents() {
+    document.querySelectorAll('form button:not([type="submit"])').forEach(btn =>
+        btn.addEventListener('click', e => {
+            e.preventDefault();
             applyChanges();
             saveInputsToCookies();
-        }
+        })
+    );
 
-        window.addEventListener('DOMContentLoaded', () => {
-            loadInputsFromCookies();  // 쿠키에서 입력값 불러오기
-            applyChanges(); // 초기 적용
-
-            const inputs = document.querySelectorAll('input, select, textarea');
-            inputs.forEach(el => {
-                const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
-                el.addEventListener(eventType, () => {
-                    applyChanges();          // 시각적 반영
-                    saveInputsToCookies();   // 쿠키 저장
-                });
-            });
+    const inputs = document.querySelectorAll('input, select, textarea');
+    for (const el of inputs) {
+        const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
+        el.addEventListener(eventType, () => {
+            applyChanges();
+            saveInputsToCookies();
         });
-    </script>
+    }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    loadInputsFromCookies();
+    applyChanges();
+    bindEvents();
+});
+
+window.addEventListener('load', () => {
+    requestAnimationFrame(centerQuotesOutput);
+});
+</script>
 </body>
 </body>
 </html>
