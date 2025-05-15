@@ -364,7 +364,7 @@
         };
 
         // 쿠키 저장 함수
-        function setCookie(name, value, days = 30) {
+        function setCookie(name, value, days = 90) {
             const expires = new Date(Date.now() + days * 864e5).toUTCString();
             document.cookie = encodeURIComponent(name) + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
         }
@@ -448,6 +448,7 @@
             document.getElementById('imageFilters').reset();
             document.getElementById('textSettings').reset();
             applyChanges();
+            saveInputsToCookies();
         }
 
         function downloadImage() {
