@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=600">
     <title>발췌 이미지 생성기</title>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style id="webfont">
@@ -44,10 +45,17 @@
             font-size: 14px;
         }
 
-        div#result {
-            position: relative;
+        div#result_wrapper {
             width: 600px;
             height: 600px;
+            transform: scale(0.5);
+            transform-origin: top left;
+        }
+
+        div#result {
+            position: relative;
+            width: 1200px;
+            height: 1200px;
             color: white;
             text-align: justify;
             overflow: hidden;
@@ -76,22 +84,22 @@
         .container {
             z-index: 1;
             position: absolute;
-            width: 510px;
-            height: 480px;
-            top: 60px;
-            left: 45px;
+            width: 1040px;
+            height: 960px;
+            top: 120px;
+            left: 90px;
         }
 
         div#quotesOutput {
             position: absolute;
-            height: 410px;
+            height: 820px;
             display: flex;
             align-items: center;
             font-family: 'RIDIBatang';
-            font-size: 25px;
+            font-size: 50px;
             line-height: 1.6;
-            letter-spacing: -1px;
-            word-spacing: -1px;
+            letter-spacing: -2px;
+            word-spacing: -2px;
         }
 
         div#quotesOutput p {
@@ -100,9 +108,9 @@
 
         .title {
             position: absolute;
-            bottom: 33px;
+            bottom: 66px;
             font-family: 'Pretendard';
-            font-size: 24px;
+            font-size: 48px;
             line-height: 1;
             font-weight: 300;
         }
@@ -111,7 +119,7 @@
             position: absolute;
             bottom: 0;
             font-family: 'Pretendard';
-            font-size: 24px;
+            font-size: 48px;
             line-height: 1;
             font-weight: 100;
         }
@@ -124,6 +132,14 @@
 
         fieldset {
             padding: 10px;
+        }
+
+        label,
+        input,
+        textarea,
+        select,
+        button {
+            font-size: 14px;
         }
 
         textarea {
@@ -183,29 +199,31 @@
     </style>
 </head>
 <body>
-    <div id="result">
-        <div class="background-layer">
-            <img id="background-img" src="https://images.unsplash.com/photo-1746990263194-0e2826fed608?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
-        </div>
-        <div class="container" id="capture">
-            <div class="quotes" id="quotesOutput">
-                <div>
-                    <p>“지유안 생도! 입관 한 달 만에 최연소 재요(災妖) 제거자가 되신 소감 부탁드립니다!”</p>
-                    <p>온갖 대기업 협찬사들의 로고가 빼곡히 프린트된 배경지 앞. 유안이라 불린 자그마한 여자가 폭우처럼 쏟아붓는 플래시 세례의 한중간에 반듯하게 서 있었다. 갓 스물이나 되었을까 싶은 앳된 얼굴은 온통 끈적한 핏물에 젖은 채였다. 선홍색 피 얼룩 때문에 유난히 창백한 피부가 도드라지자 기자들은 상처 입은 먹잇감을 발견한 육식동물이라도 된 것처럼 셔터를 눌러댔다.</p>
+    <div id="result_wrapper">
+        <div id="result">
+            <div class="background-layer">
+                <img id="background-img" src="https://images.unsplash.com/photo-1746990263194-0e2826fed608?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+            </div>
+            <div class="container" id="capture">
+                <div class="quotes" id="quotesOutput">
+                    <div>
+                        <p>“지유안 생도! 입관 한 달 만에 최연소 재요(災妖) 제거자가 되신 소감 부탁드립니다!”</p>
+                        <p>온갖 대기업 협찬사들의 로고가 빼곡히 프린트된 배경지 앞. 유안이라 불린 자그마한 여자가 폭우처럼 쏟아붓는 플래시 세례의 한중간에 반듯하게 서 있었다. 갓 스물이나 되었을까 싶은 앳된 얼굴은 온통 끈적한 핏물에 젖은 채였다. 선홍색 피 얼룩 때문에 유난히 창백한 피부가 도드라지자 기자들은 상처 입은 먹잇감을 발견한 육식동물이라도 된 것처럼 셔터를 눌러댔다.</p>
+                    </div>
                 </div>
-            </div>
-            <div class="title">
-                <p id="titleOutput">네가 균열에서 희망을 소원한다면 1권</p>
-            </div>
-            <div class="author">
-                <p id="authorOutput">KIMARA</p>
+                <div class="title">
+                    <p id="titleOutput">네가 균열에서 희망을 소원한다면 1권</p>
+                </div>
+                <div class="author">
+                    <p id="authorOutput">KIMARA</p>
+                </div>
             </div>
         </div>
     </div>
     <div class="controls">
         <fieldset>
             <label>발췌 문장</label>
-            <textarea id="quotes" rows="5">“지유안 생도! 입관 한 달 만에 최연소 재요(災妖) 제거자가 되신 소감 부탁드립니다!”
+            <textarea id="quotes" rows="10">“지유안 생도! 입관 한 달 만에 최연소 재요(災妖) 제거자가 되신 소감 부탁드립니다!”
 
 온갖 대기업 협찬사들의 로고가 빼곡히 프린트된 배경지 앞. 유안이라 불린 자그마한 여자가 폭우처럼 쏟아붓는 플래시 세례의 한중간에 반듯하게 서 있었다. 갓 스물이나 되었을까 싶은 앳된 얼굴은 온통 끈적한 핏물에 젖은 채였다. 선홍색 피 얼룩 때문에 유난히 창백한 피부가 도드라지자 기자들은 상처 입은 먹잇감을 발견한 육식동물이라도 된 것처럼 셔터를 눌러댔다.</textarea>
             <div>
@@ -220,13 +238,13 @@
             <label>배경 이미지 URL</label>
             <textarea id="bgUrl" rows="3">https://images.unsplash.com/photo-1746990263194-0e2826fed608?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D</textarea>
             <label>밝기</label>
-            <input id="brightness" type="number" value="30" step="10">%
+            <input id="brightness" type="number" value="30" step="10"> %
             <label>대비</label>
-            <input id="contrast" type="number" value="100" step="10">%
+            <input id="contrast" type="number" value="100" step="10"> %
             <label>회색조</label>
-            <input id="grayscale" type="number" value="0" step="10">%
+            <input id="grayscale" type="number" value="0" step="10"> %
             <label>채도</label>
-            <input id="saturate" type="number" value="100" step="10">%
+            <input id="saturate" type="number" value="100" step="10"> %
         </fieldset>
         <fieldset>
             <div>
@@ -239,7 +257,7 @@
                     <option value="omyu_pretty">오뮤 다예쁨체</option>
                 </select>
                 <label>글씨 크기</label>
-                <input id="quoteSize" type="number" value="25"> px
+                <input id="quoteSize" type="number" value="50"> px
             </div>
             <div>
                 <label>줄 높이</label>
@@ -247,9 +265,9 @@
                 <label>문단 간격</label>
                 <input id="quoteMargin" type="number" value="0.4" step="0.1"> em
                 <label>자간</label>
-                <input id="quoteLetterSpacing" type="number" value="-1"> px
+                <input id="quoteLetterSpacing" type="number" value="-2"> px
                 <label>단어 간격</label>
-                <input id="quoteWordSpacing" type="number" value="-1"> px
+                <input id="quoteWordSpacing" type="number" value="-2"> px
             </div>
         </fieldset>
         <button onclick="applyChanges()">적용</button>
@@ -357,16 +375,13 @@
             const para = document.getElementById('quotes').value;
             const filename = Array.from(title).slice(0, 10).join('').trim() + '-' + Array.from(para).slice(0, 10).join('').trim();
 
-            const scale = 2 / window.devicePixelRatio;
             const node = document.getElementById('result');
-
-            node.style.transform = `scale(${scale})`;
-            node.style.transformOrigin = 'top left';
+            const scale = 1 / window.devicePixelRatio;
 
             htmlToImage.toJpeg(node, {
                 quality: 0.95,
                 width: 1200,
-                height: 1200
+                height: 1200,
             })
                 .then(function (dataUrl) {
                     const link = document.createElement('a');
@@ -377,8 +392,6 @@
                 .catch(function (error) {
                     console.error('이미지 저장 실패:', error);
                 });
-            node.style.transform = `scale(${1 / scale})`;
-            node.style.transformOrigin = 'top left';
         }
 
         function saveHTML() {
