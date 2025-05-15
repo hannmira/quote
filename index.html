@@ -46,10 +46,7 @@
         }
 
         div#result_wrapper {
-            width: 600px;
-            height: 600px;
-            transform: scale(0.5);
-            transform-origin: top left;
+            zoom: 0.5;
         }
 
         div#result {
@@ -223,7 +220,7 @@
     <div class="controls">
         <fieldset>
             <label>발췌 문장</label>
-            <textarea id="quotes" rows="10">“지유안 생도! 입관 한 달 만에 최연소 재요(災妖) 제거자가 되신 소감 부탁드립니다!”
+            <textarea id="quotes" rows="7">“지유안 생도! 입관 한 달 만에 최연소 재요(災妖) 제거자가 되신 소감 부탁드립니다!”
 
 온갖 대기업 협찬사들의 로고가 빼곡히 프린트된 배경지 앞. 유안이라 불린 자그마한 여자가 폭우처럼 쏟아붓는 플래시 세례의 한중간에 반듯하게 서 있었다. 갓 스물이나 되었을까 싶은 앳된 얼굴은 온통 끈적한 핏물에 젖은 채였다. 선홍색 피 얼룩 때문에 유난히 창백한 피부가 도드라지자 기자들은 상처 입은 먹잇감을 발견한 육식동물이라도 된 것처럼 셔터를 눌러댔다.</textarea>
             <div>
@@ -376,12 +373,12 @@
             const filename = Array.from(title).slice(0, 10).join('').trim() + '-' + Array.from(para).slice(0, 10).join('').trim();
 
             const node = document.getElementById('result');
-            const scale = 1 / window.devicePixelRatio;
 
             htmlToImage.toJpeg(node, {
                 quality: 0.95,
                 width: 1200,
                 height: 1200,
+                pixelRatio: 1,
             })
                 .then(function (dataUrl) {
                     const link = document.createElement('a');
