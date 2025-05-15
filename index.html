@@ -24,7 +24,7 @@
         @font-face {
             font-family: 'Pretendard';
             src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Pretendard/Pretendard-Light.woff2') format('woff2');
-            font-weight: 300;
+            font-weight: 200;
             font-style: normal;
         }
 
@@ -95,7 +95,7 @@
             font-family: 'Pretendard';
             font-size: 48px;
             line-height: 1;
-            font-weight: 300;
+            font-weight: 200;
         }
 
         .author {
@@ -176,9 +176,13 @@
             width: 100px;
         }
 
-        button.right {
+        button {
+            margin: 10px 5px 0 0px;
             padding: 10px 20px;
-            margin: 10px 0 0 5px;
+        }
+
+        button.right {
+            margin-right: 0;
             float: right;
         }
     </style>
@@ -187,7 +191,7 @@
     <div id="result_wrapper">
         <div id="result">
             <div class="background-layer">
-                <img id="background-img" src="https://images.unsplash.com/photo-1746990263194-0e2826fed608?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                <img id="background-img">
             </div>
             <div class="container">
                 <div id="quotes-container">
@@ -219,55 +223,62 @@
         </fieldset>
         <fieldset>
             <label>배경 이미지 URL</label>
-            <textarea id="bgUrl" rows="3">https://images.unsplash.com/photo-1746990263194-0e2826fed608?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D</textarea>
-            <label>밝기</label>
-            <input id="brightness" type="number" value="50" step="10"> %
-            <label>대비</label>
-            <input id="contrast" type="number" value="100" step="10"> %
-            <label>회색조</label>
-            <input id="grayscale" type="number" value="0" step="10"> %
-            <label>채도</label>
-            <input id="saturate" type="number" value="100" step="10"> %
+            <textarea id="bgUrl" rows="3">https://images.unsplash.com/photo-1747193544056-088ffe8969ed?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D</textarea>
+            <form id="imageFilters">
+                <label>밝기</label>
+                <input id="brightness" type="number" value="50" step="10"> %
+                <label>대비</label>
+                <input id="contrast" type="number" value="100" step="10"> %
+                <label>회색조</label>
+                <input id="grayscale" type="number" value="0" step="10"> %
+                <label>채도</label>
+                <input id="saturate" type="number" value="100" step="10"> %
+            </form>
         </fieldset>
-        <fieldset>
-            <div>
-                <label>글꼴</label>
-                <select id="fontSelect">
-                    <option value="ridi">리디바탕</option>
-                    <option value="pretendard">프리텐다드</option>
-                    <option value="corncorn">온글잎 콘콘체</option>
-                    <option value="GangwonEdu">강원교육모두체</option>
-                    <option value="omyu_pretty">오뮤 다예쁨체</option>
-                </select>
-                <label>글씨 크기</label>
-                <input id="quoteSize" type="number" value="50"> px
-                <label>글씨 색</label>
-                <select id="quoteColor">
-                    <option value="White">White</option>
-                    <option value="Black">Black</option>
-                    <option value="DarkBlue">DarkBlue</option>
-                    <option value="DarkGray">DarkGray</option>
-                    <option value="DarkGreen">DarkGreen</option>
-                    <option value="DarkRed">DarkRed</option>
-                    <option value="LightBlue">LightBlue</option>
-                    <option value="LightGray">LightGray</option>
-                    <option value="LightGreen">LightGreen</option>
-                    <option value="LightPink">LightPink</option>
-                </select>
-            </div>
-            <div>
-                <label>줄 높이</label>
-                <input id="quoteLineHeight" type="number" value="1.6" step="0.1">
-                <label>문단 간격</label>
-                <input id="quoteMargin" type="number" value="0.4" step="0.1"> em
-                <label>자간</label>
-                <input id="quoteLetterSpacing" type="number" value="-2"> px
-                <label>단어 간격</label>
-                <input id="quoteWordSpacing" type="number" value="-2"> px
-            </div>
-        </fieldset>
-        <button class="right" onclick="saveHTML()">HTML로 저장</button>
-        <button class="right" onclick="downloadImage()">이미지로 저장</button>
+        <form id="textSettings">
+            <fieldset>
+                <div>
+                    <label>글꼴</label>
+                    <select id="fontSelect">
+                        <option value="ridi">리디바탕</option>
+                        <option value="pretendard">프리텐다드</option>
+                        <option value="GangwonEdu">강원교육모두체</option>
+                        <option value="GangwonEduSaeeum">강원교육새음체</option>
+                        <option value="GowunDodum">고운돋움</option>
+                        <option value="Cafe24Oneprettynight">카페24 고운밤</option>
+                        <option value="HakgyoansimBadasseugiTTF">학교안심 받아쓰기</option>
+                    </select>
+                    <label>글씨 크기</label>
+                    <input id="quoteSize" type="number" value="50"> px
+                    <label>글씨 색</label>
+                    <select id="quoteColor">
+                        <option value="White">White</option>
+                        <option value="Black">Black</option>
+                        <option value="DarkBlue">DarkBlue</option>
+                        <option value="DarkGray">DarkGray</option>
+                        <option value="DarkGreen">DarkGreen</option>
+                        <option value="DarkRed">DarkRed</option>
+                        <option value="LightBlue">LightBlue</option>
+                        <option value="LightGray">LightGray</option>
+                        <option value="LightGreen">LightGreen</option>
+                        <option value="LightPink">LightPink</option>
+                    </select>
+                </div>
+                <div>
+                    <label>줄 높이</label>
+                    <input id="quoteLineHeight" type="number" value="1.6" step="0.1">
+                    <label>문단 간격</label>
+                    <input id="quoteMargin" type="number" value="0.4" step="0.1"> em
+                    <label>자간</label>
+                    <input id="quoteLetterSpacing" type="number" value="-2"> px
+                    <label>단어 간격</label>
+                    <input id="quoteWordSpacing" type="number" value="-2"> px
+                </div>
+            </fieldset>
+        </form>
+        <button onclick="downloadImage()">이미지로 저장</button>
+        <button onclick="saveHTML()">HTML로 저장</button>
+        <button class="right" onclick="reset()">초기화</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.13/dist/html-to-image.min.js"></script>
@@ -295,17 +306,6 @@
 }
                 `
             },
-            corncorn: {
-                fontFamily: 'Ownglyph_corncorn-Rg',
-                fontFace: `
-@font-face {
-    font-family: 'Ownglyph_corncorn-Rg';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2412-1@1.0/Ownglyph_corncorn-Rg.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-}
-                `
-            },
             GangwonEdu: {
                 fontFamily: 'GangwonEdu_OTFLightA',
                 fontFace: `
@@ -317,17 +317,50 @@
 }
                 `
             },
-            omyu_pretty: {
-                fontFamily: 'omyu_pretty',
+            GangwonEduSaeeum: {
+                fontFamily: 'GangwonEduSaeeum_OTFMediumA',
                 fontFace: `
 @font-face {
-    font-family: 'omyu_pretty';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
                 `
-            }
+            },
+            GowunDodum: {
+                fontFamily: 'GowunDodum',
+                fontFace: `
+@font-face {
+    font-family: 'GowunDodum';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+                `
+            },
+            Cafe24Oneprettynight: {
+                fontFamily: 'Cafe24Oneprettynight',
+                fontFace: `
+@font-face {
+    font-family: 'Cafe24Oneprettynight';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+                `
+            },
+            HakgyoansimBadasseugiTTF: {
+                fontFamily: 'HakgyoansimBadasseugiTTF',
+                fontFace: `
+@font-face {
+    font-family: 'HakgyoansimBadasseugiTTF';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimBadasseugiTTF-L.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+                `
+            },
         };
 
         // 쿠키 저장 함수
@@ -385,7 +418,6 @@
         }
 
         function applyChanges() {
-
             document.getElementById('quotesOutput').innerHTML = formatParagraphs(document.getElementById('quotes').value);
 
             document.getElementById('titleOutput').textContent = document.getElementById('title').value;
@@ -401,7 +433,6 @@
             document.getElementById('quotes-container').style.fontSize = document.getElementById('quoteSize').value + 'px';
             document.getElementById('result').style.color = document.getElementById('quoteColor').value;
             document.getElementById('quotes-container').style.lineHeight = document.getElementById('quoteLineHeight').value;
-            document.getElementById('quotes-container').style.lineHeight = document.getElementById('quoteLineHeight').value;
             document.getElementById('quotes-container').style.letterSpacing = document.getElementById('quoteLetterSpacing').value + 'px';
             document.getElementById('quotes-container').style.wordSpacing = document.getElementById('quoteWordSpacing').value + 'px';
 
@@ -411,6 +442,12 @@
             });
 
             centerQuotesOutput();
+        }
+
+        function reset() {
+            document.getElementById('imageFilters').reset();
+            document.getElementById('textSettings').reset();
+            applyChanges();
         }
 
         function downloadImage() {
