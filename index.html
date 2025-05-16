@@ -433,6 +433,26 @@ font-style: normal;
             });
         }
 
+        function removeInfoText() {
+            const infoText = document.getElementById('info-text');
+            if (infoText) {
+                infoText.remove();
+            }
+        }
+        function addInfoText() {
+            const infoText = document.createElement('div');
+            if (document.getElementById('info-text')) return;
+            infoText.innerHTML = "HTML 저장 시 로컬 이미지 파일 배경은 저장되지 않습니다.";
+            infoText.id = 'info-text'
+            infoText.style.width = '180px';
+            infoText.style.color = '#666';
+            infoText.style.fontSize = '0.9em';
+            infoText.style.display = 'inline-block';
+            infoText.style.verticalAlign = 'middle';
+            infoText.style.wordBreak = 'keep-all';
+            document.querySelector('button[onclick="saveHTML()"]').insertAdjacentElement('afterend', infoText);
+        }
+        
         function setBgImgSrc(src) {
             const $ = id => document.getElementById(id);
 
@@ -457,6 +477,7 @@ saturate(${$('saturate').value}%)
             }
             else if (src) {
                 $('background-img').src = src;
+                addInfoText();
             }
         }
 
@@ -475,25 +496,6 @@ saturate(${$('saturate').value}%)
             reader.readAsDataURL(file);
             addInfoText();
         });
-        function removeInfoText() {
-            const infoText = document.getElementById('info-text');
-            if (infoText) {
-                infoText.remove();
-            }
-        }
-        function addInfoText() {
-            const infoText = document.createElement('div');
-            if (document.getElementById('info-text')) return;
-            infoText.innerHTML = "HTML 저장 시 로컬 이미지 파일 배경은 저장되지 않습니다.";
-            infoText.id = 'info-text'
-            infoText.style.width = '180px';
-            infoText.style.color = '#666';
-            infoText.style.fontSize = '0.9em';
-            infoText.style.display = 'inline-block';
-            infoText.style.verticalAlign = 'middle';
-            infoText.style.wordBreak = 'keep-all';
-            document.querySelector('button[onclick="saveHTML()"]').insertAdjacentElement('afterend', infoText);
-        }
 
         // 텍스트 포맷팅
         function formatParagraphs(text) {
