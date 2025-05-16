@@ -1,372 +1,386 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=600">
-<title>발췌 이미지 생성기</title>
-<style id="webfont">
-</style>
-<style>
-@font-face {
-    font-family: 'Pretendard';
-    src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Pretendard/Pretendard-Thin.woff2') format('woff2');
-    font-weight: 100;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Pretendard';
-    src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Pretendard/Pretendard-Light.woff2') format('woff2');
-    font-weight: 200;
-    font-style: normal;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=600">
+    <title>발췌 이미지 생성기</title>
+    <style id="webfont">
+    </style>
+    <style>
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Pretendard/Pretendard-Thin.woff2') format('woff2');
+            font-weight: 100;
+            font-style: normal;
+        }
 
-html, body, div, p, fieldset {
-    margin: 0;
-    padding: 0;
-}
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Pretendard/Pretendard-Light.woff2') format('woff2');
+            font-weight: 200;
+            font-style: normal;
+        }
 
-body {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    font-family: sans-serif;
-    font-size: 14px;
-}
+        html,
+        body,
+        div,
+        p,
+        fieldset {
+            margin: 0;
+            padding: 0;
+        }
 
-#result-wrapper {
-    zoom: 0.5;
-}
+        body {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            font-family: sans-serif;
+            font-size: 14px;
+        }
 
-#result {
-    position: relative;
-    width: 1200px;
-    height: 1200px;
-    color: white;
-    text-align: justify;
-    overflow: hidden;
-}
+        body,
+        input,
+        textarea,
+        select,
+        button {
+            font-family: sans-serif;
+            font-size: 14px;
+        }
 
-#background-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-}
+        #result-wrapper {
+            zoom: 0.5;
+        }
 
-#background-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+        #result {
+            position: relative;
+            width: 1200px;
+            height: 1200px;
+            color: white;
+            text-align: justify;
+            overflow: hidden;
+        }
 
-#container {
-    position: absolute;
-    top: 120px;
-    left: 90px;
-    width: 1020px;
-    height: 960px;
-    z-index: 1;
-}
+        #background-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            object-fit: cover;
+        }
 
-#quotes-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 1020px;
-}
+        #container {
+            position: absolute;
+            top: 120px;
+            left: 90px;
+            width: 1020px;
+            height: 960px;
+        }
 
-#title-container,
-#author-container {
-    position: absolute;
-    font-family: 'Pretendard';
-    font-size: 48px;
-}
+        #quotes-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1020px;
+        }
 
-#title-container {
-    bottom: 62px;
-    line-height: 1.2;
-    font-weight: 200;
-}
+        #title-container,
+        #author-container {
+            position: absolute;
+            font-family: 'Pretendard';
+            font-size: 48px;
+        }
 
-#author-container {
-    bottom: 0;
-    line-height: 1;
-    font-weight: 100;
-}
+        #title-container {
+            bottom: 62px;
+            line-height: 1.2;
+            font-weight: 200;
+        }
 
-.controls {
-    max-width: 600px;
-    position: relative;
-    padding: 20px;
-}
+        #author-container {
+            bottom: 0;
+            line-height: 1;
+            font-weight: 100;
+        }
 
-fieldset {
-    padding: 10px;
-    margin-bottom: 10px;
-}
+        .controls {
+            width: 580px;
+            position: relative;
+            padding: 10px;
+            vertical-align: middle;
+        }
 
-label {
-    font-size: 14px;
-    font-weight: 500;
-    margin-right: 1px;
-}
+        fieldset {
+            width: 558px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: gray 1px solid;
+        }
 
-textarea,
-input,
-select {
-    padding: 2px;
-    font-size: 14px;
-}
+        label {
+            font-size: 14px;
+            font-weight: 500;
+            margin-right: 1px;
+        }
 
-textarea {
-    display: block;
-    width: 520px;
-    margin: 5px 0 12px 0;
-    word-break: break-word;
-}
-select {
-    margin-bottom: 12px;
-}
+        textarea,
+        input,
+        select {
+            padding: 2px;
+            font-size: 14px;
+        }
 
+        textarea {
+            display: block;
+            width: 556px;
+            margin: 5px 0 12px 0;
+            word-break: break-word;
+        }
 
-input[type="number"] {
-    appearance: textfield;
-    -webkit-appearance: textfield;
-    -moz-appearance: textfield;
-}
+        select {
+            margin-bottom: 12px;
+        }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-}
+        input[type="number"] {
+            appearance: textfield;
+            -webkit-appearance: textfield;
+            -moz-appearance: textfield;
+        }
 
-.number-input {
-    display: inline-flex;
-    vertical-align: -5px;
-    border: 1px solid #aaa;
-    box-sizing: border-box;
-}
-.number-input * {
-    box-sizing: border-box;
-}
-.number-input input[type=number] {
-    border: solid #aaa;
-    border-width: 0 1px;
-    width: 40px;
-    text-align: center;
-}
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
 
-.number-input button {
-    width: 18px;
-    height: 20px;
-    padding: 0;
-    margin: 0;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 12px 12px;
-    -webkit-appearance: none;
-    outline: none;
-}
+        .number-input {
+            display: inline-flex;
+            border: 1px solid #aaa;
+            box-sizing: border-box;
+            height: 22px;
+        }
 
-/* Minus button */
-.number-input button.minus {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><rect x='2' y='5.5' width='8' height='1' fill='%23212121'/></svg>");
-}
+        .number-input * {
+            box-sizing: border-box;
+        }
 
-/* Plus button */
-.number-input button.plus {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><rect x='2' y='5.5' width='8' height='1' fill='%23212121'/><rect x='5.5' y='2' width='1' height='8' fill='%23212121'/></svg>");
-}
-input#title { width: 260px; }
-input#author { width: 120px; }
-input#bgUrl { width: 440px; }
+        .number-input input[type=number] {
+            border: solid #aaa;
+            border-width: 0 1px;
+            text-align: center;
+        }
 
-input#brightness,
-input#contrast,
-input#grayscale,
-input#saturate,
-input#quoteSize,
-input#quoteLineHeight,
-input#quoteMargin,
-input#quoteLetterSpacing,
-input#quoteWordSpacing {
-    width: 30px;
-    text-align: center;
-}
+        .number-input button {
+            width: 18px;
+            padding: 0;
+            margin: 0;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            -webkit-appearance: none;
+            outline: none;
+        }
 
-select#quoteColor {
-    width: 100px;
-}
+        input#title {
+            width: 290px;
+        }
 
-button {
-    margin: 0 5px 0 0;
-    padding: 10px 20px;
-}
-button.right {
-    float: right;
-    margin-right: 0;
-}
+        input#author {
+            width: 120px;
+        }
 
-div + label {
-    margin-left: 10px;
-}
-input + label,
-select + label {
-    margin-left: 20px;
-}
-</style>
+        input#bgUrl {
+            width: 440px;
+        }
+
+        #local {
+            padding: 1px;
+            line-height: 1;
+        }
+
+        input#brightness,
+        input#contrast,
+        input#grayscale,
+        input#saturate,
+        input#quoteSize,
+        input#quoteLineHeight,
+        input#quoteMargin,
+        input#quoteLetterSpacing,
+        input#quoteWordSpacing {
+            width: 34px;
+            text-align: center;
+        }
+
+        select#quoteColor {
+            width: 100px;
+        }
+
+        button {
+            margin: 0 5px 0 0;
+            padding: 10px 20px;
+        }
+
+        button.right {
+            float: right;
+            margin-right: 0;
+        }
+
+        div+label {
+            margin-left: 10px;
+        }
+
+        input+label,
+        select+label {
+            margin-left: 20px;
+        }
+    </style>
 </head>
 <body>
-<div id="result-wrapper">
-    <div id="result">
-        <div id="background-layer">
+    <div id="result-wrapper">
+        <div id="result">
             <img id="background-img">
-        </div>
-        <div id="container">
-            <div id="quotes-container">
-                <div id="quotesOutput">
+            <div id="container">
+                <div id="quotes-container">
+                    <div id="quotesOutput">
+                    </div>
+                </div>
+                <div id="title-container">
+                    <p id="titleOutput"></p>
+                </div>
+                <div id="author-container">
+                    <p id="authorOutput"></p>
                 </div>
             </div>
-            <div id="title-container">
-                <p id="titleOutput"></p>
-            </div>
-            <div id="author-container">
-                <p id="authorOutput"></p>
-            </div>
         </div>
     </div>
-</div>
-<div class="controls">
-    <fieldset>
-        <label>발췌 문장</label>
-        <textarea id="quotes" rows="7">“지유안 생도! 입관 한 달 만에 최연소 재요(災妖) 제거자가 되신 소감 부탁드립니다!”
+    <div class="controls">
+        <fieldset>
+            <label>발췌 문장</label>
+            <textarea id="quotes" rows="7">“지유안 생도! 입관 한 달 만에 최연소 재요(災妖) 제거자가 되신 소감 부탁드립니다!”
 
 온갖 대기업 협찬사들의 로고가 빼곡히 프린트된 배경지 앞. 유안이라 불린 자그마한 여자가 폭우처럼 쏟아붓는 플래시 세례의 한중간에 반듯하게 서 있었다.</textarea>
-        <div>
-            <label>글 제목</label>
-            <input id="title" type="text" value="네가 균열에서 희망을 소원한다면 1권">
-
-            <label>저자 이름</label>
-            <input id="author" type="text" value="KIMARA">
-        </div>
-    </fieldset>
-    <fieldset>
-        <label>배경 이미지 URL</label>
-        <textarea id="bgUrl" rows="3">https://images.unsplash.com/photo-1747193544056-088ffe8969ed?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D</textarea>
-        <form id="imageFilters">
-            <label>밝기</label>
-            <div class="number-input">
-                <button class="minus" onclick="this.parentNode.querySelector('#brightness').stepDown()"></button>
-                <input id="brightness" type="number" value="50" step="10">
-                <button class="plus" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"></button>
-            </div> %
-            <label>대비</label>
-            <div class="number-input">
-                <button class="minus" onclick="this.parentNode.querySelector('#contrast').stepDown()"></button>
-                <input id="contrast" type="number" value="100" step="10">
-                <button class="plus" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"></button>
-            </div> %
-            <label>회색조</label>
-            <div class="number-input">
-                <button class="minus" onclick="this.parentNode.querySelector('#grayscale').stepDown()"></button>
-                <input id="grayscale" type="number" value="0" step="10">
-                <button class="plus" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"></button>
-            </div> %
-            <label>채도</label>
-            <div class="number-input">
-                <button class="minus" onclick="this.parentNode.querySelector('#saturate').stepDown()"></button>
-                <input id="saturate" type="number" value="100" step="10">
-                <button class="plus" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"></button>
-            </div> %
-        </form>
-    </fieldset>
-    <form id="textSettings">
-        <fieldset>
             <div>
-                <label>글꼴</label>
-                <select id="fontSelect">
-                    <option value="ridi">리디바탕</option>
-                    <option value="pretendard">프리텐다드</option>
-                    <option value="GangwonEdu">강원교육모두체</option>
-                    <option value="GangwonEduSaeeum">강원교육새음체</option>
-                    <option value="GowunDodum">고운돋움</option>
-                    <option value="Cafe24Oneprettynight">카페24 고운밤</option>
-                    <option value="HakgyoansimBadasseugiTTF">학교안심 받아쓰기</option>
-                </select>
-                <label>글씨 크기</label>
-                <div class="number-input">
-        <button class="minus" onclick="this.parentNode.querySelector('#quoteSize').stepDown()"></button>
-        <input id="quoteSize" type="number" value="50" step="1">
-        <button class="plus" onclick="this.parentNode.querySelector('#quoteSize').stepUp()"></button>
-                </div> px
-                <label>글씨 색</label>
-                <select id="quoteColor">
-                    <option value="White">White</option>
-                    <option value="Black">Black</option>
-                    <option value="DarkBlue">DarkBlue</option>
-                    <option value="DarkGray">DarkGray</option>
-                    <option value="DarkGreen">DarkGreen</option>
-                    <option value="DarkRed">DarkRed</option>
-                    <option value="LightBlue">LightBlue</option>
-                    <option value="LightGray">LightGray</option>
-                    <option value="LightGreen">LightGreen</option>
-                    <option value="LightPink">LightPink</option>
-                </select>
+                <label>글 제목</label>
+                <input id="title" type="text" value="네가 균열에서 희망을 소원한다면 1권">
+
+                <label>저자 이름</label>
+                <input id="author" type="text" value="KIMARA">
             </div>
-<div>
-    <label>줄높이</label>
-    <div class="number-input">
-        <button class="minus" onclick="this.parentNode.querySelector('#quoteLineHeight').stepDown()"></button>
-        <input id="quoteLineHeight" type="number" value="1.6" step="0.1">
-        <button class="plus" onclick="this.parentNode.querySelector('#quoteLineHeight').stepUp()"></button>
+        </fieldset>
+        <fieldset>
+            <label>배경 이미지 URL</label> 또는 <button id="local" onclick="clickFileInput()">로컬 파일</button>
+            <input type="file" id="fileInput" accept="image/*" style="display: none;">
+            <textarea id="bgUrl" rows="3">https://images.unsplash.com/photo-1747193544056-088ffe8969ed?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D</textarea>
+            <form id="imageFilters">
+                <label>밝기</label>
+                <div class="number-input">
+                    <button class="minus" type="button">−</button>
+                    <input id="brightness" type="number" value="50" step="10">
+                    <button class="plus" type="button">+</button>
+                </div> %
+                <label>대비</label>
+                <div class="number-input">
+                    <button class="minus" type="button">−</button>
+                    <input id="contrast" type="number" value="100" step="10">
+                    <button class="plus" type="button">+</button>
+                </div> %
+                <label>회색조</label>
+                <div class="number-input">
+                    <button class="minus" type="button">−</button>
+                    <input id="grayscale" type="number" value="0" step="10">
+                    <button class="plus" type="button">+</button>
+                </div> %
+                <label>채도</label>
+                <div class="number-input">
+                    <button class="minus" type="button">−</button>
+                    <input id="saturate" type="number" value="100" step="10">
+                    <button class="plus" type="button">+</button>
+                </div> %
+            </form>
+        </fieldset>
+        <form id="textSettings">
+            <fieldset>
+                <div>
+                    <label>글꼴</label>
+                    <select id="fontSelect">
+                        <option value="RIDIBatang">리디바탕</option>
+                        <option value="Pretendard">프리텐다드</option>
+                        <option value="GangwonEdu">강원교육모두체</option>
+                        <option value="GangwonEduSaeeum">강원교육새음체</option>
+                        <option value="GowunDodum">고운돋움</option>
+                        <option value="KNPSKkomi">국립공원 꼬미</option>
+                        <option value="InkLipquid">잉크립퀴드체</option>
+                        <option value="HakgyoansimGaeulsopung">학교안심 가을소풍</option>
+                        <option value="HakgyoansimChilpanjiugaeTTF">학교안심 칠판지우개</option>
+                    </select>
+                    <label>글씨 크기</label>
+                    <div class="number-input">
+                        <button class="minus" type="button">−</button>
+                        <input id="quoteSize" type="number" value="50" step="1">
+                        <button class="plus" type="button">+</button>
+                    </div> px
+                    <label>글씨 색</label>
+                    <select id="quoteColor">
+                        <option value="White">White</option>
+                        <option value="Black">Black</option>
+                        <option value="DarkBlue" style="color:DarkBlue">DarkBlue</option>
+                        <option value="DarkGray" style="color:DarkGray">DarkGray</option>
+                        <option value="DarkGreen" style="color:DarkGreen">DarkGreen</option>
+                        <option value="DarkRed" style="color:DarkRed">DarkRed</option>
+                        <option value="LightBlue" style="color:LightBlue">LightBlue</option>
+                        <option value="LightGray" style="color:LightGray">LightGray</option>
+                        <option value="LightGreen" style="color:LightGreen">LightGreen</option>
+                        <option value="LightPink" style="color:LightPink">LightPink</option>
+                    </select>
+                </div>
+                <div>
+                    <label>줄높이</label>
+                    <div class="number-input">
+                        <button class="minus" type="button">−</button>
+                        <input id="quoteLineHeight" type="number" value="1.6" step="0.1">
+                        <button class="plus" type="button">+</button>
+                    </div>
+                    <label>문단간격</label>
+                    <div class="number-input">
+                        <button class="minus" type="button">−</button>
+                        <input id="quoteMargin" type="number" value="0.4" step="0.1">
+                        <button class="plus" type="button">+</button>
+                    </div> em
+                    <label>자간</label>
+                    <div class="number-input">
+                        <button class="minus" type="button">−</button>
+                        <input id="quoteLetterSpacing" type="number" value="-1" step="1">
+                        <button class="plus" type="button">+</button>
+                    </div> px
+                    <label>어간</label>
+                    <div class="number-input">
+                        <button class="minus" type="button">−</button>
+                        <input id="quoteWordSpacing" type="number" value="0" step="1">
+                        <button class="plus" type="button">+</button>
+                    </div> px
+                </div>
+            </fieldset>
+        </form>
+        <button type="submit" onclick="downloadImage()">이미지로 저장</button>
+        <button type="submit" onclick="saveHTML()">HTML로 저장</button>
+        <button type="submit" class="right" onclick="reset()">서식 초기화</button>
     </div>
 
-    <label>문단간격</label>
-    <div class="number-input">
-        <button class="minus" onclick="this.parentNode.querySelector('#quoteMargin').stepDown()"></button>
-        <input id="quoteMargin" type="number" value="0.4" step="0.1">
-        <button class="plus" onclick="this.parentNode.querySelector('#quoteMargin').stepUp()"></button>
-    </div> em
+    <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.13/dist/html-to-image.min.js"></script>
+    <script>
+        const fontMap = {
+            RIDIBatang: ['RIDIBatang', 'projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff'],
+            Pretendard: ['Pretendard', 'Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff'],
+            GangwonEdu: ['GangwonEdu', 'projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFLightA.woff'],
+            GangwonEduSaeeum: ['GangwonEduSaeeum', 'projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff'],
+            GowunDodum: ['GowunDodum', 'projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff'],
+            KNPSKkomi: ['KNPSKkomi', 'projectnoonnu/noonfonts_2201-2@1.0/KNPSKkomi-Regular00.woff'],
+            InkLipquid: ['InkLipquid', 'projectnoonnu/noonfonts_one@1.0/InkLipquid.woff'],
+            HakgyoansimGaeulsopung: ['HakgyoansimGaeulsopung', 'projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimGaeulsopungL.woff2'],
+            HakgyoansimChilpanjiugaeTTF: ['HakgyoansimChilpanjiugaeTTF', 'projectnoonnu/2408-5@1.0/HakgyoansimChilpanjiugaeTTF-L.woff2'],
+        };
 
-    <label>자간</label>
-    <div class="number-input">
-        <button class="minus" onclick="this.parentNode.querySelector('#quoteLetterSpacing').stepDown()"></button>
-        <input id="quoteLetterSpacing" type="number" value="-1" step="1">
-        <button class="plus" onclick="this.parentNode.querySelector('#quoteLetterSpacing').stepUp()"></button>
-    </div> px
-
-    <label>어간</label>
-    <div class="number-input">
-        <button class="minus" onclick="this.parentNode.querySelector('#quoteWordSpacing').stepDown()"></button>
-        <input id="quoteWordSpacing" type="number" value="0" step="1">
-        <button class="plus" onclick="this.parentNode.querySelector('#quoteWordSpacing').stepUp()"></button>
-    </div> px
-</div>
-        </fieldset>
-    </form>
-    <button type="submit" onclick="downloadImage()">이미지로 저장</button>
-    <button type="submit" onclick="saveHTML()">HTML로 저장</button>
-    <button type="submit" class="right" onclick="reset()">초기화</button>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.13/dist/html-to-image.min.js"></script>
-<script>
-const fontMap = {
-    ridi: ['RIDIBatang', 'projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff'],
-    pretendard: ['Pretendard-Regular', 'Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff'],
-    GangwonEdu: ['GangwonEdu_OTFLightA', 'projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFLightA.woff'],
-    GangwonEduSaeeum: ['GangwonEduSaeeum_OTFMediumA', 'projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff'],
-    GowunDodum: ['GowunDodum', 'projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff'],
-    Cafe24Oneprettynight: ['Cafe24Oneprettynight', 'projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff'],
-    HakgyoansimBadasseugiTTF: ['HakgyoansimBadasseugiTTF', 'projectnoonnu/2408-5@1.0/HakgyoansimBadasseugiTTF-L.woff2']
-};
-
-const buildFontFace = (name, url, format = 'woff') => `
+        const buildFontFace = (name, url, format = 'woff') => `
 @font-face {
 font-family: '${name}';
 src: url('https://fastly.jsdelivr.net/gh/${url}') format('${format}');
@@ -374,119 +388,187 @@ font-weight: normal;
 font-style: normal;
 }`;
 
-// 쿠키 관련
-function setCookie(name, value, days = 90) {
-    const expires = new Date(Date.now() + days * 864e5).toUTCString();
-    document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
-}
-
-function getCookie(name) {
-    return document.cookie.split('; ').reduce((res, cookie) => {
-        const [key, val] = cookie.split('=');
-        return key === encodeURIComponent(name) ? decodeURIComponent(val) : res;
-    }, '');
-}
-
-// 입력 저장/복원
-function saveInputsToCookies() {
-    document.querySelectorAll('input, select, textarea').forEach(el => {
-        if (el.id) setCookie(el.id, el.value);
-    });
-}
-
-function loadInputsFromCookies() {
-    document.querySelectorAll('input, select, textarea').forEach(el => {
-        if (el.id) {
-            const value = getCookie(el.id);
-            if (value !== '') el.value = value;
+        // 쿠키 관련
+        function setCookie(name, value, days = 90) {
+            const expires = new Date(Date.now() + days * 864e5).toUTCString();
+            document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
         }
-    });
-}
 
-// 텍스트 포맷팅
-function formatParagraphs(text) {
-    return text.trim().split('\n').map(line => line.trim()).filter(Boolean).map(line => `<p>${line}</p>`).join('\n');
-}
+        function getCookie(name) {
+            return document.cookie.split('; ').reduce((res, cookie) => {
+                const [key, val] = cookie.split('=');
+                return key === encodeURIComponent(name) ? decodeURIComponent(val) : res;
+            }, '');
+        }
 
-// 레이아웃 중앙 정렬
-function centerQuotesOutput() {
-    const titleHeight = document.getElementById('title-container').scrollHeight;
-    const containerHeight = 882 - titleHeight;
-    const outputHeight = document.getElementById('quotesOutput').scrollHeight;
-    const marginTop = (containerHeight - outputHeight) / 2;
+        // 입력 저장/복원
+        function saveInputsToCookies() {
+            document.querySelectorAll('input, select, textarea').forEach(el => {
+                if (el.id) setCookie(el.id, el.value);
+            });
+        }
 
-    document.getElementById('quotes-container').style.height = `${containerHeight}px`;
-    document.getElementById('quotesOutput').style.marginTop = `${marginTop}px`;
-}
+        function loadInputsFromCookies() {
+            document.querySelectorAll('input, select, textarea').forEach(el => {
+                if (el.id) {
+                    const value = getCookie(el.id);
+                    if (value !== '') el.value = value;
+                }
+            });
+        }
 
-// 스타일 반영
-function applyChanges() {
-    const $ = id => document.getElementById(id);
+        function clickFileInput() {
+            fileInput.click();
+        }
+        document.getElementById('fileInput').addEventListener('change', () => {
+            const file = fileInput.files[0];
+            if (!file) return;
 
-    $('quotesOutput').innerHTML = formatParagraphs($('quotes').value);
-    $('titleOutput').textContent = $('title').value;
-    $('authorOutput').textContent = $('author').value;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('bgUrl').value = '로컬 이미지 파일'
+                document.getElementById('background-img').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+            addInfoText();
+        });
+        document.getElementById('bgUrl').addEventListener('input', function (event) {
+            if (event.target.value === '로컬 이미지 파일') return;
+            document.getElementById('background-img').src = event.target.value;
+            saveInputsToCookies();
+            removeInfoText();
+        });
+        function removeInfoText() {
+            const infoText = document.getElementById('info-text');
+            if (infoText) {
+                infoText.remove();
+            }
+        }
+        function addInfoText() {
+            const infoText = document.createElement('div');
+            infoText.innerHTML = "HTML 저장 시 로컬 이미지 파일 배경은 저장되지 않습니다.";
+            infoText.id = 'info-text'
+            infoText.style.width = '180px';
+            infoText.style.marginLeft = '5px';
+            infoText.style.color = '#666';
+            infoText.style.fontSize = '0.9em';
+            infoText.style.display = 'inline-block';
+            infoText.style.verticalAlign = '-10px';
+            infoText.style.wordBreak = 'keep-all';
+            document.querySelector('button[onclick="saveHTML()"]').insertAdjacentElement('afterend', infoText);
+        }
 
-    $('background-img').src = $('bgUrl').value;
-    $('background-img').style.filter = `
+        // 텍스트 포맷팅
+        function formatParagraphs(text) {
+            return text.trim().split('\n').map(line => line.trim()).filter(Boolean).map(line => `<p>${line}</p>`).join('\n');
+        }
+
+        // 레이아웃 중앙 정렬
+        function centerQuotesOutput() {
+            const titleHeight = document.getElementById('title-container').scrollHeight;
+            const containerHeight = 882 - titleHeight;
+            const outputHeight = document.getElementById('quotesOutput').scrollHeight;
+            const marginTop = (containerHeight - outputHeight) / 2;
+
+            document.getElementById('quotes-container').style.height = `${containerHeight}px`;
+            document.getElementById('quotesOutput').style.marginTop = `${marginTop}px`;
+        }
+
+        // 스타일 반영
+        function applyChanges() {
+            const $ = id => document.getElementById(id);
+
+            $('quotesOutput').innerHTML = formatParagraphs($('quotes').value);
+            $('titleOutput').textContent = $('title').value;
+            $('authorOutput').textContent = $('author').value;
+
+            $('background-img').style.filter = `
 brightness(${$('brightness').value}%)
 contrast(${$('contrast').value}%)
 grayscale(${$('grayscale').value}%)
 saturate(${$('saturate').value}%)
 `;
 
-    const [fontName, fontURL] = fontMap[$('fontSelect').value];
-    $('webfont').innerHTML = buildFontFace(fontName, fontURL, fontURL.endsWith('.woff2') ? 'woff2' : 'woff');
-    $('quotes-container').style.fontFamily = fontName;
+            const [fontName, fontURL] = fontMap[$('fontSelect').value];
+            $('webfont').innerHTML = buildFontFace(fontName, fontURL, fontURL.endsWith('.woff2') ? 'woff2' : 'woff');
+            $('quotes-container').style.fontFamily = fontName;
 
-    $('quotes-container').style.fontSize = $('quoteSize').value + 'px';
-    $('result').style.color = $('quoteColor').value;
-    $('quotes-container').style.lineHeight = $('quoteLineHeight').value;
-    $('quotes-container').style.letterSpacing = $('quoteLetterSpacing').value + 'px';
-    $('quotes-container').style.wordSpacing = $('quoteWordSpacing').value + 'px';
+            $('quotes-container').style.fontSize = $('quoteSize').value + 'px';
+            $('result').style.color = $('quoteColor').value;
+            $('quotes-container').style.lineHeight = $('quoteLineHeight').value;
+            $('quotes-container').style.letterSpacing = $('quoteLetterSpacing').value + 'px';
+            $('quotes-container').style.wordSpacing = $('quoteWordSpacing').value + 'px';
 
-    document.querySelectorAll('#quotesOutput p').forEach(p => {
-        p.style.marginBottom = $('quoteMargin').value + 'em';
-    });
+            document.querySelectorAll('#quotesOutput p').forEach(p => {
+                p.style.marginBottom = $('quoteMargin').value + 'em';
+            });
 
-    centerQuotesOutput();
-}
+            centerQuotesOutput();
+            setTimeout(() => {
+                centerQuotesOutput();
+            }, 500);
 
-// 이미지 다운로드
-function downloadImage() {
-    const title = document.getElementById('title').value;
-    const para = document.getElementById('quotes').value;
-    const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
+        }
 
-    htmlToImage.toJpeg(document.getElementById('result'), {
-        quality: 0.95,
-        width: 1200,
-        height: 1200,
-        pixelRatio: 1
-    }).then(dataUrl => {
-        const link = document.createElement('a');
-        link.download = `${filename}.jpg`;
-        link.href = dataUrl;
-        link.click();
-    }).catch(error => console.error('이미지 저장 실패:', error));
-}
+        function bindNumberInputButtons() {
+            document.querySelectorAll('.number-input').forEach(wrapper => {
+                const input = wrapper.querySelector('input');
 
-// HTML 저장
-function saveHTML() {
-    const title = document.getElementById('title').value;
-    const para = document.getElementById('quotes').value;
-    const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
+                wrapper.querySelector('.minus').addEventListener('click', e => {
+                    e.preventDefault();
+                    input.stepDown();
+                    applyChanges();
+                    saveInputsToCookies();
+                });
 
-    const styleHTML = document.querySelector('#webfont').outerHTML;
-    const wrapperHTML = document.querySelector('#result-wrapper').outerHTML;
+                wrapper.querySelector('.plus').addEventListener('click', e => {
+                    e.preventDefault();
+                    input.stepUp();
+                    applyChanges();
+                    saveInputsToCookies();
+                });
+            });
+        }
 
-    const htmlContent = `
+        // 이미지 다운로드
+        function downloadImage() {
+            const title = document.getElementById('title').value;
+            const para = document.getElementById('quotes').value;
+            const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
+
+            htmlToImage.toJpeg(document.getElementById('result'), {
+                quality: 0.95,
+                width: 1200,
+                height: 1200,
+                pixelRatio: 1
+            }).then(dataUrl => {
+                const link = document.createElement('a');
+                link.download = `${filename}.jpg`;
+                link.href = dataUrl;
+                link.click();
+            }).catch(error => console.error('이미지 저장 실패:', error));
+        }
+
+        // HTML 저장
+        function saveHTML() {
+            const title = document.getElementById('title').value;
+            const para = document.getElementById('quotes').value;
+            const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
+
+            const styleHTML = document.querySelector('#webfont').outerHTML;
+
+            let wrapperHTML = document.querySelector('#result-wrapper').outerHTML;
+            if (document.getElementById('bgUrl').value === '로컬 이미지 파일') {
+                wrapperHTML = wrapperHTML.replace(/<img\b[^>]*?>/gi, '');
+            }
+
+            const htmlContent = `
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=600">
-<title>발췌 이미지 생성기</title>
+<title>${document.getElementById('title').value}</title>
 ${styleHTML}
 <style>
 @font-face {
@@ -520,18 +602,13 @@ html, body, div, p, fieldset {
     overflow: hidden;
 }
 
-#background-layer {
+#background-img {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: -1;
-}
-
-#background-img {
-    width: 100%;
-    height: 100%;
     object-fit: cover;
 }
 
@@ -541,7 +618,6 @@ html, body, div, p, fieldset {
     left: 90px;
     width: 1020px;
     height: 960px;
-    z-index: 1;
 }
 
 #quotes-container {
@@ -576,54 +652,57 @@ ${wrapperHTML}
 </body>
 </html>`;
 
-    const blob = new Blob([htmlContent], { type: "text/html" });
-    const url = URL.createObjectURL(blob);
+            const blob = new Blob([htmlContent], { type: "text/html" });
+            const url = URL.createObjectURL(blob);
 
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename + ".html";
-    a.click();
-    URL.revokeObjectURL(url);
-}
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = filename + ".html";
+            a.click();
+            URL.revokeObjectURL(url);
+        }
 
-// 리셋
-function reset() {
-    document.getElementById('imageFilters').reset();
-    document.getElementById('textSettings').reset();
-    applyChanges();
-    saveInputsToCookies();
-}
-
-// 이벤트 바인딩
-function bindEvents() {
-    document.querySelectorAll('form button:not([type="submit"])').forEach(btn =>
-        btn.addEventListener('click', e => {
-            e.preventDefault();
+        // 리셋
+        function reset() {
+            document.getElementById('imageFilters').reset();
+            document.getElementById('textSettings').reset();
             applyChanges();
             saveInputsToCookies();
-        })
-    );
+        }
 
-    const inputs = document.querySelectorAll('input, select, textarea');
-    for (const el of inputs) {
-        const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
-        el.addEventListener(eventType, () => {
+        // 이벤트 바인딩
+        function bindEvents() {
+            document.querySelectorAll('form button:not([type="submit"])').forEach(btn =>
+                btn.addEventListener('click', e => {
+                    e.preventDefault();
+                    applyChanges();
+                    saveInputsToCookies();
+                })
+            );
+
+            const inputs = document.querySelectorAll('input, select, textarea');
+            for (const el of inputs) {
+                const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
+                el.addEventListener(eventType, () => {
+                    applyChanges();
+                    saveInputsToCookies();
+                });
+            }
+
+            bindNumberInputButtons();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadInputsFromCookies();
             applyChanges();
-            saveInputsToCookies();
+            bindEvents();
+            document.getElementById('background-img').src = document.getElementById('bgUrl').value;
         });
-    }
-}
 
-window.addEventListener('DOMContentLoaded', () => {
-    loadInputsFromCookies();
-    applyChanges();
-    bindEvents();
-});
-
-window.addEventListener('load', () => {
-    requestAnimationFrame(centerQuotesOutput);
-});
-</script>
+        window.addEventListener('load', () => {
+            requestAnimationFrame(centerQuotesOutput);
+        });
+    </script>
 </body>
 </body>
 </html>
