@@ -200,10 +200,6 @@
             width: 120px;
         }
 
-        input#bgUrl {
-            width: 440px;
-        }
-
         #local {
             padding: 1px;
             line-height: 1;
@@ -457,6 +453,7 @@ saturate(${$('saturate').value}%)
 
             if ($('bgUrl').value !== '로컬 이미지 파일') {
                 $('background-img').src = $('bgUrl').value;
+                removeInfoText();
             }
             else if (src) {
                 $('background-img').src = src;
