@@ -423,13 +423,15 @@ font-style: normal;
         // 입력 저장/복원
         function saveInputsToCookies() {
             document.querySelectorAll('input, select, textarea').forEach(el => {
-                if (el.id) setCookie(el.id, el.value);
+                if (el.id && el.type !== 'file') {
+                    setCookie(el.id, el.value);
+                }
             });
         }
 
         function loadInputsFromCookies() {
             document.querySelectorAll('input, select, textarea').forEach(el => {
-                if (el.id) {
+                if (el.id && el.type !== 'file') {
                     const value = getCookie(el.id);
                     if (value !== '') el.value = value;
                 }
