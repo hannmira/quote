@@ -520,6 +520,8 @@ saturate(${$('saturate').value}%)
 
         // 스타일 반영
         function applyChanges() {
+            saveInputsToCookies();
+
             const $ = id => document.getElementById(id);
 
             $('quotesOutput').innerHTML = formatParagraphs($('quotes').value);
@@ -532,7 +534,6 @@ saturate(${$('saturate').value}%)
             $('webfont').innerHTML = buildFontFace(fontName, fontURL, fontURL.endsWith('.woff2') ? 'woff2' : 'woff');
 
             $('result').style.color = $('quoteColor').value;
-
             document.querySelectorAll('#quotesOutput p').forEach(p => {
                 p.style.fontFamily = fontName;
                 p.style.fontSize = $('quoteSize').value + 'px';
@@ -542,12 +543,10 @@ saturate(${$('saturate').value}%)
                 p.style.wordSpacing = $('quoteWordSpacing').value + 'px';
             });
 
-            saveInputsToCookies();
-
             centerQuotesOutput();
-            setTimeout(() => {
+            document.fonts.ready.then(function () {
                 centerQuotesOutput();
-            }, 1000);
+            });
         }
 
         function bindNumberInputButtons() {
