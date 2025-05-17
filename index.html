@@ -222,8 +222,8 @@
 
         input#brightness,
         input#contrast,
-        input#grayscale,
         input#saturate,
+        input#blur,
         input#quoteSize,
         input#quoteLineHeight,
         input#quoteMargin,
@@ -290,7 +290,7 @@
             </div>
         </fieldset>
         <fieldset>
-            <label>배경 이미지 URL 또는 </label><button id="local" onclick="clickFileInput()">로컬 파일</button>
+            <label>배경 이미지 URL (<a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>) 또는 </label><button id="local" onclick="clickFileInput()">로컬 파일</button>
             <input type="file" id="fileInput" accept="image/*" style="display: none;">
             <input id="bgUrl" value="https://images.unsplash.com/photo-1747193544056-088ffe8969ed?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
             <form id="imageFilters">
@@ -308,13 +308,6 @@
                     <button class="plus" type="button">+</button>
                 </div>
                 <span class="unit">%</span>
-                <label>회색조</label>
-                <div class="number-input">
-                    <button class="minus" type="button">−</button>
-                    <input id="grayscale" type="number" value="0" step="10">
-                    <button class="plus" type="button">+</button>
-                </div>
-                <span class="unit">%</span>
                 <label>채도</label>
                 <div class="number-input">
                     <button class="minus" type="button">−</button>
@@ -322,6 +315,13 @@
                     <button class="plus" type="button">+</button>
                 </div>
                 <span class="unit">%</span>
+                <label>흐리게</label>
+                <div class="number-input">
+                    <button class="minus" type="button">−</button>
+                    <input id="blur" type="number" value="0" step="1">
+                    <button class="plus" type="button">+</button>
+                </div>
+                <span class="unit">px</span>
             </form>
         </fieldset>
         <form id="textSettings">
@@ -483,8 +483,8 @@ font-style: normal;
             $('background-img').style.filter = `
 brightness(${$('brightness').value}%)
 contrast(${$('contrast').value}%)
-grayscale(${$('grayscale').value}%)
 saturate(${$('saturate').value}%)
+blur(${$('blur').value}px)
 `;
 
             if ($('bgUrl').value !== '로컬 이미지 파일') {
