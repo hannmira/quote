@@ -163,6 +163,7 @@
         label {
             font-weight: 500;
             margin-right: 3px;
+            vertical-align: -1px;
         }
 
         sub {
@@ -313,7 +314,9 @@
         <fieldset>
             <div class="flex-container-coloumn">
                 <div class="flex-container">
-                    <label>배경 이미지 URL(<a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>) 또는 <button id="local" style="vertical-align: 0;" onclick="clickFileInput()">로컬 파일</button></label>
+                    <div>
+                        <label>배경 이미지 URL(<a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>) 또는</label> <button id="local" style="vertical-align: -1px;" onclick="clickFileInput()">로컬 파일</button>
+                    </div>
                     <input type="file" id="fileInput" accept="image/*" style="display: none;">
                     <a href="#" onclick="clearInputs('bgUrl')">지우기</a>
                 </div>
