@@ -493,9 +493,10 @@ saturate(${$('saturate').value}%)
 
             const reader = new FileReader();
             reader.onload = function (e) {
-                document.getElementById('bgUrl').value = '로컬 이미지 파일'
                 setBgImgSrc(e.target.result);
             };
+            document.getElementById('bgUrl').value = '로컬 이미지 파일'
+            saveInputsToCookies();
             reader.readAsDataURL(file);
         });
 
@@ -539,6 +540,8 @@ saturate(${$('saturate').value}%)
                 p.style.wordSpacing = $('quoteWordSpacing').value + 'px';
             });
 
+            saveInputsToCookies();
+
             centerQuotesOutput();
             setTimeout(() => {
                 centerQuotesOutput();
@@ -553,14 +556,12 @@ saturate(${$('saturate').value}%)
                     e.preventDefault();
                     input.stepDown();
                     applyChanges();
-                    saveInputsToCookies();
                 });
 
                 wrapper.querySelector('.plus').addEventListener('click', e => {
                     e.preventDefault();
                     input.stepUp();
                     applyChanges();
-                    saveInputsToCookies();
                 });
             });
         }
@@ -705,7 +706,6 @@ ${wrapperHTML}
             document.getElementById('imageFilters').reset();
             document.getElementById('textSettings').reset();
             applyChanges();
-            saveInputsToCookies();
         }
 
         // 이벤트 바인딩
@@ -714,7 +714,6 @@ ${wrapperHTML}
                 btn.addEventListener('click', e => {
                     e.preventDefault();
                     applyChanges();
-                    saveInputsToCookies();
                 })
             );
 
@@ -723,7 +722,6 @@ ${wrapperHTML}
                 const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
                 el.addEventListener(eventType, () => {
                     applyChanges();
-                    saveInputsToCookies();
                 });
             }
 
