@@ -295,29 +295,31 @@
     <div class="controls">
         <fieldset>
             <div class="flex-container-coloumn">
-            <label>발췌 문장</label>
-            <textarea id="quotes" rows="5">“지유안 생도! 입관 한 달 만에 최연소 재요(災妖) 제거자가 되신 소감 부탁드립니다!”
+                <div class="flex-container">
+                    <label>발췌 문장</label>
+                    <a href="#" onclick="clearInputs('quotes', 'title', 'author')">지우기</a>
+                </div>
+                <textarea id="quotes" rows="5">“지유안 생도! 입관 한 달 만에 최연소 재요(災妖) 제거자가 되신 소감 부탁드립니다!”
 
 온갖 대기업 협찬사들의 로고가 빼곡히 프린트된 배경지 앞. 유안이라 불린 자그마한 여자가 폭우처럼 쏟아붓는 플래시 세례의 한중간에 반듯하게 서 있었다.</textarea>
-</div>
+            </div>
             <div class="flex-container">
                 <label>글 제목</label>
                 <input id="title" type="text" value="네가 균열에서 희망을 소원한다면 1권">
-
                 <label>저자 이름</label>
                 <input id="author" type="text" value="KIMARA">
             </div>
         </fieldset>
         <fieldset>
             <div class="flex-container-coloumn">
-            <div class="flex-container">
-                <label>배경 이미지 URL(<a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>) 또는 <button id="local" style="vertical-align: 0;" onclick="clickFileInput()">로컬 파일</button></label>
-                <input type="file" id="fileInput" accept="image/*" style="display: none;">
-            </div>
-            <div class="flex-container">
-                <input id="bgUrl" value="https://images.unsplash.com/photo-1739659153856-ae22a5d2390a?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
-                <a href="#" onclick="document.getElementById('bgUrl').value = ''; return false;" style="margin-left: 5px">지우기</a>
-            </div>
+                <div class="flex-container">
+                    <label>배경 이미지 URL(<a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>) 또는 <button id="local" style="vertical-align: 0;" onclick="clickFileInput()">로컬 파일</button></label>
+                    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                    <a href="#" onclick="clearInputs('bgUrl')">지우기</a>
+                </div>
+                <div class="flex-container">
+                    <input id="bgUrl" value="https://images.unsplash.com/photo-1739659153856-ae22a5d2390a?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                </div>
             </div>
             <form id="imageFilters" class="flex-container">
                 <div>
@@ -485,6 +487,11 @@ font-style: normal;
                     if (value !== '') el.value = value;
                 }
             });
+        }
+
+        function clearInputs(...ids) {
+            ids.forEach(id => document.getElementById(id).value = '');
+            return false;
         }
 
         function removeInfoText() {
