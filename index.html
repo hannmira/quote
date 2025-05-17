@@ -33,9 +33,17 @@
         label {
             margin: 0;
             padding: 0;
+            vertical-align: middle;
+        }
+
+        fieldset,
+        input,
+        textarea,
+        select,
+        button,
+        label {
             font-family: sans-serif;
             font-size: 16px;
-            vertical-align: middle;
         }
 
         body {
@@ -621,9 +629,13 @@ ${styleHTML}
     font-style: normal;
 }
 
-html, body, div, p {
+html,
+body,
+div,
+p {
     margin: 0;
     padding: 0;
+    vertical-align: middle;
 }
 
 #result-wrapper {
@@ -667,20 +679,21 @@ html, body, div, p {
     width: 1020px;
 }
 
-#title-container,
-#author-container {
-    position: absolute;
+#title-container p,
+#author-container p {
     font-family: 'Pretendard';
     font-size: 48px;
 }
 
 #title-container {
+    position: absolute;
     bottom: 62px;
     line-height: 1.2;
     font-weight: 200;
 }
 
 #author-container {
+    position: absolute;
     bottom: 0;
     line-height: 1;
     font-weight: 100;
