@@ -7,26 +7,7 @@
     <style id="webfont">
     </style>
     <style>
-        @font-face {
-            font-family: 'Pretendard';
-            src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Pretendard/Pretendard-Thin.woff2') format('woff2');
-            font-weight: 100;
-            font-style: normal;
-        }
-
-        @font-face {
-            font-family: 'Pretendard';
-            src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Pretendard/Pretendard-Light.woff2') format('woff2');
-            font-weight: 200;
-            font-style: normal;
-        }
-
-        @font-face {
-            font-family: 'Pretendard';
-            src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Pretendard/Pretendard-Light.woff2') format('woff2');
-            font-weight: 400;
-            font-style: normal;
-        }
+        @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
 
         html,
         body,
@@ -113,7 +94,7 @@
 
         #title-container p,
         #author-container p {
-            font-family: 'Pretendard';
+            font-family: "Pretendard Variable";
             font-size: 48px;
             text-align: left;
             word-break: keep-all;
@@ -232,7 +213,7 @@
         .number-input input[type=number] {
             width: 34px;
             padding: 0;
-            font-family: 'Pretendard';
+            font-family: "Pretendard Variable";
             font-feature-settings: "tnum", "lnum";
             text-align: center;
             border: solid #aaa;
@@ -325,44 +306,44 @@
                         <label>배경 이미지 URL(<a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>) 또는</label><button id="local" onclick="clickFileInput()">로컬 파일</button>
                     </div>
                     <input type="file" id="fileInput" accept="image/*" style="display: none;">
-                    <a href="#" onclick="clearInputs('bgUrl')"">지우기</a>
+                    <a href="#" onclick="clearInputs('bgUrl')">지우기</a>
                 </div>
                 <input id="bgUrl" value="https://images.unsplash.com/photo-1739659153856-ae22a5d2390a?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
-            </div>
-            <form id="imageFilters" class="flex-container">
-                <div>
-                    <label>밝기<sub>%</sub></label>
-                    <div class="number-input">
-                        <button class="minus" type="button">−</button>
-                        <input id="brightness" type="number" value="70" step="10">
-                        <button class="plus" type="button">+</button>
-                    </div>
                 </div>
-                <div>
-                    <label>대비<sub>%</sub></label>
-                    <div class="number-input">
-                        <button class="minus" type="button">−</button>
-                        <input id="contrast" type="number" value="100" step="10">
-                        <button class="plus" type="button">+</button>
+                <form id="imageFilters" class="flex-container">
+                    <div>
+                        <label>밝기<sub>%</sub></label>
+                        <div class="number-input">
+                            <button class="minus" type="button">−</button>
+                            <input id="brightness" type="number" value="70" step="10">
+                            <button class="plus" type="button">+</button>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <label>채도<sub>%</sub></label>
-                    <div class="number-input">
-                        <button class="minus" type="button">−</button>
-                        <input id="saturate" type="number" value="100" step="10">
-                        <button class="plus" type="button">+</button>
+                    <div>
+                        <label>대비<sub>%</sub></label>
+                        <div class="number-input">
+                            <button class="minus" type="button">−</button>
+                            <input id="contrast" type="number" value="100" step="10">
+                            <button class="plus" type="button">+</button>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <label>흐리게<sub>%</sub></label>
-                    <div class="number-input">
-                        <button class="minus" type="button">−</button>
-                        <input id="blur" type="number" value="0" step="1">
-                        <button class="plus" type="button">+</button>
+                    <div>
+                        <label>채도<sub>%</sub></label>
+                        <div class="number-input">
+                            <button class="minus" type="button">−</button>
+                            <input id="saturate" type="number" value="100" step="10">
+                            <button class="plus" type="button">+</button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                    <div>
+                        <label>흐리게<sub>%</sub></label>
+                        <div class="number-input">
+                            <button class="minus" type="button">−</button>
+                            <input id="blur" type="number" value="0" step="1">
+                            <button class="plus" type="button">+</button>
+                        </div>
+                    </div>
+                </form>
         </fieldset>
         <form id="textSettings">
             <fieldset>
@@ -672,18 +653,7 @@ blur(${$('blur').value}px)
 <title>${document.getElementById('title').value}</title>
 ${styleHTML}
 <style>
-@font-face {
-    font-family: 'Pretendard';
-    src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Pretendard/Pretendard-Thin.woff2') format('woff2');
-    font-weight: 100;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Pretendard';
-    src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Pretendard/Pretendard-Light.woff2') format('woff2');
-    font-weight: 200;
-    font-style: normal;
-}
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
 
 html,
 body,
@@ -739,7 +709,7 @@ p {
 
 #title-container p,
 #author-container p {
-    font-family: 'Pretendard';
+    font-family: "Pretendard Variable";
     font-size: 48px;
 }
 
