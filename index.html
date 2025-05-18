@@ -641,7 +641,8 @@ blur(${$('blur').value}px)
                 quality: 0.95,
                 width: 1200,
                 height: 1200,
-                pixelRatio: 1
+                pixelRatio: 1,
+                cacheBust: true
             }).then(dataUrl => {
                 const link = document.createElement('a');
                 link.download = `${filename}.jpg`;
