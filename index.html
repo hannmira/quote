@@ -642,7 +642,7 @@ blur(${$('blur').value}px)
             document.fonts.ready.then(() => {
                 html2canvas(result, {
                     useCORS: true,
-                    pixelRatio: 1,
+                    scale: 1,
                     width: 1200,
                     height: 1200
                 }).then(canvas => {
