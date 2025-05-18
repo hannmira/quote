@@ -614,30 +614,22 @@ blur(${$('blur').value}px)
         }
 
         // 이미지 다운로드
-        async function downloadImage() {
-  const node = document.getElementById('result');
+        function downloadImage() {
+            const title = document.getElementById('title').value;
+            const para = document.getElementById('quotes').value;
+            const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
 
-  await document.fonts.ready; // 웹폰트 로드 대기
-  const fontCSS = await htmlToImage.getFontEmbedCSS(); // Base64 인코딩된 @font-face CSS
-
-  setTimeout(() => {
-    htmlToImage.toJpeg(node, {
-      quality: 0.95,
-      width: 1200,
-      height: 1200,
-      pixelRatio: 1,
-
-      // 여기서 getFonts 옵션을 통해 fontCSS를 넘김
-      getFonts: async () => fontCSS,
-    }).then(dataUrl => {
-      const link = document.createElement('a');
-      link.download = 'image-with-fonts.jpg';
-      link.href = dataUrl;
-      link.click();
-    }).catch(err => {
-      console.error('이미지 저장 실패:', err);
-    });
-  }, 100); // 폰트 적용 시간 대기
+            htmlToImage.toJpeg(document.getElementById('result'), {
+                quality: 0.95,
+                width: 1200,
+                height: 1200,
+                pixelRatio: 1,
+            }).then(dataUrl => {
+                const link = document.createElement('a');
+                link.download = `${filename}.jpg`;
+                link.href = dataUrl;
+                link.click();
+            }).catch(error => console.error('이미지 저장 실패:', error));
         }
 
         // HTML 저장
@@ -743,11 +735,10 @@ ${wrapperHTML}
 
             const blob = new Blob([htmlContent], { type: "text/html" });
             const url = URL.createObjectURL(blob);
-
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = filename + ".html";
-            a.click();
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${filename}.html`;
+            link.click();
             URL.revokeObjectURL(url);
         }
 
