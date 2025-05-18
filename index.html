@@ -614,22 +614,30 @@ blur(${$('blur').value}px)
         }
 
         // 이미지 다운로드
-        function downloadImage() {
-            const title = document.getElementById('title').value;
-            const para = document.getElementById('quotes').value;
-            const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
+        async function downloadImage() {
+  const node = document.getElementById('result');
 
-            htmlToImage.toJpeg(document.getElementById('result'), {
-                quality: 0.95,
-                width: 1200,
-                height: 1200,
-                pixelRatio: 1,
-            }).then(dataUrl => {
-                const link = document.createElement('a');
-                link.download = `${filename}.jpg`;
-                link.href = dataUrl;
-                link.click();
-            }).catch(error => console.error('이미지 저장 실패:', error));
+  await document.fonts.ready; // 웹폰트 로드 대기
+  const fontCSS = await getFontEmbedCSS(); // Base64 인코딩된 @font-face CSS
+
+  setTimeout(() => {
+    toJpeg(node, {
+      quality: 0.95,
+      width: 1200,
+      height: 1200,
+      pixelRatio: 1,
+
+      // 여기서 getFonts 옵션을 통해 fontCSS를 넘김
+      getFonts: async () => fontCSS,
+    }).then(dataUrl => {
+      const link = document.createElement('a');
+      link.download = 'image-with-fonts.jpg';
+      link.href = dataUrl;
+      link.click();
+    }).catch(err => {
+      console.error('이미지 저장 실패:', err);
+    });
+  }, 100); // 폰트 적용 시간 대기
         }
 
         // HTML 저장
