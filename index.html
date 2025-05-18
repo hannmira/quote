@@ -618,10 +618,10 @@ blur(${$('blur').value}px)
   const node = document.getElementById('result');
 
   await document.fonts.ready; // 웹폰트 로드 대기
-  const fontCSS = await getFontEmbedCSS(); // Base64 인코딩된 @font-face CSS
+  const fontCSS = await htmlToImage.getFontEmbedCSS(); // Base64 인코딩된 @font-face CSS
 
   setTimeout(() => {
-    toJpeg(node, {
+    htmlToImage.toJpeg(node, {
       quality: 0.95,
       width: 1200,
       height: 1200,
