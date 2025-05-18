@@ -636,7 +636,7 @@ blur(${$('blur').value}px)
             const title = document.getElementById('title').value;
             const para = document.getElementById('quotes').value;
             const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
-            fontEmbedCSS = await htmlToImage.getFontEmbedCSS('result');
+            const fontEmbedCSS = await htmlToImage.getFontEmbedCSS('result');
 
             htmlToImage.toJpeg(document.getElementById('result'), {
                 quality: 0.95,
