@@ -44,8 +44,16 @@
             vertical-align: middle;
             font-family: sans-serif;
             font-size: 16px;
+        }
+
+        fieldset,
+        input,
+        select,
+        button,
+        label {
             line-height: 1;
         }
+
 
         body {
             display: flex;
@@ -151,7 +159,7 @@
         .flex-container-coloumn {
             display: flex;
             flex-direction: column;
-            gap: 3px;
+            gap: 5px;
             width: 100%;
             box-sizing: border-box;
             justify-content: space-between;
@@ -164,7 +172,7 @@
         label {
             font-weight: 500;
             margin-right: 3px;
-            vertical-align: -1px;
+            vertical-align: -2px;
         }
 
         sub {
@@ -213,16 +221,17 @@
         }
 
         .number-input input[type=number] {
+            width: 34px;
             border: solid #aaa;
             border-width: 0 1px;
             text-align: center;
+            vertical-align: -2px;
         }
 
         .number-input button {
             width: 20px;
             padding: 0;
             margin: 0;
-            line-height: 1;
             border: none;
             background-color: transparent;
             -webkit-appearance: none;
@@ -239,21 +248,8 @@
 
         #local {
             padding: 1px;
-            line-height: 1;
             margin: 0;
-        }
-
-        input#brightness,
-        input#contrast,
-        input#saturate,
-        input#blur,
-        input#quoteSize,
-        input#quoteLineHeight,
-        input#quoteMargin,
-        input#quoteLetterSpacing,
-        input#quoteWordSpacing {
-            width: 34px;
-            text-align: center;
+            vertical-align: -2px;
         }
 
         select#quoteColor {
@@ -316,10 +312,10 @@
             <div class="flex-container-coloumn">
                 <div class="flex-container">
                     <div>
-                        <label>배경 이미지 URL(<a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>) 또는</label><button id="local" style="vertical-align: -1px;" onclick="clickFileInput()">로컬 파일</button>
+                        <label>배경 이미지 URL(<a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>) 또는</label><button id="local" onclick="clickFileInput()">로컬 파일</button>
                     </div>
                     <input type="file" id="fileInput" accept="image/*" style="display: none;">
-                    <a href="#" onclick="clearInputs('bgUrl')">지우기</a>
+                    <a href="#" onclick="clearInputs('bgUrl')" style="vertical-align: -2px;">지우기</a>
                 </div>
                 <input id="bgUrl" value="https://images.unsplash.com/photo-1739659153856-ae22a5d2390a?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
             </div>
@@ -685,7 +681,6 @@ div,
 p {
     margin: 0;
     padding: 0;
-    vertical-align: middle;
 }
 
 #result-wrapper {
