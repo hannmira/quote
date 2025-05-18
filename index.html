@@ -619,15 +619,11 @@ blur(${$('blur').value}px)
             const para = document.getElementById('quotes').value;
             const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
 
-            await document.fonts.ready;
-            const fontCSS = await getFontEmbedCSS();
-
             htmlToImage.toJpeg(document.getElementById('result'), {
                 quality: 0.95,
                 width: 1200,
                 height: 1200,
                 pixelRatio: 1,
-                getFonts: async () => fontCSS,
             }).then(dataUrl => {
                 const link = document.createElement('a');
                 link.download = `${filename}.jpg`;
