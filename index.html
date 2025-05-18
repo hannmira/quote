@@ -652,7 +652,7 @@ blur(${$('blur').value}px)
                 link.href = dataUrl;
                 link.click();
             }).catch(error => console.error('이미지 저장 실패:', error));
-        }
+        }, []);
 
         // HTML 저장
         function saveHTML() {
