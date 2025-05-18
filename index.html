@@ -614,7 +614,7 @@ blur(${$('blur').value}px)
         }
 
         // 이미지 다운로드
-        async function downloadImage() {
+        function downloadImage() {
             const title = document.getElementById('title').value;
             const para = document.getElementById('quotes').value;
             const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
