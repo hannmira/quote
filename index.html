@@ -645,6 +645,7 @@ blur(${$('blur').value}px)
                 width: 1200,
                 height: 1200,
                 pixelRatio: 1,
+                getFonts: async () => fontCSS,
             }).then(dataUrl => {
                 const link = document.createElement('a');
                 link.download = `${filename}.jpg`;
