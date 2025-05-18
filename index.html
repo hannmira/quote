@@ -815,6 +815,14 @@ ${wrapperHTML}
             applyChanges();
             bindEvents();
         });
+        function log(msg) {
+  const el = document.getElementById('log');
+  el.innerText += msg + '\n';
+}
+
+console.log = log;
+console.error = log;
     </script>
+    <pre id="log" style="position: fixed; bottom: 0; left: 0; background: black; color: lime; font-size: 12px; max-height: 200px; overflow-y: auto; z-index: 9999;"></pre>
 </body>
 </html>
