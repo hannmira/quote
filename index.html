@@ -640,9 +640,10 @@ blur(${$('blur').value}px)
             const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
 
             document.fonts.ready.then(() => {
-html2canvas(document.getElementById('result'), {
+html2canvas(result, {
   width: 1200,
   height: 1200,
+  scale: 1,
   pixelRatio: 1,
   useCORS: true
 }).then(canvas => {
