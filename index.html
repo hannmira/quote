@@ -640,12 +640,12 @@ blur(${$('blur').value}px)
             const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
 
             document.fonts.ready.then(() => {
-                html2canvas(result, {
-                    useCORS: true,
-                    scale: 1,
-                    width: 1200,
-                    height: 1200
-                }).then(canvas => {
+html2canvas(document.getElementById('result'), {
+  width: 1200,
+  height: 1200,
+  pixelRatio: 1,
+  useCORS: true
+}).then(canvas => {
                     const link = document.createElement('a');
                     link.download = `${filename}.jpg`;
                     link.href = canvas.toDataURL('image/jpeg', 0.95);
