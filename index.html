@@ -443,9 +443,9 @@
         <button type="submit" onclick="downloadImage()">이미지로 저장</button>
         <button type="submit" onclick="saveHTML()">HTML로 저장</button>
         <button type="submit" class="right" onclick="reset()">서식 초기화</button>
+    <pre id="log" style="position: fixed; bottom: 0; left: 0; background: black; color: lime; font-size: 12px; max-height: 200px; overflow-y: auto; z-index: 9999;"></pre>
     </div>
     
-    <pre id="log" style="position: fixed; bottom: 0; left: 0; background: black; color: lime; font-size: 12px; max-height: 200px; overflow-y: auto; z-index: 9999;"></pre>
 
     <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.13/dist/html-to-image.min.js"></script>
     <script>
@@ -817,13 +817,26 @@ ${wrapperHTML}
             applyChanges();
             bindEvents();
         });
-        function log(msg) {
+
+function log(msg) {
   const el = document.getElementById('log');
-  el.innerText += msg + '\n';
+  el.textContent += msg + '\n';
 }
 
+// 콘솔 함수 재정의
 console.log = log;
-console.error = log;
+console.error = (msg) => {
+  if (msg instanceof Error) {
+    log("ERROR: " + msg.message);
+  } else {
+    try {
+      log("ERROR: " + JSON.stringify(msg));
+    } catch {
+      log("ERROR: " + msg);
+    }
+  }
+};
+    
     </script>
 </body>
 </html>
