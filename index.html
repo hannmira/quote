@@ -632,24 +632,25 @@ blur(${$('blur').value}px)
         }
 
         // 이미지 다운로드
-        function downloadImage() {
+        async function downloadImage() {
             const title = document.getElementById('title').value;
             const para = document.getElementById('quotes').value;
             const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
 
-            document.fonts.ready.then(() => {
-                htmlToImage.toJpeg(document.getElementById('result'), {
-                    quality: 0.95,
-                    width: 1200,
-                    height: 1200,
-                    pixelRatio: 1,
-                }).then(dataUrl => {
-                    const link = document.createElement('a');
-                    link.download = `${filename}.jpg`;
-                    link.href = dataUrl;
-                    link.click();
-                }).catch(error => console.error('이미지 저장 실패:', error));
-            });
+            await document.fonts.ready;
+            const fontCSS = await getFontEmbedCSS();
+
+            htmlToImage.toJpeg(document.getElementById('result'), {
+                quality: 0.95,
+                width: 1200,
+                height: 1200,
+                pixelRatio: 1,
+            }).then(dataUrl => {
+                const link = document.createElement('a');
+                link.download = `${filename}.jpg`;
+                link.href = dataUrl;
+                link.click();
+            }).catch(error => console.error('이미지 저장 실패:', error));                
         }
 
         // HTML 저장
