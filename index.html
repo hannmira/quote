@@ -4,30 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=600">
     <title>발췌 이미지 생성기</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <style id="webfont">
     </style>
     <style>
-        @font-face {
-            font-family: 'Pretendard';
-            src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff2') format('woff2');
-            font-weight: 400;
-            font-style: normal;
-        }
-
-        @font-face {
-            font-family: 'Pretendard';
-            src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraLight.woff2') format('woff2');
-            font-weight: 200;
-            font-style: normal;
-        }
-
-        @font-face {
-            font-family: 'Pretendard';
-            src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Thin.woff2') format('woff2');
-            font-weight: 100;
-            font-style: normal;
-        }
-
         html,
         body,
         div,
@@ -113,7 +93,7 @@
 
         #title-container p,
         #author-container p {
-            font-family: "Pretendard";
+            font-family: 'Pretendard';
             font-size: 48px;
             text-align: left;
             word-break: keep-all;
@@ -232,7 +212,7 @@
         .number-input input[type=number] {
             width: 34px;
             padding: 0;
-            font-family: "Pretendard";
+            font-family: 'Pretendard';
             font-feature-settings: "tnum", "lnum";
             text-align: center;
             border: solid #aaa;
@@ -449,7 +429,7 @@
     <script>
         const fontMap = {
             RIDIBatang: ['RIDIBatang', 'projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff'],
-            Pretendard: ['Pretendard', 'Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff2', 'woff2'],
+            Pretendard: ['Pretendard', ''],
             GangwonEdu: ['GangwonEdu', 'projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFLightA.woff'],
             GangwonEduSaeeum: ['GangwonEduSaeeum', 'projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff'],
             GowunDodum: ['GowunDodum', 'projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff'],
@@ -595,7 +575,9 @@ blur(${$('blur').value}px)
             setBgImgSrc();
 
             const [fontName, fontURL] = fontMap[$('fontSelect').value];
-            $('webfont').innerHTML = buildFontFace(fontName, fontURL, fontURL.endsWith('.woff2') ? 'woff2' : 'woff');
+            if (fontName !== 'Pretendard') {
+                $('webfont').innerHTML = buildFontFace(fontName, fontURL, fontURL.endsWith('.woff2') ? 'woff2' : 'woff');
+            }
 
             $('result').style.color = $('quoteColor').value;
             document.querySelectorAll('#quotesOutput p').forEach(p => {
@@ -651,7 +633,7 @@ blur(${$('blur').value}px)
                 link.download = `${filename}.jpg`;
                 link.href = dataUrl;
                 link.click();
-            }).catch(error => console.error('이미지 저장 실패:', error));                
+            }).catch(error => console.error('이미지 저장 실패:', error));
         }
 
         // HTML 저장
@@ -674,29 +656,9 @@ blur(${$('blur').value}px)
 <meta charset="UTF-8">
 <meta name="viewport" content="width=600">
 <title>${document.getElementById('title').value}</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 ${styleHTML}
 <style>
-@font-face {
-    font-family: 'Pretendard';
-    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Pretendard';
-    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraLight.woff') format('woff');
-    font-weight: 200;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Pretendard';
-    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Thin.woff') format('woff');
-    font-weight: 100;
-    font-style: normal;
-}
-
 html,
 body,
 div,
@@ -751,7 +713,7 @@ p {
 
 #title-container p,
 #author-container p {
-    font-family: "Pretendard";
+    font-family: 'Pretendard';
     font-size: 48px;
 }
 
