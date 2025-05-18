@@ -644,7 +644,7 @@ blur(${$('blur').value}px)
                 pixelRatio: 1
             }).then(dataUrl => {
                 const link = document.createElement('a');
-                link.download = `${filename}.jpg;`
+                link.download = `${filename}.jpg`;
                 link.href = dataUrl;
                 link.click();
             }).catch(error => console.error('이미지 저장 실패:', error));
