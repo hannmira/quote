@@ -67,12 +67,9 @@
 
         #background-img {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 50%;
+            left: 50%;
             z-index: 0;
-            object-fit: cover;
         }
 
         #container {
@@ -314,10 +311,10 @@
                         <button onclick="zoom(1.1)">+</button>
                         <button onclick="zoom(0.9)">-</button>
                         <div style="width:7px;text-align: center;">|</div>
-                        <button onclick="move(0, -30)">▲</button>
-                        <button onclick="move(0, 30)">▼</button>
-                        <button onclick="move(-30, 0)">◀</button>
-                        <button onclick="move(30, 0)">▶</button>
+                        <button onclick="move(0, -2)">▲</button>
+                        <button onclick="move(0, 2)">▼</button>
+                        <button onclick="move(-2, 0)">◀</button>
+                        <button onclick="move(2, 0)">▶</button>
                         <div style="width:7px;text-align: center;">|</div>
                         <button onclick="resetImage()">↺</button>
                     </div>
@@ -547,27 +544,37 @@ blur(${$('blur').value}px)
             }
         }
 
-        const img = document.getElementById('background-img');
+        const img = document.getElementById('background-img') || '';
         const container = document.getElementById('container');
         let scale = 1;
         let translateX = 0;
         let translateY = 0;
+        let transformOriginX = 50;
+        let transformOriginY = 50;
+
         function updateTransform() {
-            img.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
+            if (img) img.style.transform = `translate(${translateX}%, ${translateY}%) scale(${scale})`;
+            if (img) img.style.transformOrigin = `${transformOriginX}% ${transformOriginY}%`;
         }
         function saveImageTransformToCookies() {
             setCookie('image_scale', scale);
             setCookie('image_translateX', translateX);
             setCookie('image_translateY', translateY);
+            setCookie('image_transformOriginX', transformOriginX);
+            setCookie('image_transformOriginY', transformOriginY);
         }
         function loadImageTransformFromCookies() {
             const savedScale = parseFloat(getCookie('image_scale'));
             const savedX = parseFloat(getCookie('image_translateX'));
             const savedY = parseFloat(getCookie('image_translateY'));
+            const savedOriginX = parseFloat(getCookie('image_transformOriginX'));
+            const savedOriginY = parseFloat(getCookie('image_transformOriginY'));
 
             if (!isNaN(savedScale)) scale = savedScale;
             if (!isNaN(savedX)) translateX = savedX;
             if (!isNaN(savedY)) translateY = savedY;
+            if (!isNaN(savedOriginX)) transformOriginX = savedOriginX;
+            if (!isNaN(savedOriginY)) transformOriginY = savedOriginY;
 
             updateTransform();
         }
@@ -576,19 +583,33 @@ blur(${$('blur').value}px)
             updateTransform();
             saveImageTransformToCookies();
         }
-        function move(dx, dy) {
-            translateX += dx;
-            translateY += dy;
+        function move(dxPercent, dyPercent) {
+            translateX += dxPercent;
+            translateY += dyPercent;
+            transformOriginX -= dxPercent;
+            transformOriginY -= dyPercent;
             updateTransform();
             saveImageTransformToCookies();
         }
         function resetImage() {
-            scale = 1;
-            translateX = 0;
-            translateY = 0;
+            const imgRatio = img.naturalWidth / img.naturalHeight;
+
+            if (imgRatio > 1) {
+                scale = 1200 / img.naturalHeight;
+            } else {
+                scale = 1200 / img.naturalWidth;
+            }
+
+            translateX = -50;
+            translateY = -50;
+
             updateTransform();
             saveImageTransformToCookies();
         }
+        img.onload = () => {
+            resetImage();
+            updateTransform();
+        };
 
         function clickFileInput() {
             fileInput.click();
