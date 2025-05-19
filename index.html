@@ -155,6 +155,12 @@
             justify-content: space-between;
         }
 
+        #image-controls button {
+            width: 20px;
+            margin: 0 3px;
+            padding: 0;
+        }
+
         #title {
             flex: 1;
         }
@@ -303,6 +309,17 @@
                 <div class="flex-container">
                     <div>
                         <label>배경 이미지 URL(<a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>) 또는</label><button id="local" onclick="clickFileInput()">로컬 파일</button>
+                    </div>
+                    <div id="image-controls">
+                        <button onclick="zoom(1.1)">+</button>
+                        <button onclick="zoom(0.9)">-</button>
+                        <div style="width:7px;text-align: center;">|</div>
+                        <button onclick="move(0, -30)">▲</button>
+                        <button onclick="move(0, 30)">▼</button>
+                        <button onclick="move(-30, 0)">◀</button>
+                        <button onclick="move(30, 0)">▶</button>
+                        <div style="width:7px;text-align: center;">|</div>
+                        <button onclick="resetImage()">↺</button>
                     </div>
                     <input type="file" id="fileInput" accept="image/*" style="display: none;">
                     <a href="#" onclick="clearInputs('bgUrl')">지우기</a>
@@ -528,6 +545,49 @@ blur(${$('blur').value}px)
                 $('background-img').src = src;
                 addInfoText();
             }
+        }
+
+        const img = document.getElementById('background-img');
+        const container = document.getElementById('container');
+        let scale = 1;
+        let translateX = 0;
+        let translateY = 0;
+        function updateTransform() {
+            img.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
+        }
+        function saveImageTransformToCookies() {
+            setCookie('image_scale', scale);
+            setCookie('image_translateX', translateX);
+            setCookie('image_translateY', translateY);
+        }
+        function loadImageTransformFromCookies() {
+            const savedScale = parseFloat(getCookie('image_scale'));
+            const savedX = parseFloat(getCookie('image_translateX'));
+            const savedY = parseFloat(getCookie('image_translateY'));
+
+            if (!isNaN(savedScale)) scale = savedScale;
+            if (!isNaN(savedX)) translateX = savedX;
+            if (!isNaN(savedY)) translateY = savedY;
+
+            updateTransform();
+        }
+        function zoom(factor) {
+            scale *= factor;
+            updateTransform();
+            saveImageTransformToCookies();
+        }
+        function move(dx, dy) {
+            translateX += dx;
+            translateY += dy;
+            updateTransform();
+            saveImageTransformToCookies();
+        }
+        function resetImage() {
+            scale = 1;
+            translateX = 0;
+            translateY = 0;
+            updateTransform();
+            saveImageTransformToCookies();
         }
 
         function clickFileInput() {
@@ -771,6 +831,7 @@ ${wrapperHTML}
 
         window.addEventListener('DOMContentLoaded', () => {
             loadInputsFromCookies();
+            loadImageTransformFromCookies(); // 이미지 위치/크기 복원
             applyChanges();
             bindEvents();
         });
