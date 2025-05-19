@@ -550,7 +550,6 @@ font-style: normal;
         function updateTransform() {
             img.style.transform = `translate(${translateX}%, ${translateY}%) scale(${scale})`;
             img.style.transformOrigin = `${transformOriginX}% ${transformOriginY}%`;
-            img.style.filter = `brightness(${$('brightness').value}%) contrast(${$('contrast').value}%) saturate(${$('saturate').value}%) blur(${$('blur').value}px)`;
             saveImageTransformToCookies();
         }
         function saveImageTransformToCookies() {
