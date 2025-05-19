@@ -268,7 +268,7 @@
 <body>
     <div id="result-wrapper">
         <div id="result">
-            <img id="background-img" crossorigin="anonymous" onerror="this.remove()">
+            <img id="background-img" crossorigin="anonymous" onerror="this.src='https://images.unsplash.com/photo-1739659153856-ae22a5d2390a?q=80&amp;w=1964&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';resetImage();">
             <div id="container">
                 <div id="quotes-container">
                     <div id="quotesOutput">
@@ -516,45 +516,41 @@ font-style: normal;
             document.querySelector('button[onclick="saveHTML()"]').insertAdjacentElement('afterend', infoText);
         }
 
+        const img = document.getElementById('background-img');
+        const $ = id => document.getElementById(id);
+
+        img.onload = () => {
+            if (resetImg) {
+                resetImage();
+                resetImg = false;
+            }
+            else {
+                updateTransform();
+            }
+        };
+
         function setBgImgSrc(src) {
-            const $ = id => document.getElementById(id);
-
-            if (!$('background-img')) {
-                const img = document.createElement("img");
-                img.id = "background-img";
-                img.onerror = function () {
-                    this.remove(); // 이미지 로드 실패 시 제거
-                };
-                container.parentNode.insertBefore(img, $(container));
-            }
-            $('background-img').style.filter = `
-brightness(${$('brightness').value}%)
-contrast(${$('contrast').value}%)
-saturate(${$('saturate').value}%)
-blur(${$('blur').value}px)
-`;
-
-            if ($('bgUrl').value !== '로컬 이미지 파일') {
-                $('background-img').src = $('bgUrl').value;
-                removeInfoText();
-            }
-            else if (src) {
-                $('background-img').src = src;
+            if (src) {
+                img.src = src;
                 addInfoText();
+            }
+            else if (/^https?:/.test($('bgUrl').value)) {
+                img.src = $('bgUrl').value;
+                removeInfoText();
             }
         }
 
-        const img = document.getElementById('background-img') || '';
-        const container = document.getElementById('container');
-        let scale = 1;
+        let scale = 0.62;
         let translateX = -50;
         let translateY = -50;
         let transformOriginX = 50;
         let transformOriginY = 50;
+        let resetImg = false;
 
         function updateTransform() {
-            if (img) img.style.transform = `translate(${translateX}%, ${translateY}%) scale(${scale})`;
-            if (img) img.style.transformOrigin = `${transformOriginX}% ${transformOriginY}%`;
+            img.style.transform = `translate(${translateX}%, ${translateY}%) scale(${scale})`;
+            img.style.transformOrigin = `${transformOriginX}% ${transformOriginY}%`;
+            img.style.filter = `brightness(${$('brightness').value}%) contrast(${$('contrast').value}%) saturate(${$('saturate').value}%) blur(${$('blur').value}px)`;
             saveImageTransformToCookies();
         }
         function saveImageTransformToCookies() {
@@ -606,24 +602,21 @@ blur(${$('blur').value}px)
 
             updateTransform();
         }
-        img.onload = () => {
-            updateTransform();
-        };
 
         function clickFileInput() {
             fileInput.click();
         }
-        document.getElementById('fileInput').addEventListener('change', () => {
+        $('fileInput').addEventListener('change', () => {
             const file = fileInput.files[0];
             if (!file) return;
 
+            resetImg = true;
+            $('bgUrl').value = '로컬 이미지 파일'
             const reader = new FileReader();
             reader.onload = function (e) {
                 setBgImgSrc(e.target.result);
             };
-            document.getElementById('bgUrl').value = '로컬 이미지 파일'
             reader.readAsDataURL(file);
-            resetImage();
             saveInputsToCookies();
         });
 
@@ -634,26 +627,24 @@ blur(${$('blur').value}px)
 
         // 레이아웃 중앙 정렬
         function centerQuotesOutput() {
-            const titleHeight = document.getElementById('title-container').scrollHeight;
+            const titleHeight = $('title-container').scrollHeight;
             const containerHeight = 882 - titleHeight;
-            const outputHeight = document.getElementById('quotesOutput').scrollHeight;
+            const outputHeight = $('quotesOutput').scrollHeight;
             const marginTop = (containerHeight - outputHeight) / 2;
 
-            document.getElementById('quotes-container').style.height = `${containerHeight}px`;
-            document.getElementById('quotesOutput').style.marginTop = `${marginTop}px`;
+            $('quotes-container').style.height = `${containerHeight}px`;
+            $('quotesOutput').style.marginTop = `${marginTop}px`;
         }
 
         // 스타일 반영
         function applyChanges() {
             saveInputsToCookies();
 
-            const $ = id => document.getElementById(id);
-
             $('quotesOutput').innerHTML = formatParagraphs($('quotes').value);
             $('titleOutput').textContent = $('title').value;
             $('authorOutput').textContent = $('author').value;
 
-            setBgImgSrc();
+            $('background-img').style.filter = `brightness(${$('brightness').value}%) contrast(${$('contrast').value}%) saturate(${$('saturate').value}%) blur(${$('blur').value}px)`;
 
             const [fontName, fontURL] = fontMap[$('fontSelect').value];
             if (fontName !== 'Pretendard') {
@@ -715,14 +706,14 @@ blur(${$('blur').value}px)
 
         // HTML 저장
         function saveHTML() {
-            const title = document.getElementById('title').value;
-            const para = document.getElementById('quotes').value;
+            const title = $('title').value;
+            const para = $('quotes').value;
             const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
 
             const styleHTML = document.querySelector('#webfont').outerHTML;
 
             let wrapperHTML = document.querySelector('#result-wrapper').outerHTML;
-            if (document.getElementById('bgUrl').value === '로컬 이미지 파일') {
+            if (img.src.startsWith('data:')) {
                 wrapperHTML = wrapperHTML.replace(/<img\b[^>]*?>/gi, '');
             }
 
@@ -764,12 +755,9 @@ p {
 
 #background-img {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 50%;
+    left: 50%;
     z-index: 0;
-    object-fit: cover;
 }
 
 #container {
@@ -792,13 +780,15 @@ p {
 #author-container p {
     font-family: 'Pretendard';
     font-size: 48px;
+    text-align: left;
+    word-break: keep-all;
 }
 
 #title-container {
     position: absolute;
     bottom: 62px;
     line-height: 1.2;
-    font-weight: 200;
+    font-weight: 300;
 }
 
 #author-container {
@@ -845,7 +835,8 @@ ${wrapperHTML}
                 el.addEventListener(eventType, () => {
                     applyChanges();
                     if (el.id === 'bgUrl') {
-                        resetImage();
+                        setBgImgSrc();
+                        resetImg = true;
                     }
                 });
             }
@@ -855,6 +846,7 @@ ${wrapperHTML}
 
         window.addEventListener('DOMContentLoaded', () => {
             loadInputsFromCookies();
+            setBgImgSrc();
             applyChanges();
             loadImageTransformFromCookies();
             bindEvents();
