@@ -40,7 +40,6 @@
             line-height: 1;
         }
 
-
         body {
             display: flex;
             flex-direction: row;
@@ -183,6 +182,11 @@
             flex: 1;
         }
 
+        .bg-button {
+            width: 20px;
+            height: 20px;
+        }
+
         textarea {
             display: block;
             width: 100%;
@@ -308,15 +312,15 @@
                         <label>배경 이미지 URL(<a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>) 또는</label><button id="local" onclick="clickFileInput()">로컬 파일</button>
                     </div>
                     <div id="image-controls">
-                        <button onclick="zoom(1.1)">+</button>
-                        <button onclick="zoom(0.9)">-</button>
+                        <button class="bg-button" onclick="zoom(1.05)">+</button>
+                        <button class="bg-button" onclick="zoom(0.95)">-</button>
                         <div style="width:7px;text-align: center;">|</div>
-                        <button onclick="move(0, -2)">▲</button>
-                        <button onclick="move(0, 2)">▼</button>
-                        <button onclick="move(-2, 0)">◀</button>
-                        <button onclick="move(2, 0)">▶</button>
+                        <button class="bg-button" onclick="move(0, -2)" style="font-size: 0.9em">▲</button>
+                        <button class="bg-button" onclick="move(0, 2)" style="font-size: 0.9em">▼</button>
+                        <button class="bg-button" onclick="move(-2, 0)" style="font-size: 0.9em">◀</button>
+                        <button class="bg-button" onclick="move(2, 0)" style="font-size: 0.9em">▶</button>
                         <div style="width:7px;text-align: center;">|</div>
-                        <button onclick="resetImage()">↺</button>
+                        <button class="bg-button" onclick="resetImage()">↺</button>
                     </div>
                     <input type="file" id="fileInput" accept="image/*" style="display: none;">
                     <a href="#" onclick="clearInputs('bgUrl')">지우기</a>
