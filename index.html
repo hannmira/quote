@@ -555,6 +555,7 @@ blur(${$('blur').value}px)
         function updateTransform() {
             if (img) img.style.transform = `translate(${translateX}%, ${translateY}%) scale(${scale})`;
             if (img) img.style.transformOrigin = `${transformOriginX}% ${transformOriginY}%`;
+            saveImageTransformToCookies();
         }
         function saveImageTransformToCookies() {
             setCookie('image_scale', scale);
@@ -581,7 +582,6 @@ blur(${$('blur').value}px)
         function zoom(factor) {
             scale *= factor;
             updateTransform();
-            saveImageTransformToCookies();
         }
         function move(dxPercent, dyPercent) {
             translateX += dxPercent;
@@ -589,7 +589,6 @@ blur(${$('blur').value}px)
             transformOriginX -= dxPercent;
             transformOriginY -= dyPercent;
             updateTransform();
-            saveImageTransformToCookies();
         }
         function resetImage() {
             const imgRatio = img.naturalWidth / img.naturalHeight;
@@ -606,7 +605,6 @@ blur(${$('blur').value}px)
             transformOriginY = 50;
 
             updateTransform();
-            saveImageTransformToCookies();
         }
         img.onload = () => {
             resetImage();
@@ -854,8 +852,8 @@ ${wrapperHTML}
 
         window.addEventListener('DOMContentLoaded', () => {
             loadInputsFromCookies();
-            loadImageTransformFromCookies(); // 이미지 위치/크기 복원
             applyChanges();
+            loadImageTransformFromCookies();
             bindEvents();
         });
     </script>
