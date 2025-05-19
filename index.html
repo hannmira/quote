@@ -547,8 +547,8 @@ blur(${$('blur').value}px)
         const img = document.getElementById('background-img') || '';
         const container = document.getElementById('container');
         let scale = 1;
-        let translateX = 0;
-        let translateY = 0;
+        let translateX = -50;
+        let translateY = -50;
         let transformOriginX = 50;
         let transformOriginY = 50;
 
@@ -602,6 +602,8 @@ blur(${$('blur').value}px)
 
             translateX = -50;
             translateY = -50;
+            transformOriginX = 50;
+            transformOriginY = 50;
 
             updateTransform();
             saveImageTransformToCookies();
