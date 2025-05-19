@@ -182,9 +182,15 @@
             flex: 1;
         }
 
-        .bg-button {
+        .bg-button {            
             width: 20px;
             height: 20px;
+            padding: 0;
+            margin: 0;
+            border: 1px solid #aaa; 
+            border-radius: 20%;
+            background-color: transparent;
+            -webkit-appearance: none;
         }
 
         textarea {
@@ -315,10 +321,10 @@
                         <button class="bg-button" onclick="zoom(1.05)">+</button>
                         <button class="bg-button" onclick="zoom(0.95)">-</button>
                         <div style="width:7px;text-align: center;">|</div>
-                        <button class="bg-button" onclick="move(0, -2)" style="font-size: 0.9em">▲</button>
-                        <button class="bg-button" onclick="move(0, 2)" style="font-size: 0.9em">▼</button>
-                        <button class="bg-button" onclick="move(-2, 0)" style="font-size: 0.9em">◀</button>
-                        <button class="bg-button" onclick="move(2, 0)" style="font-size: 0.9em">▶</button>
+                        <button class="bg-button" onclick="move(0, -2)" style="font-size: 0.8em">▲</button>
+                        <button class="bg-button" onclick="move(0, 2)" style="font-size: 0.8em">▼</button>
+                        <button class="bg-button" onclick="move(-2, 0)" style="font-size: 0.8em">◀</button>
+                        <button class="bg-button" onclick="move(2, 0)" style="font-size: 0.8em">▶</button>
                         <div style="width:7px;text-align: center;">|</div>
                         <button class="bg-button" onclick="resetImage()">↺</button>
                     </div>
