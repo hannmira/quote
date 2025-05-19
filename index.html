@@ -621,10 +621,10 @@ blur(${$('blur').value}px)
             reader.onload = function (e) {
                 setBgImgSrc(e.target.result);
             };
-            resetImage();
             document.getElementById('bgUrl').value = '로컬 이미지 파일'
-            saveInputsToCookies();
             reader.readAsDataURL(file);
+            resetImage();
+            saveInputsToCookies();
         });
 
         // 텍스트 포맷팅
