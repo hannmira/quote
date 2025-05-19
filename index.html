@@ -268,7 +268,7 @@
 <body>
     <div id="result-wrapper">
         <div id="result">
-            <img id="background-img" crossorigin="anonymous" onerror="this.src='https://images.unsplash.com/photo-1739659153856-ae22a5d2390a?q=80&amp;w=1964&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';resetImage();">
+            <img id="background-img" crossorigin="anonymous" onerror="setBgImgSrc('https://images.unsplash.com/photo-1739659153856-ae22a5d2390a?q=80&amp;w=1964&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
             <div id="container">
                 <div id="quotes-container">
                     <div id="quotesOutput">
@@ -532,7 +532,7 @@ font-style: normal;
         function setBgImgSrc(src) {
             if (src) {
                 img.src = src;
-                addInfoText();
+                if (src.startsWith('data:') addInfoText();
             }
             else if (/^https?:/.test($('bgUrl').value)) {
                 img.src = $('bgUrl').value;
