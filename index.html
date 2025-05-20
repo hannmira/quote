@@ -403,15 +403,8 @@ font-display: swap;
             });
         });
 
-        // 스타일 반영
-        function applyChanges() {
+        function applyFont() {
             saveInputsToCookies();
-
-            $('quotesOutput').innerHTML = formatParagraphs($('quotes').value);
-            $('titleOutput').textContent = $('title').value;
-            $('authorOutput').textContent = $('author').value;
-
-            $('background-img').style.filter = `brightness(${$('brightness').value}%) contrast(${$('contrast').value}%) saturate(${$('saturate').value}%) blur(${$('blur').value}px)`;
 
             const [fontName, fontURL] = fontMap[$('fontSelect').value];
             if (fontName !== 'Pretendard') {
@@ -424,17 +417,30 @@ font-display: swap;
                     });
                 });
             }
+            document.querySelectorAll('#quotesOutput p').forEach(p => {
+                p.style.fontFamily = fontName;
+            });
+            centerQuotesOutput();
+        }
+
+        // 스타일 반영
+        function applyChanges() {
+            saveInputsToCookies();
+
+            $('quotesOutput').innerHTML = formatParagraphs($('quotes').value);
+            $('titleOutput').textContent = $('title').value;
+            $('authorOutput').textContent = $('author').value;
+
+            $('background-img').style.filter = `brightness(${$('brightness').value}%) contrast(${$('contrast').value}%) saturate(${$('saturate').value}%) blur(${$('blur').value}px)`;
 
             $('result').style.color = $('quoteColor').value;
             document.querySelectorAll('#quotesOutput p').forEach(p => {
-                p.style.fontFamily = fontName;
                 p.style.fontSize = $('quoteSize').value + 'px';
                 p.style.lineHeight = $('quoteLineHeight').value;
                 p.style.marginBottom = $('quoteMargin').value + 'em';
                 p.style.letterSpacing = $('quoteLetterSpacing').value + 'px';
                 p.style.wordSpacing = $('quoteWordSpacing').value + 'px';
             });
-
             centerQuotesOutput();
         }
 
@@ -471,7 +477,7 @@ font-display: swap;
             }
             try {
                 await img.decode();
-            } catch (e) {}
+            } catch (e) { }
             await new Promise(resolve => setTimeout(resolve, 50));
 
             htmlToImage.toJpeg($('result'), {
@@ -544,10 +550,15 @@ font-display: swap;
             for (const el of inputs) {
                 const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
                 el.addEventListener(eventType, () => {
-                    applyChanges();
                     if (el.id === 'bgUrl') {
-                        setBgImgSrc();
                         resetImg = true;
+                        setBgImgSrc();
+                    }
+                    else if (el.id === 'fontSelect') {
+                        applyFont();
+                    }
+                    else {
+                        applyChanges();
                     }
                 });
             }
