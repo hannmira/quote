@@ -261,7 +261,7 @@ font-style: normal;
         const img = $('background-img');
 
         function setBgImgSrc(src) {
-            img.onload = function() {
+            img.onload = function () {
                 if (resetImg) {
                     $('imageFilters').reset();
                     applyChanges();
@@ -454,7 +454,12 @@ font-style: normal;
             const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
 
             await document.fonts.ready;
-            await img.decode();
+            if (!img.complete) {
+                await new Promise(resolve => {
+                    img.onload = resolve;
+                    img.onerror = resolve;
+                });
+            }
 
             htmlToImage.toJpeg($('result'), {
                 quality: 0.95,
