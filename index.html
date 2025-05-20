@@ -347,18 +347,18 @@ font-style: normal;
         function clickFileInput() {
             fileInput.click();
         }
-        $('fileInput').addEventListener('change', () => {
+        $('fileInput').addEventListener('change', async () => {
             const file = fileInput.files[0];
             if (!file) return;
 
             resetImg = true;
             $('bgUrl').value = '로컬 이미지 파일'
             const reader = new FileReader();
-            reader.onload = function (e) {
-                setBgImgSrc(e.target.result);
+            reader.onload = async function (e) {
+                await setBgImgSrc(e.target.result);
+                saveInputsToCookies();
             };
             reader.readAsDataURL(file);
-            saveInputsToCookies();
         });
 
         // 텍스트 포맷팅
