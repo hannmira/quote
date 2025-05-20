@@ -192,7 +192,6 @@ button[type="submit"] {
 
 #info-text {
     flex: 1;
-    float: right;
     color: #666;
     font-size: 0.9em;
     vertical-align: middle;
