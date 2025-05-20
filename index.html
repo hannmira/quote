@@ -7,272 +7,9 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <style id="webfont">
     </style>
-    <style>
-        html,
-        body,
-        div,
-        p,
-        fieldset,
-        input,
-        textarea,
-        select,
-        button,
-        label {
-            margin: 0;
-            padding: 0;
-        }
-
-        fieldset,
-        input,
-        textarea,
-        select,
-        button,
-        label {
-            font-family: sans-serif;
-            font-size: 16px;
-        }
-
-        fieldset,
-        input,
-        select,
-        button,
-        label {
-            line-height: 1;
-        }
-
-        body {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-
-        #result-wrapper {
-            width: 600px;
-            height: 600px;
-            transform: scale(0.5);
-            transform-origin: top left;
-        }
-
-        #result {
-            position: relative;
-            width: 1200px;
-            height: 1200px;
-            color: white;
-            text-align: justify;
-            overflow: hidden;
-            background-color: gray;
-            z-index: -1;
-        }
-
-        #background-img {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            z-index: 0;
-        }
-
-        #container {
-            position: absolute;
-            top: 120px;
-            left: 90px;
-            width: 1020px;
-            height: 960px;
-            z-index: 1;
-        }
-
-        #quotes-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 1020px;
-        }
-
-        #title-container p,
-        #author-container p {
-            font-family: 'Pretendard';
-            font-size: 48px;
-            text-align: left;
-            word-break: keep-all;
-        }
-
-        #title-container {
-            position: absolute;
-            bottom: 62px;
-            line-height: 1.2;
-            font-weight: 300;
-        }
-
-        #author-container {
-            position: absolute;
-            bottom: 0;
-            line-height: 1;
-            font-weight: 100;
-        }
-
-        .controls {
-            width: 580px;
-            position: relative;
-            margin: 0;
-            padding: 0 10px 10px 10px;
-        }
-
-        fieldset {
-            display: flex;
-            flex-direction: column;
-            width: 580px;
-            padding: 10px 0 10px 0;
-            border-color: gray;
-            border-width: 0 0 1px 0;
-            border-style: solid;
-            gap: 10px;
-            align-content: space-around;
-            justify-content: space-between;
-        }
-
-        .flex-container {
-            display: flex;
-            width: 100%;
-            box-sizing: border-box;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .flex-container>div {
-            display: flex;
-            align-items: center;
-        }
-
-        .flex-container-coloumn {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            width: 100%;
-            box-sizing: border-box;
-            justify-content: space-between;
-        }
-
-        #image-controls button {
-            width: 20px;
-            margin: 0 3px;
-            padding: 0;
-        }
-
-        #title {
-            flex: 1;
-        }
-
-        label {
-            font-weight: 500;
-            margin-right: 3px;
-        }
-
-        sub {
-            vertical-align: baseline;
-            margin-left: 1px;
-            font-weight: 300;
-        }
-
-        textarea,
-        input,
-        select {
-            padding: 2px;
-        }
-
-        #bgUrl {
-            flex: 1;
-        }
-
-        .bg-button {            
-            width: 20px;
-            height: 20px;
-            padding: 0;
-            margin: 0;
-            border: 1px solid #aaa; 
-            border-radius: 20%;
-            background-color: transparent;
-            -webkit-appearance: none;
-        }
-
-        textarea {
-            display: block;
-            width: 100%;
-            box-sizing: border-box;
-            word-break: break-all;
-        }
-
-        input[type="number"] {
-            appearance: textfield;
-            -webkit-appearance: textfield;
-            -moz-appearance: textfield;
-        }
-
-        input[type=number]::-webkit-inner-spin-button,
-        input[type=number]::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-        }
-
-        .number-input {
-            display: inline-flex;
-            border: 1px solid #aaa;
-            box-sizing: border-box;
-            height: 24px;
-        }
-
-        .number-input * {
-            box-sizing: border-box;
-        }
-
-        .number-input input[type=number] {
-            width: 34px;
-            padding: 0;
-            font-family: 'Pretendard';
-            font-feature-settings: "tnum", "lnum";
-            text-align: center;
-            border: solid #aaa;
-            border-width: 0 1px;
-        }
-
-        .number-input button {
-            width: 20px;
-            padding: 0;
-            margin: 0;
-            border: none;
-            background-color: transparent;
-            -webkit-appearance: none;
-            outline: none;
-        }
-
-        input#title {
-            width: 290px;
-        }
-
-        input#author {
-            width: 120px;
-        }
-
-        #local {
-            padding: 1px;
-            margin: 0;
-        }
-
-        select#quoteColor {
-            width: 100px;
-        }
-
-        button {
-            margin: 10px 5px 0 0;
-            padding: 10px 20px;
-        }
-
-        button.right {
-            float: right;
-            margin-right: 0;
-        }
-
-        input+label,
-        select+label {
-            margin-left: 20px;
-        }
+    <style id="result-style">
+    </style>
+    <style id="control-style">
     </style>
 </head>
 <body>
@@ -714,106 +451,35 @@ font-style: normal;
         }
 
         // HTML 저장
-        function saveHTML() {
+        async function saveHTML() {
+            const [templateRes, resultStyleRes] = await Promise.all([
+                fetch('template.html'),
+                fetch('result.css')
+            ]);
+
+            let template = await templateRes.text();
+            const resultStyle = await resultStyleRes.text();
+
             const title = $('title').value;
             const para = $('quotes').value;
             const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
 
-            const styleHTML = document.querySelector('#webfont').outerHTML;
+            const webfontStyleHTML = document.querySelector('#webfont').outerHTML;
+            const resultStyleHTML = `<style>\n${resultStyle}\n</style>`;
 
-            let wrapperHTML = document.querySelector('#result-wrapper').outerHTML;
+            let resultHTML = document.querySelector('#result-wrapper').outerHTML;
+
             if (img.src.startsWith('data:')) {
-                wrapperHTML = wrapperHTML.replace(/<img\b[^>]*?>/gi, '');
+                resultHTML = resultHTML.replace(/<img\b[^>]*?>/gi, '');
             }
 
-            const htmlContent = `
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=600">
-<title>${document.getElementById('title').value}</title>
-<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-${styleHTML}
-<style>
-html,
-body,
-div,
-p {
-    margin: 0;
-    padding: 0;
-}
+            template = template
+                .replace('{{title}}', title)
+                .replace('{{webfontStyle}}', webfontStyleHTML)
+                .replace('{{resultStyle}}', resultStyleHTML)
+                .replace('{{result}}', resultHTML);
 
-#result-wrapper {
-    width: 600px;
-    height: 600px;
-    transform: scale(0.5);
-    transform-origin: top left;
-}
-
-#result {
-    position: relative;
-    width: 1200px;
-    height: 1200px;
-    color: white;
-    text-align: justify;
-    overflow: hidden;
-    background-color: gray;
-    z-index: -1;
-}
-
-#background-img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 0;
-}
-
-#container {
-    position: absolute;
-    top: 120px;
-    left: 90px;
-    width: 1020px;
-    height: 960px;
-    z-index: 1;
-}
-
-#quotes-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 1020px;
-}
-
-#title-container p,
-#author-container p {
-    font-family: 'Pretendard';
-    font-size: 48px;
-    text-align: left;
-    word-break: keep-all;
-}
-
-#title-container {
-    position: absolute;
-    bottom: 62px;
-    line-height: 1.2;
-    font-weight: 300;
-}
-
-#author-container {
-    position: absolute;
-    bottom: 0;
-    line-height: 1;
-    font-weight: 100;
-}
-</style>
-</head>
-<body>
-${wrapperHTML}
-</body>
-</html>`;
-
-            const blob = new Blob([htmlContent], { type: "text/html" });
+            const blob = new Blob([template], { type: "text/html" });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
@@ -853,7 +519,21 @@ ${wrapperHTML}
             bindNumberInputButtons();
         }
 
+        async function fetchCss() {
+            const [resultStyleRes, controlStyleRes] = await Promise.all([
+                fetch('result.css'),
+                fetch('control.css')
+            ]);
+
+            const resultStyle = await resultStyleRes.text();
+            const controlStyle = await controlStyleRes.text();
+
+            $('result-style').innerHTML = resultStyle;
+            $('control-style').innerHTML = controlStyle;
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
+            fetchCss();
             loadInputsFromCookies();
             setBgImgSrc();
             applyChanges();
