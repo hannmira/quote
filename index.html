@@ -470,6 +470,7 @@ font-display: swap;
                 });
             }
 
+            await img.decode();
             await new Promise(resolve => setTimeout(resolve, 50));
 
             htmlToImage.toJpeg($('result'), {
