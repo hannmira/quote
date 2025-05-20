@@ -396,7 +396,11 @@ font-display: swap;
         }
 
         document.fonts.ready.then(function () {
-            centerQuotesOutput();
+            $('quotesOutput').style.display = 'none';
+            requestAnimationFrame(() => {
+                $('quotesOutput').style.display = '';
+                centerQuotesOutput();
+            });
         });
 
         // 스타일 반영
@@ -413,7 +417,11 @@ font-display: swap;
             if (fontName !== 'Pretendard') {
                 $('webfont').innerHTML = buildFontFace(fontName, fontURL, fontURL.endsWith('.woff2') ? 'woff2' : 'woff');
                 document.fonts.load(`16px "${fontName}"`).then(() => {
-                    centerQuotesOutput(); // 폰트 적용 후 높이 재계산
+                    $('quotesOutput').style.display = 'none';
+                    requestAnimationFrame(() => {
+                        $('quotesOutput').style.display = '';
+                        centerQuotesOutput();
+                    });
                 });
             }
 
@@ -461,6 +469,12 @@ font-display: swap;
                     img.onerror = resolve;
                 });
             }
+            scale += 0.01;
+            updateTransform();
+            requestAnimationFrame(() => {
+                scale -= 0.01;
+                updateTransform();
+            });
 
             htmlToImage.toJpeg($('result'), {
                 quality: 0.95,
