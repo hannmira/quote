@@ -15,7 +15,7 @@
 <body>
     <div id="result-wrapper">
         <div id="result">
-            <img id="background-img" crossorigin="anonymous" onerror="setBgImgSrc('https://images.unsplash.com/photo-1739659153856-ae22a5d2390a?q=80&amp;w=1964&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+            <img id="background-img" crossorigin="anonymous" onerror="setBgImgSrc('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjEyMDAiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNmZmYiIC8+PC9zdmc+');">
             <div id="container">
                 <div id="quotes-container">
                     <div id="quotesOutput">
@@ -115,10 +115,15 @@
                             <option value="Pretendard">프리텐다드</option>
                             <option value="GangwonEdu">강원교육모두체</option>
                             <option value="GangwonEduSaeeum">강원교육새음체</option>
+                            <option value="GangwonEduHyeonokT">강원교육현옥샘체</option>
                             <option value="GowunDodum">고운돋움</option>
+                            <option value="KyoboHand">교보손글씨 2019</option>
+                            <option value="DungGeunMo">둥근모꼴+Fixedsys</option>
+                            <option value="Handletter">손편지체</option>
+                            <option value="Ownglyph_wiseelist">온글잎 위씨리스트</option>
                             <option value="InkLipquid">잉크립퀴드체</option>
                             <option value="HakgyoansimGaeulsopung">학교안심 가을소풍</option>
-                            <option value="HakgyoansimChilpanjiugaeTTF">학교안심 칠판지우개</option>
+                            <option value="HakgyoansimBadasseugiTTF">학교안심 받아쓰기</option>
                         </select>
                     </div>
                     <div>
@@ -196,7 +201,12 @@
             GowunDodum: ['GowunDodum', 'projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff'],
             InkLipquid: ['InkLipquid', 'projectnoonnu/noonfonts_one@1.0/InkLipquid.woff'],
             HakgyoansimGaeulsopung: ['HakgyoansimGaeulsopung', 'projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimGaeulsopungL.woff2'],
-            HakgyoansimChilpanjiugaeTTF: ['HakgyoansimChilpanjiugaeTTF', 'projectnoonnu/2408-5@1.0/HakgyoansimChilpanjiugaeTTF-L.woff2'],
+            GangwonEduHyeonokT: ['GangwonEduHyeonokT', 'projectnoonnu/noonfonts_2201-2@1.0/GangwonEduHyeonokT_OTFMediumA.woff'],
+            KyoboHand: ['KyoboHand', 'projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff'],
+            DungGeunMo: ['DungGeunMo', 'projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff'],
+            Handletter: ['Handletter', 'projectnoonnu/naverfont_05@1.0/Handletter.woff'],
+            Ownglyph_wiseelist: ['Ownglyph_wiseelist', 'projectnoonnu/2501-1@1.1/Ownglyph_wiseelist-Rg.woff2'],
+            HakgyoansimBadasseugiTTF: ['HakgyoansimBadasseugiTTF', 'projectnoonnu/2408-5@1.0/HakgyoansimBadasseugiTTF-L.woff2'],
         };
 
         const buildFontFace = (name, url, format = 'woff') => `
@@ -275,7 +285,6 @@ font-style: normal;
                 updateTransform();
             }
         };
-
         function setBgImgSrc(src) {
             if (src) {
                 img.src = src;
@@ -382,6 +391,10 @@ font-style: normal;
             $('quotesOutput').style.marginTop = `${marginTop}px`;
         }
 
+        document.fonts.ready.then(function () {
+            centerQuotesOutput();
+        });
+
         // 스타일 반영
         function applyChanges() {
             saveInputsToCookies();
@@ -395,6 +408,9 @@ font-style: normal;
             const [fontName, fontURL] = fontMap[$('fontSelect').value];
             if (fontName !== 'Pretendard') {
                 $('webfont').innerHTML = buildFontFace(fontName, fontURL, fontURL.endsWith('.woff2') ? 'woff2' : 'woff');
+                document.fonts.load(`16px "${fontName}"`).then(() => {
+                    centerQuotesOutput(); // 폰트 적용 후 높이 재계산
+                });
             }
 
             $('result').style.color = $('quoteColor').value;
@@ -408,9 +424,6 @@ font-style: normal;
             });
 
             centerQuotesOutput();
-            document.fonts.ready.then(function () {
-                centerQuotesOutput();
-            });
         }
 
         function bindNumberInputButtons() {
@@ -532,8 +545,8 @@ font-style: normal;
             $('control-style').innerHTML = controlStyle;
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            fetchCss();
+        window.addEventListener('DOMContentLoaded', async () => {
+            await fetchCss();
             loadInputsFromCookies();
             setBgImgSrc();
             applyChanges();
