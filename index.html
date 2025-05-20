@@ -434,8 +434,11 @@ font-display: swap;
                 p.style.letterSpacing = $('quoteLetterSpacing').value + 'px';
                 p.style.wordSpacing = $('quoteWordSpacing').value + 'px';
             });
-
-            centerQuotesOutput();
+            $('quotesOutput').style.display = 'none';
+            requestAnimationFrame(() => {
+                $('quotesOutput').style.display = '';
+                centerQuotesOutput();
+            });
         }
 
         function bindNumberInputButtons() {
