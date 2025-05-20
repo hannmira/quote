@@ -11,8 +11,16 @@
 <body>
     {{result}}
     <button id="downlaod-image" type="submit" onclick="downloadImage()">이미지로 저장</button>
-    <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
     <script>
+        function loadHtmlToImageScript() {
+            const script = document.createElement("script");
+            if (/firefox/i.test(navigator.userAgent)) {
+                script.src = "https://cdn.jsdelivr.net/npm/html-to-image@1.9.0/dist/html-to-image.min.js";
+            } else {
+                script.src = "https://cdn.jsdelivr.net/npm/html-to-image@1.11.13/dist/html-to-image.min.js";
+            }
+            document.head.appendChild(script);
+        }
         function downloadImage() {
             const title = document.title;
             const para = document.getElementById('quotesOutput').innerText;
@@ -30,6 +38,7 @@
                 link.click();
             }).catch(error => console.error('이미지 저장 실패:', error));
         }
+        loadHtmlToImageScript();
     </script>
 </body>
 </html>
