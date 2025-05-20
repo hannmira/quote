@@ -1,0 +1,70 @@
+html,
+body,
+div,
+p {
+    margin: 0;
+    padding: 0;
+}
+
+#result-wrapper {
+    width: 600px;
+    height: 600px;
+    transform: scale(0.5);
+    transform-origin: top left;
+}
+
+#result {
+    position: relative;
+    width: 1200px;
+    height: 1200px;
+    color: white;
+    text-align: justify;
+    overflow: hidden;
+    background-color: gray;
+    z-index: -1;
+}
+
+#background-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 0;
+}
+
+#container {
+    position: absolute;
+    top: 120px;
+    left: 90px;
+    width: 1020px;
+    height: 960px;
+    z-index: 1;
+}
+
+#quotes-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1020px;
+}
+
+#title-container p,
+#author-container p {
+    font-family: 'Pretendard';
+    font-size: 48px;
+    text-align: left;
+    word-break: keep-all;
+}
+
+#title-container {
+    position: absolute;
+    bottom: 62px;
+    line-height: 1.2;
+    font-weight: 300;
+}
+
+#author-container {
+    position: absolute;
+    bottom: 0;
+    line-height: 1;
+    font-weight: 100;
+}
