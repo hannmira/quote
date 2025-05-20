@@ -260,18 +260,18 @@ font-style: normal;
 
         const img = $('background-img');
 
-        img.onload = () => {
-            if (resetImg) {
-                $('imageFilters').reset();
-                applyChanges();
-                resetImage();
-                resetImg = false;
-            }
-            else {
-                updateTransform();
-            }
-        };
         function setBgImgSrc(src) {
+            img.onload = function() {
+                if (resetImg) {
+                    $('imageFilters').reset();
+                    applyChanges();
+                    resetImage();
+                    resetImg = false;
+                }
+                else {
+                    updateTransform();
+                }
+            };
             if (src) {
                 img.src = src;
                 if (src.startsWith('data:')) $('info-text').style.visibility = 'visible';
@@ -448,10 +448,13 @@ font-style: normal;
         }
 
         // 이미지 다운로드
-        function downloadImage() {
+        async function downloadImage() {
             const title = $('title').value;
             const para = $('quotes').value;
             const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
+
+            await document.fonts.ready;
+            await img.decode();
 
             htmlToImage.toJpeg($('result'), {
                 quality: 0.95,
