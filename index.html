@@ -368,11 +368,28 @@ font-style: normal;
 
         // 레이아웃 중앙 정렬
         function centerQuotesOutput() {
-            const titleHeight = $('title-container').scrollHeight;
-            const containerHeight = 882 - titleHeight;
-            const outputHeight = $('quotesOutput').scrollHeight;
+            const titleHeight = $('title-container').clientHeight;
+            const authorHeight = $('author-container').clientHeight;
+            const outputHeight = $('quotesOutput').clientHeight;
+
+            let containerMarginBottom = 0;
+            let titleBottom = 0;
+
+            if (authorHeight != 0 && titleHeight != 0) {
+                titleBottom = authorHeight + 14;
+                containerMarginBottom = titleBottom + titleHeight + 16;
+            }
+            else if (authorHeight != 0) {
+                containerMarginBottom = authorHeight + 16;
+            }
+            else if (titleHeight != 0) {
+                containerMarginBottom = titleHeight + 16;
+            }
+
+            const containerHeight = 960 - containerMarginBottom;
             const marginTop = (containerHeight - outputHeight) / 2;
 
+            $('title-container').style.bottom = `${titleBottom}px`;
             $('quotes-container').style.height = `${containerHeight}px`;
             $('quotesOutput').style.marginTop = `${marginTop}px`;
         }
