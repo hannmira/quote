@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -10,6 +9,27 @@
 {{resultStyle}}
 </head>
 <body>
-{{result}}
+    {{result}}
+    <button id="downlaod-image" type="submit" onclick="downloadImage()">이미지로 저장</button>
+    <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
+    <script>
+        function downloadImage() {
+            const title = document.title;
+            const para = document.getElementById('quotesOutput').innerText;
+            const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
+
+            htmlToImage.toJpeg(document.getElementById('result'), {
+                quality: 0.95,
+                width: 1200,
+                height: 1200,
+                pixelRatio: 1,
+            }).then(dataUrl => {
+                const link = document.createElement('a');
+                link.download = `${filename}.jpg`;
+                link.href = dataUrl;
+                link.click();
+            }).catch(error => console.error('이미지 저장 실패:', error));
+        }
+    </script>
 </body>
 </html>
