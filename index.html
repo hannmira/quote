@@ -469,12 +469,8 @@ font-display: swap;
                     img.onerror = resolve;
                 });
             }
-            scale += 0.01;
-            updateTransform();
-            requestAnimationFrame(() => {
-                scale -= 0.01;
-                updateTransform();
-            });
+
+            await new Promise(resolve => setTimeout(resolve, 50));
 
             htmlToImage.toJpeg($('result'), {
                 quality: 0.95,
