@@ -469,8 +469,9 @@ font-display: swap;
                     img.onerror = resolve;
                 });
             }
-
-            await img.decode();
+            try {
+                await img.decode();
+            } catch (e) {}
             await new Promise(resolve => setTimeout(resolve, 50));
 
             htmlToImage.toJpeg($('result'), {
