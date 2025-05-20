@@ -149,6 +149,7 @@
                             <option value="LightPink" style="color:LightPink">LightPink</option>
                         </select>
                     </div>
+                    <a href="#" onclick="reset()">초기화</a>
                 </div>
                 <div class="flex-container">
                     <div>
@@ -186,9 +187,11 @@
                 </div>
             </fieldset>
         </form>
-        <button type="submit" onclick="downloadImage()">이미지로 저장</button>
-        <button type="submit" onclick="saveHTML()">HTML로 저장</button>
-        <button type="submit" class="right" onclick="reset()">서식 초기화</button>
+        <div class="flex-container">
+            <div id="info-text">HTML 저장 시 로컬 이미지 파일 배경은 저장되지 않습니다.</div>
+            <button type="submit" onclick="saveHTML()">HTML로 저장</button>
+            <button type="submit" onclick="downloadImage()">이미지로 저장</button>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
@@ -248,36 +251,19 @@ font-style: normal;
             });
         }
 
+        const $ = id => document.getElementById(id);
+
         function clearInputs(...ids) {
-            ids.forEach(id => document.getElementById(id).value = '');
+            ids.forEach(id => $(id).value = '');
             return false;
         }
 
-        function removeInfoText() {
-            const infoText = document.getElementById('info-text');
-            if (infoText) {
-                infoText.remove();
-            }
-        }
-        function addInfoText() {
-            const infoText = document.createElement('div');
-            if (document.getElementById('info-text')) return;
-            infoText.innerHTML = "HTML 저장 시 로컬 이미지 파일 배경은 저장되지 않습니다.";
-            infoText.id = 'info-text'
-            infoText.style.width = '180px';
-            infoText.style.color = '#666';
-            infoText.style.fontSize = '0.9em';
-            infoText.style.display = 'inline-block';
-            infoText.style.verticalAlign = 'middle';
-            infoText.style.wordBreak = 'keep-all';
-            document.querySelector('button[onclick="saveHTML()"]').insertAdjacentElement('afterend', infoText);
-        }
-
-        const img = document.getElementById('background-img');
-        const $ = id => document.getElementById(id);
+        const img = $('background-img');
 
         img.onload = () => {
             if (resetImg) {
+                $('imageFilters').reset();
+                applyChanges();
                 resetImage();
                 resetImg = false;
             }
@@ -288,11 +274,11 @@ font-style: normal;
         function setBgImgSrc(src) {
             if (src) {
                 img.src = src;
-                if (src.startsWith('data:')) addInfoText();
+                if (src.startsWith('data:')) $('info-text').style.visibility = 'visible';
             }
             else if (/^https?:/.test($('bgUrl').value)) {
                 img.src = $('bgUrl').value;
-                removeInfoText();
+                $('info-text').style.visibility = 'hidden';
             }
         }
 
@@ -446,11 +432,11 @@ font-style: normal;
 
         // 이미지 다운로드
         function downloadImage() {
-            const title = document.getElementById('title').value;
-            const para = document.getElementById('quotes').value;
+            const title = $('title').value;
+            const para = $('quotes').value;
             const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
 
-            htmlToImage.toJpeg(document.getElementById('result'), {
+            htmlToImage.toJpeg($('result'), {
                 quality: 0.95,
                 width: 1200,
                 height: 1200,
@@ -503,8 +489,7 @@ font-style: normal;
 
         // 리셋
         function reset() {
-            document.getElementById('imageFilters').reset();
-            document.getElementById('textSettings').reset();
+            $('textSettings').reset();
             applyChanges();
         }
 
