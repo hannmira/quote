@@ -427,6 +427,13 @@ font-display: swap;
             });
         }
 
+        // 리셋
+        function resetTextStyle() {
+            $('textStyle').reset();
+            changeFont();
+            applyChanges();
+        }
+
         function bindNumberInputButtons() {
             document.querySelectorAll('.number-input').forEach(wrapper => {
                 const input = wrapper.querySelector('input');
@@ -500,12 +507,6 @@ font-display: swap;
             link.download = `${filename}.html`;
             link.click();
             URL.revokeObjectURL(url);
-        }
-
-        // 리셋
-        function resetTextStyle() {
-            $('textStyle').reset();
-            applyChanges();
         }
 
         // 이벤트 바인딩
