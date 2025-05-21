@@ -118,7 +118,10 @@
                             <option value="GangwonEduHyeonokT">강원교육현옥샘체</option>
                             <option value="GowunDodum">고운돋움</option>
                             <option value="KyoboHand">교보손글씨 2019</option>
+                            <option value="NanumMyeongjo">나눔명조</option>
+                            <option value="NanumBarunpen">나눔바른펜</option>
                             <option value="DungGeunMo">둥근모꼴+Fixedsys</option>
+                            <option value="MapoFlowerIsland">마포꽃섬</option>
                             <option value="Handletter">손편지체</option>
                             <option value="Ownglyph_wiseelist">온글잎 위씨리스트</option>
                             <option value="InkLipquid">잉크립퀴드체</option>
@@ -206,19 +209,22 @@
         }
 
         const fontMap = {
-            RIDIBatang: ['RIDIBatang', 'projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff'],
-            Pretendard: ['Pretendard', ''],
+            DungGeunMo: ['DungGeunMo', 'projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff'],
             GangwonEdu: ['GangwonEdu', 'projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFLightA.woff'],
+            GangwonEduHyeonokT: ['GangwonEduHyeonokT', 'projectnoonnu/noonfonts_2201-2@1.0/GangwonEduHyeonokT_OTFMediumA.woff'],
             GangwonEduSaeeum: ['GangwonEduSaeeum', 'projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff'],
             GowunDodum: ['GowunDodum', 'projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff'],
-            InkLipquid: ['InkLipquid', 'projectnoonnu/noonfonts_one@1.0/InkLipquid.woff'],
-            HakgyoansimGaeulsopung: ['HakgyoansimGaeulsopung', 'projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimGaeulsopungL.woff2'],
-            GangwonEduHyeonokT: ['GangwonEduHyeonokT', 'projectnoonnu/noonfonts_2201-2@1.0/GangwonEduHyeonokT_OTFMediumA.woff'],
-            KyoboHand: ['KyoboHand', 'projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff'],
-            DungGeunMo: ['DungGeunMo', 'projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff'],
-            Handletter: ['Handletter', 'projectnoonnu/naverfont_05@1.0/Handletter.woff'],
-            Ownglyph_wiseelist: ['Ownglyph_wiseelist', 'projectnoonnu/2501-1@1.1/Ownglyph_wiseelist-Rg.woff2'],
             HakgyoansimBadasseugiTTF: ['HakgyoansimBadasseugiTTF', 'projectnoonnu/2408-5@1.0/HakgyoansimBadasseugiTTF-L.woff2'],
+            HakgyoansimGaeulsopung: ['HakgyoansimGaeulsopung', 'projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimGaeulsopungL.woff2'],
+            Handletter: ['Handletter', 'projectnoonnu/naverfont_05@1.0/Handletter.woff'],
+            InkLipquid: ['InkLipquid', 'projectnoonnu/noonfonts_one@1.0/InkLipquid.woff'],
+            KyoboHand: ['KyoboHand', 'projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff'],
+            MapoFlowerIsland: ['MapoFlowerIsland', 'projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff'],
+            NanumBarunpen: ['NanumBarunpen', 'projectnoonnu/noonfonts_two@1.0/NanumBarunpen.woff'],
+            NanumMyeongjo: ['Nanum Myeongjo', ''],
+            Ownglyph_wiseelist: ['Ownglyph_wiseelist', 'projectnoonnu/2501-1@1.1/Ownglyph_wiseelist-Rg.woff2'],
+            Pretendard: ['Pretendard', ''],
+            RIDIBatang: ['RIDIBatang', 'projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff'],
         };
 
         const buildFontFace = (name, url, format = 'woff') => `
@@ -389,7 +395,7 @@ font-display: swap;
 
             centerQuotesOutput();
 
-            if (fontName !== 'Pretendard') {
+            if (fontName !== 'Pretendard' && fontName !== 'Nanum Myeongjo') {
                 $('webfont').innerHTML = buildFontFace(fontName, fontURL, fontURL.endsWith('.woff2') ? 'woff2' : 'woff');
                 document.fonts.load(`16px "${fontName}"`).then(() => {
                     $('quotesOutput').style.display = 'none';
