@@ -272,7 +272,7 @@ font-display: swap;
 
         function setBgImgSrc(src) {
             img.src = src;
-            if (src.startsWith('data:') || src.startsWith('blob:')) {
+            if (src.startsWith('blob:')) {
                 $('info-text').style.visibility = 'visible';
             }
             else {
@@ -492,7 +492,7 @@ font-display: swap;
 
             let resultHTML = document.querySelector('#result-wrapper').outerHTML;
 
-            if (img.src.startsWith('data:')) {
+            if (img.src.startsWith('blob:')) {
                 resultHTML = resultHTML.replace(/<img\b[^>]*?>/gi, '');
             }
 
@@ -594,13 +594,8 @@ font-display: swap;
                 if (!file) return;
 
                 resetImg = true;
-                const reader = new FileReader();
-                reader.onload = async function (e) {
-                    $('bgUrl').value = e.target.result;
-                    await setBgImgSrc($('bgUrl').value);
-                    saveInputsToCookies();
-                };
-                reader.readAsDataURL(file);
+                $('bgUrl').value = URL.createObjectURL(file);
+                setBgImgSrc($('bgUrl').value);
             });
 
             document.querySelectorAll('form button:not([type="submit"])').forEach(btn =>
