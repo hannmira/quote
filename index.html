@@ -2,7 +2,6 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1200">
     <title>발췌 이미지 생성기</title>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <style id="webfont">
@@ -271,8 +270,8 @@ font-display: swap;
         const img = $('background-img');
 
         function setBgImgSrc(src) {
-            img.src = $('bgUrl').value.split(' ')[0];
-            if ($('bgUrl').value.startsWith('data:') || $('bgUrl').value.startsWith('blob:')) {
+            img.src = src;
+            if (src.startsWith('data:') || src.startsWith('blob:')) {
                 $('info-text').style.visibility = 'visible';
             }
             else {
@@ -511,8 +510,17 @@ font-display: swap;
             URL.revokeObjectURL(url);
         }
 
+        function updateContentWidth() {
+            const isPortrait = window.innerHeight > window.innerWidth;
+
+            if (isPortrait) document.body.style.width = '600px';
+            else document.body.style.width = '1200px';
+        }
+
         // 이벤트 바인딩
         function bindEvents() {
+            window.addEventListener('resize', updateContentWidth);
+
             img.onload = () => {
                 if (resetImg) {
                     $('imageFilters').reset();
@@ -575,8 +583,9 @@ font-display: swap;
                 }
             });
             $('bgUrl').addEventListener('input', () => {
+                $('bgUrl').value = $('bgUrl').value.split(' ')[0];
                 resetImg = true;
-                setBgImgSrc();
+                setBgImgSrc($('bgUrl').value);
             });
 
             $('fileInput').addEventListener('change', async () => {
@@ -587,7 +596,7 @@ font-display: swap;
                 const reader = new FileReader();
                 reader.onload = async function (e) {
                     $('bgUrl').value = e.target.result;
-                    await setBgImgSrc();
+                    await setBgImgSrc($('bgUrl').value);
                     saveInputsToCookies();
                 };
                 reader.readAsDataURL(file);
@@ -620,14 +629,16 @@ font-display: swap;
 
             $('result-style').innerHTML = resultStyle;
             $('control-style').innerHTML = controlStyle;
+
         }
         window.addEventListener('DOMContentLoaded', async () => {
             await fetchCss();
+            updateContentWidth();
             loadInputsFromCookies();
             loadImageTransformFromCookies();
             bindEvents();
             changeText();
-            setBgImgSrc();
+            setBgImgSrc($('bgUrl').value);
             applyChanges();
             loadHtmlToImageScript();
 
