@@ -554,6 +554,7 @@ font-display: swap;
             $('quotes').addEventListener('input', () => {
                 const ifRidi = $('quotes').value.match(/([\s\S]+?)\n\n(.+?) \| (.+?) 저\n\n리디에서 자세히 보기: ([\s\S]+)/);
                 const ifKyobo = $('quotes').value.match(/([\s\S]+?)\n\n (.+?) 중에서\n\n 교보eBook([\s\S]+)/);
+                const ifYes24 = $('quotes').value.match(/([\s\S]+?)\n\n(.+?) \| (.+?) \n\n\[크레마 예스24 eBook\]([\s\S]+)/);
 
                 if (ifRidi) {
                     const [, body, title, author,] = ifRidi;
@@ -566,6 +567,12 @@ font-display: swap;
                     $('quotes').value = body;
                     $('title').value = title;
                     $('author').value = '';
+                }
+                if (ifYes24) {
+                    const [, body, title, author,] = ifYes24;
+                    $('quotes').value = body;
+                    $('title').value = title;
+                    $('author').value = author;
                 }
                 changeText();
             });
