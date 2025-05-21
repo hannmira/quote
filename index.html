@@ -570,7 +570,7 @@ font-display: swap;
                 for (let i = 0; i < items.length; i++) {
                     if (items[i].type.indexOf("image") !== -1) {
                         const blob = items[i].getAsFile();
-                        $('bgUrl').value = URL.createObjectURL(blob);
+                        $('bgUrl').value = URL.createObjectURL(blob).split(' ')[0];
                         break;
                     }
                 }
