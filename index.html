@@ -105,7 +105,7 @@
                 </div>
             </form>
         </fieldset>
-        <form id="textSettings">
+        <form id="textStyle">
             <fieldset>
                 <div class="flex-container">
                     <div>
@@ -149,7 +149,7 @@
                             <option value="LightPink" style="color:LightPink">LightPink</option>
                         </select>
                     </div>
-                    <a href="#" onclick="reset()">초기화</a>
+                    <a href="#" onclick="resetTextStyle()">초기화</a>
                 </div>
                 <div class="flex-container">
                     <div>
@@ -271,17 +271,6 @@ font-display: swap;
         const img = $('background-img');
 
         function setBgImgSrc(src) {
-            img.onload = function () {
-                if (resetImg) {
-                    $('imageFilters').reset();
-                    applyChanges();
-                    resetImage();
-                    resetImg = false;
-                }
-                else {
-                    updateTransform();
-                }
-            };
             if (src) {
                 img.src = src;
                 if (src.startsWith('data:')) $('info-text').style.visibility = 'visible';
@@ -355,21 +344,8 @@ font-display: swap;
         }
 
         function clickFileInput() {
-            fileInput.click();
+            $('fileInput').click();
         }
-        $('fileInput').addEventListener('change', async () => {
-            const file = fileInput.files[0];
-            if (!file) return;
-
-            resetImg = true;
-            $('bgUrl').value = '로컬 이미지 파일'
-            const reader = new FileReader();
-            reader.onload = async function (e) {
-                await setBgImgSrc(e.target.result);
-                saveInputsToCookies();
-            };
-            reader.readAsDataURL(file);
-        });
 
         // 텍스트 포맷팅
         function formatParagraphs(text) {
@@ -404,25 +380,20 @@ font-display: swap;
             $('quotesOutput').style.marginTop = `${marginTop}px`;
         }
 
-        document.fonts.ready.then(function () {
-            $('quotesOutput').style.display = 'none';
-            requestAnimationFrame(() => {
-                $('quotesOutput').style.display = '';
-                centerQuotesOutput();
-            });
-        });
-
-        // 스타일 반영
-        function applyChanges() {
-            saveInputsToCookies();
-
+        function changeText() {
             $('quotesOutput').innerHTML = formatParagraphs($('quotes').value);
             $('titleOutput').textContent = $('title').value;
             $('authorOutput').textContent = $('author').value;
+        }
 
-            $('background-img').style.filter = `brightness(${$('brightness').value}%) contrast(${$('contrast').value}%) saturate(${$('saturate').value}%) blur(${$('blur').value}px)`;
-
+        function changeFont() {
             const [fontName, fontURL] = fontMap[$('fontSelect').value];
+            document.querySelectorAll('#quotesOutput p').forEach(p => {
+                p.style.fontFamily = fontName;
+            });
+
+            centerQuotesOutput();
+
             if (fontName !== 'Pretendard') {
                 $('webfont').innerHTML = buildFontFace(fontName, fontURL, fontURL.endsWith('.woff2') ? 'woff2' : 'woff');
                 document.fonts.load(`16px "${fontName}"`).then(() => {
@@ -433,10 +404,16 @@ font-display: swap;
                     });
                 });
             }
+        }
+
+        // 스타일 반영
+        function applyChanges() {
+            saveInputsToCookies();
+
+            $('background-img').style.filter = `brightness(${$('brightness').value}%) contrast(${$('contrast').value}%) saturate(${$('saturate').value}%) blur(${$('blur').value}px)`;
 
             $('result').style.color = $('quoteColor').value;
             document.querySelectorAll('#quotesOutput p').forEach(p => {
-                p.style.fontFamily = fontName;
                 p.style.fontSize = $('quoteSize').value + 'px';
                 p.style.lineHeight = $('quoteLineHeight').value;
                 p.style.marginBottom = $('quoteMargin').value + 'em';
@@ -473,18 +450,6 @@ font-display: swap;
             const title = $('title').value;
             const para = $('quotes').value;
             const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
-
-            await document.fonts.ready;
-            if (!img.complete) {
-                await new Promise(resolve => {
-                    img.onload = resolve;
-                    img.onerror = resolve;
-                });
-            }
-            try {
-                await img.decode();
-            } catch (e) { }
-            await new Promise(resolve => setTimeout(resolve, 50));
 
             htmlToImage.toJpeg($('result'), {
                 quality: 0.95,
@@ -538,52 +503,92 @@ font-display: swap;
         }
 
         // 리셋
-        function reset() {
-            $('textSettings').reset();
+        function resetTextStyle() {
+            $('textStyle').reset();
             applyChanges();
         }
 
         // 이벤트 바인딩
         function bindEvents() {
+            img.onload = function () {
+                if (resetImg) {
+                    $('imageFilters').reset();
+                    applyChanges();
+                    resetImage();
+                    resetImg = false;
+                }
+                else {
+                    updateTransform();
+                }
+            };
+            document.fonts.ready.then(function () {
+                $('quotesOutput').style.display = 'none';
+                requestAnimationFrame(() => {
+                    $('quotesOutput').style.display = '';
+                    centerQuotesOutput();
+                });
+            });
+
+            $('quotes').addEventListener('change', () => {
+                const ifRidi = $('quotes').value.match(/([\s\S]+?)\n\n(.+?) \| (.+?) 저\n\n리디에서 자세히 보기: ([\s\S]+)/);
+                const ifKyobo = $('quotes').value.match(/([\s\S]+?)\n\n (.+?) 중에서\n\n 교보eBook([\s\S]+)/);
+
+                if (ifRidi) {
+                    const [, body, title, author,] = ifRidi;
+                    $('quotes').value = body;
+                    $('title').value = title;
+                    $('author').value = author;
+                }
+                if (ifKyobo) {
+                    const [, body, title,] = ifKyobo;
+                    $('quotes').value = body;
+                    $('title').value = title;
+                    $('author').value = '';
+                }
+                changeText();
+            });
+            $('title').addEventListener('change', () => {
+                $('titleOutput').textContent = $('title').value;
+            });
+            $('author').addEventListener('change', () => {
+                $('authorOutput').textContent = $('author').value;
+            });
+            $('fontSelect').addEventListener('change', () => {
+                changeFont();
+            });
+
+            $('bgUrl').addEventListener('change', () => {
+                setBgImgSrc();
+                resetImg = true;
+            });
+
+            $('fileInput').addEventListener('change', async () => {
+                const file = $('fileInput').files[0];
+                if (!file) return;
+
+                resetImg = true;
+                $('bgUrl').value = '로컬 이미지 파일'
+                const reader = new FileReader();
+                reader.onload = async function (e) {
+                    await setBgImgSrc(e.target.result);
+                    saveInputsToCookies();
+                };
+                reader.readAsDataURL(file);
+            });
+
             document.querySelectorAll('form button:not([type="submit"])').forEach(btn =>
                 btn.addEventListener('click', e => {
                     e.preventDefault();
                     applyChanges();
                 })
             );
-
             const inputs = document.querySelectorAll('input, select, textarea');
             for (const el of inputs) {
                 const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
                 el.addEventListener(eventType, () => {
-                    if (el.id === 'bgUrl') {
-                        setBgImgSrc();
-                        resetImg = true;
-                    }
-                    else {
-                        if (el.id === 'quotes') {
-                            const ifRidi = $('quotes').value.match(/([\s\S]+?)\n\n(.+?) \| (.+?) 저\n\n리디에서 자세히 보기: ([\s\S]+)/);
-                            const ifKyobo = $('quotes').value.match(/([\s\S]+?)\n\n (.+?) 중에서\n\n 교보eBook([\s\S]+)/);
-
-                            if (ifRidi) {
-                                const [, body, title, author,] = ifRidi;
-                                $('quotes').value = body;
-                                $('title').value = title;
-                                $('author').value = author;
-                            }
-                            if (ifKyobo) {
-                                const [, body, title,] = ifKyobo;
-                                $('quotes').value = body;
-                                $('title').value = title;
-                                $('author').value = '';
-                            }
-                        }
-                        applyChanges();
-                    }
-
+                    applyChanges();
                 });
             }
-
             bindNumberInputButtons();
         }
 
@@ -599,15 +604,19 @@ font-display: swap;
             $('result-style').innerHTML = resultStyle;
             $('control-style').innerHTML = controlStyle;
         }
-
         window.addEventListener('DOMContentLoaded', async () => {
             await fetchCss();
             loadInputsFromCookies();
-            setBgImgSrc();
-            applyChanges();
             loadImageTransformFromCookies();
             bindEvents();
+            changeText();
+            changeFont();
+            setBgImgSrc();
+            applyChanges();
             loadHtmlToImageScript();
+
+            console.log(getComputedStyle(document.querySelector('#quotesOutput p')).fontFamily);
+
         });
     </script>
 </body>
