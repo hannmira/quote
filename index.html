@@ -188,7 +188,7 @@
             </fieldset>
         </form>
         <div class="flex-container">
-            <div id="info-text">HTML 저장 시 로컬 이미지 파일 배경은 저장되지 않습니다.</div>
+            <div id="info-text">HTML로 저장 시 로컬 파일 또는 blob 이미지 배경은 저장되지 않습니다.</div>
             <button type="submit" onclick="saveHTML()">HTML로 저장</button>
             <button type="submit" onclick="downloadImage()">이미지로 저장</button>
         </div>
@@ -278,6 +278,10 @@ font-display: swap;
             else if (/^https?:/.test($('bgUrl').value)) {
                 img.src = $('bgUrl').value;
                 $('info-text').style.visibility = 'hidden';
+            }
+            else if ($('bgUrl').value.startsWith('blob:')) {
+                img.src = $('bgUrl').value;
+                $('info-text').style.visibility = 'visible';
             }
         }
 
@@ -380,13 +384,9 @@ font-display: swap;
             $('quotesOutput').style.marginTop = `${marginTop}px`;
         }
 
-        function changeText() {
-            $('quotesOutput').innerHTML = formatParagraphs($('quotes').value);
-            $('titleOutput').textContent = $('title').value;
-            $('authorOutput').textContent = $('author').value;
-        }
-
         function changeFont() {
+            saveInputsToCookies();
+
             const [fontName, fontURL] = fontMap[$('fontSelect').value];
             document.querySelectorAll('#quotesOutput p').forEach(p => {
                 p.style.fontFamily = fontName;
@@ -404,6 +404,13 @@ font-display: swap;
                     });
                 });
             }
+        }
+
+        function changeText() {
+            $('quotesOutput').innerHTML = formatParagraphs($('quotes').value);
+            $('titleOutput').textContent = $('title').value;
+            $('authorOutput').textContent = $('author').value;
+            changeFont();
         }
 
         // 스타일 반영
@@ -547,7 +554,6 @@ font-display: swap;
                     $('author').value = '';
                 }
                 changeText();
-                changeFont();
             });
             $('title').addEventListener('input', () => {
                 $('titleOutput').textContent = $('title').value;
@@ -559,9 +565,19 @@ font-display: swap;
                 changeFont();
             });
 
+            $('bgUrl').addEventListener('paste', (event) => {
+                const items = event.clipboardData.items;
+                for (let i = 0; i < items.length; i++) {
+                    if (items[i].type.indexOf("image") !== -1) {
+                        const blob = items[i].getAsFile();
+                        $('bgUrl').value = URL.createObjectURL(blob);
+                        break;
+                    }
+                }
+            });
             $('bgUrl').addEventListener('input', () => {
-                setBgImgSrc();
                 resetImg = true;
+                setBgImgSrc();
             });
 
             $('fileInput').addEventListener('change', async () => {
@@ -612,7 +628,6 @@ font-display: swap;
             loadImageTransformFromCookies();
             bindEvents();
             changeText();
-            changeFont();
             setBgImgSrc();
             applyChanges();
             loadHtmlToImageScript();
