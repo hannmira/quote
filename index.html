@@ -552,10 +552,10 @@ font-display: swap;
             });
 
             $('quotes').addEventListener('input', () => {
-                const ifRidi = $('quotes').value.match(/([\s\S]+?)\n\n(.+?) \| (.+?) 저\n\n리디에서 자세히 보기:/);
-                const ifKyobo = $('quotes').value.match(/([\s\S]+?)\n\n (.+?) 중에서\n\n 교보eBook/);
-                const ifYes24 = $('quotes').value.match(/([\s\S]+?)\n\n(.+?) [|｜∣] (.+?)\n\n\[크레마 예스24 eBook\]/);
-                const ifAladin = $('quotes').value.match(/([\s\S]+?)\n\n-알라딘 eBook <(.+?)> \((.+?)\) 중에서/);
+                const ifRidi = $('quotes').value.match(/([\s\S]+?)\r?\n\r?\n(.+?) \| (.+?) 저\r?\n\r?\n리디에서 자세히 보기:/);
+                const ifKyobo = $('quotes').value.match(/([\s\S]+?)\r?\n\r?\n (.+?) 중에서\r?\n\r?\n 교보eBook/);
+                const ifYes24 = $('quotes').value.match(/([\s\S]+?)\r?\n\r?\n(.+?) [|｜∣] (.+?)\r?\n\r?\n\[크레마 예스24 eBook\]/);
+                const ifAladin = $('quotes').value.match(/([\s\S]+?)\r?\n\r?\n-알라딘 eBook \<(.+?)\> \((.+?)\) 중에서/);
                 let body='', title='', author='';
                 if (ifRidi) [, body, title, author,] = ifRidi;
                 if (ifKyobo) [, body, title,] = ifKyobo;
