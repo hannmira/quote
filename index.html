@@ -483,7 +483,7 @@ font-display: swap;
             }
             try {
                 await img.decode();
-            } catch (e) {}
+            } catch (e) { }
             await new Promise(resolve => setTimeout(resolve, 50));
 
             htmlToImage.toJpeg($('result'), {
@@ -556,11 +556,31 @@ font-display: swap;
             for (const el of inputs) {
                 const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
                 el.addEventListener(eventType, () => {
-                    applyChanges();
                     if (el.id === 'bgUrl') {
                         setBgImgSrc();
                         resetImg = true;
                     }
+                    else {
+                        if (el.id === 'quotes') {
+                            const ifRidi = $('quotes').value.match(/([\s\S]+?)\n\n(.+?) \| (.+?) 저\n\n리디에서 자세히 보기: ([\s\S]+)/);
+                            const ifKyobo = $('quotes').value.match(/([\s\S]+?)\n\n (.+?) 중에서\n\n 교보eBook([\s\S]+)/);
+
+                            if (ifRidi) {
+                                const [, body, title, author,] = ifRidi;
+                                $('quotes').value = body;
+                                $('title').value = title;
+                                $('author').value = author;
+                            }
+                            if (ifKyobo) {
+                                const [, body, title,] = ifKyobo;
+                                $('quotes').value = body;
+                                $('title').value = title;
+                                $('author').value = '';
+                            }
+                        }
+                        applyChanges();
+                    }
+
                 });
             }
 
