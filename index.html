@@ -188,7 +188,7 @@
             </fieldset>
         </form>
         <div class="flex-container">
-            <div id="info-text">HTML로 저장 시 로컬 파일 또는 blob 이미지 배경은 저장되지 않습니다.</div>
+            <div id="info-text">HTML로 저장 시 로컬 파일 또는 복사한 이미지 배경은 저장되지 않습니다.</div>
             <button type="submit" onclick="saveHTML()">HTML로 저장</button>
             <button type="submit" onclick="downloadImage()">이미지로 저장</button>
         </div>
@@ -271,17 +271,12 @@ font-display: swap;
         const img = $('background-img');
 
         function setBgImgSrc(src) {
-            if (src) {
-                img.src = src;
-                if (src.startsWith('data:')) $('info-text').style.visibility = 'visible';
+            img.src = $('bgUrl').value.split(' ')[0];
+            if ($('bgUrl').value.startsWith('data:') || $('bgUrl').value.startsWith('blob:')) {
+                $('info-text').style.visibility = 'visible';           
             }
-            else if (/^https?:/.test($('bgUrl').value)) {
-                img.src = $('bgUrl').value;
-                $('info-text').style.visibility = 'hidden';
-            }
-            else if ($('bgUrl').value.startsWith('blob:')) {
-                img.src = $('bgUrl').value;
-                $('info-text').style.visibility = 'visible';
+            else {
+                $('info-text').style.visibility = 'hidden';                
             }
         }
 
@@ -570,7 +565,7 @@ font-display: swap;
                 for (let i = 0; i < items.length; i++) {
                     if (items[i].type.indexOf("image") !== -1) {
                         const blob = items[i].getAsFile();
-                        $('bgUrl').value = URL.createObjectURL(blob).split(' ')[0];
+                        $('bgUrl').value = URL.createObjectURL(blob);
                         break;
                     }
                 }
@@ -585,10 +580,10 @@ font-display: swap;
                 if (!file) return;
 
                 resetImg = true;
-                $('bgUrl').value = '로컬 이미지 파일'
                 const reader = new FileReader();
                 reader.onload = async function (e) {
-                    await setBgImgSrc(e.target.result);
+                    $('bgUrl').value = e.target.result; 
+                    await setBgImgSrc();
                     saveInputsToCookies();
                 };
                 reader.readAsDataURL(file);
