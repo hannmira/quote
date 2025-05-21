@@ -529,7 +529,7 @@ font-display: swap;
                 });
             });
 
-            $('quotes').addEventListener('change', () => {
+            $('quotes').addEventListener('input', () => {
                 const ifRidi = $('quotes').value.match(/([\s\S]+?)\n\n(.+?) \| (.+?) 저\n\n리디에서 자세히 보기: ([\s\S]+)/);
                 const ifKyobo = $('quotes').value.match(/([\s\S]+?)\n\n (.+?) 중에서\n\n 교보eBook([\s\S]+)/);
 
@@ -546,18 +546,19 @@ font-display: swap;
                     $('author').value = '';
                 }
                 changeText();
+                changeFont();
             });
-            $('title').addEventListener('change', () => {
+            $('title').addEventListener('input', () => {
                 $('titleOutput').textContent = $('title').value;
             });
-            $('author').addEventListener('change', () => {
+            $('author').addEventListener('input', () => {
                 $('authorOutput').textContent = $('author').value;
             });
             $('fontSelect').addEventListener('change', () => {
                 changeFont();
             });
 
-            $('bgUrl').addEventListener('change', () => {
+            $('bgUrl').addEventListener('input', () => {
                 setBgImgSrc();
                 resetImg = true;
             });
