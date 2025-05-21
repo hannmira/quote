@@ -558,18 +558,11 @@ font-display: swap;
                 const ifAladin = $('quotes').value.match(/([\s\S]+?)\n\n-알라딘 eBook <(.+?)> \((.+?)\) 중에서/);
                 let body='', title='', author='';
 
-                if (ifRidi) {
-                    [, body, title, author,] = ifRidi;
-                }
-                if (ifKyobo) {
-                    [, body, title,] = ifKyobo;
-                }
-                if (ifYes24) {
-                    [, body, title, author,] = ifYes24;
-                }
-                if (ifAladin) {
-                    [, body, title, author,] = ifAladin;
-                }
+                if (ifRidi) [, body, title, author,] = ifRidi;
+                if (ifKyobo) [, body, title,] = ifKyobo;
+                if (ifYes24) [, body, title, author,] = ifYes24;
+                if (ifAladin) [, body, title, author,] = ifAladin;
+                    
                 $('quotes').value = body;
                 $('title').value = title;
                 $('author').value = author;
