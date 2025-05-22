@@ -70,6 +70,7 @@ fieldset {
 
 #image-controls button {
     width: 20px;
+    height: 20px;
     margin: 0 3px;
     padding: 0;
 }
@@ -95,15 +96,33 @@ select {
     padding: 2px;
 }
 
+.input-wrapper {
+    position: relative;
+    width: 100%;
+    display: inline-block;
+}
+
 #bgUrl {
-    flex: 1;
+    width: 100%;
+    padding-right: 30px;
+    box-sizing: border-box;
+}
+
+#clearBgUrl {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: transparent;
+    line-height: 1;
 }
 
 .bg-button {
     width: 20px;
     height: 20px;
-    padding: 0;
-    margin: 0;
     border: 1px solid #aaa;
     border-radius: 20%;
     background-color: transparent;
@@ -196,4 +215,35 @@ button[type="submit"] {
 input+label,
 select+label {
     margin-left: 20px;
+}
+
+.color-picker {
+    width: 192px;
+}
+
+.color-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    border: 2px solid transparent;
+}
+
+.color-option div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 16px;
+    height: 16px;
+    border: 1px solid black;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+input[type="radio"]:checked+label {
+    border-color: black;
 }
