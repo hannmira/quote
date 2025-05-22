@@ -52,7 +52,7 @@
             <div class="flex-container-coloumn">
                 <div class="flex-container">
                     <div>
-                        <label>배경 이미지 URL 또는</label> <button id="local" onclick="clickFileInput()">파일</button>
+                        <label>배경 이미지 URL 또는</label><button id="local" onclick="clickFileInput()">파일</button>
                     </div>
                     <div id="image-controls">
                         <button class="bg-button" onclick="zoom(1.05)">+</button>
@@ -695,12 +695,14 @@ font-display: swap;
             $('bgUrl').addEventListener('input', () => {
                 $('bgUrl').value = $('bgUrl').value.split(' ')[0];
                 resetImg = true;
+                document.getElementById("bgColor0").checked = true;
                 setBgImgSrc($('bgUrl').value);
             });
             $('fileInput').addEventListener('change', async () => {
                 const file = $('fileInput').files[0];
                 if (!file) return;
 
+                document.getElementById("bgColor0").checked = true;
                 resetImg = true;
                 $('bgUrl').value = URL.createObjectURL(file);
                 setBgImgSrc($('bgUrl').value);
