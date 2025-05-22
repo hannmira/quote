@@ -385,13 +385,17 @@ font-display: swap;
             $('quotesOutput').style.marginTop = `${marginTop}px`;
         }
 
+        let previousFont;
         function changeFont() {
             saveInputsToCookies();
 
             if ($('fontSelect').value == 'localFont') {
+                $('fontSelect').value = previousFont;
                 $('fontInput').click();
                 return;
             }
+            previousFont = $('fontSelect').value;
+            $('fontInput').value = '';
 
             const [fontName, fontURL] = fontMap[$('fontSelect').value];
             document.querySelectorAll('#quotesOutput p').forEach(p => {
@@ -585,12 +589,14 @@ font-display: swap;
             $('author').addEventListener('input', () => {
                 $('authorOutput').textContent = $('author').value;
             });
+            
             $('fontSelect').addEventListener('change', () => {
                 changeFont();
             });
-            $('fontInput').addEventListener('change', async () => {
+            $('fontInput').addEventListener('change', async (event) => {
                 const file = event.target.files[0];
                 if (!file) return;
+                $('fontSelect').value = 'localFont';
 
                 const fontURL = URL.createObjectURL(file); // Blob URL 생성
                 const fontName = 'localFont'; // 사용할 폰트 이름
