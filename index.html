@@ -509,9 +509,15 @@ font-display: swap;
 
             template = template
                 .replace('{{title}}', title)
-                .replace('{{webfontStyle}}', webfontStyleHTML)
                 .replace('{{resultStyle}}', resultStyleHTML)
                 .replace('{{result}}', resultHTML);
+
+            if ($('fontSelect').value == 'localFont') {
+                template = template.replace('{{webfontStyle}}', '');
+            }
+            else {
+                template = template.replace('{{webfontStyle}}', webfontStyleHTML);
+            }
 
             const blob = new Blob([template], { type: "text/html" });
             const url = URL.createObjectURL(blob);
