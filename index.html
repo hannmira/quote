@@ -359,7 +359,7 @@ font-display: swap;
         }
         function loadImageTransformFromCookies() {
             const cookieKeys = {};
-            Object.keys(transform).forEach((key) => cookieKeys[`transform_${key}`] = key);
+            Object.keys(transform).forEach(key => cookieKeys[`transform_${key}`] = key);
 
             for (const [cookieKey, varName] of Object.entries(cookieKeys)) {
                 const value = parseFloat(getCookie(cookieKey));
@@ -644,7 +644,7 @@ font-display: swap;
                 $('bgUrl').value = URL.createObjectURL(file);
                 setBgImgSrc($('bgUrl').value);
             });
-            document.querySelectorAll('input[name="bgColor"]').forEach((input) => {
+            document.querySelectorAll('input[name="bgColor"]').forEach(input => {
                 input.addEventListener('change', () => {
                     if (input.value == 'no') {
                         setBgImgSrc('');
