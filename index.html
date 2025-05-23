@@ -667,7 +667,7 @@ font-display: swap;
             );
             const inputs = document.querySelectorAll('input, select, textarea');
             for (const el of inputs) {
-                const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
+                const eventType = (el.tagName === 'SELECT' || el.type === 'radio') ? 'change' : 'input';
                 el.addEventListener(eventType, () => {
                     applyFilters();
                     applyQuoteStyles();
