@@ -284,13 +284,7 @@ font-style: normal;
 font-display: swap;
 }`;
 
-        const transform = {
-            scale: 1,
-            translateX: -50,
-            translateY: -50,
-            OriginX: 50,
-            OriginY: 50
-        };
+        const transform = {scale, translateX, translateY, OriginX, OriginY};
 
         const $ = id => document.getElementById(id);
 
@@ -338,22 +332,6 @@ font-display: swap;
 
         const img = $('background-img');
 
-        function setBgImgSrc(src) {
-            img.src = src;
-            if (src.startsWith('blob:')) {
-                $('info-text').style.visibility = 'visible';
-            }
-            else {
-                $('info-text').style.visibility = 'hidden';
-            }
-        }
-        function applyFilters() {
-            $('background-img').style.filter = `brightness(${$('brightness').value}%) contrast(${$('contrast').value}%) saturate(${$('saturate').value}%) blur(${$('blur').value}px)`;
-        }
-        function clickFileInput() {
-            $('fileInput').click();
-        }
-
         function saveImageTransformToCookies() {
             Object.entries(transform).forEach(([key, val]) => setCookie(`transform_${key}`, val));
         }
@@ -369,6 +347,21 @@ font-display: swap;
             }
         }
 
+        function setBgImgSrc(src) {
+            img.src = src;
+            if (src.startsWith('blob:')) {
+                $('info-text').style.visibility = 'visible';
+            }
+            else {
+                $('info-text').style.visibility = 'hidden';
+            }
+        }
+        function applyFilters() {
+            img.style.filter = `brightness(${$('brightness').value}%) contrast(${$('contrast').value}%) saturate(${$('saturate').value}%) blur(${$('blur').value}px)`;
+        }
+        function clickFileInput() {
+            $('fileInput').click();
+        }
         function updateTransform() {
             img.style.transform = `translate(${transform.translateX}%, ${transform.translateY}%) scale(${transform.scale})`;
             img.style.transformOrigin = `${transform.OriginX}% ${transform.OriginY}%`;
