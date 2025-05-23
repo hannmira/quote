@@ -31,115 +31,112 @@
         </div>
     </div>
     <div class="controls">
-        <fieldset>
-            <div class="flex-container-coloumn">
-                <div class="flex-container">
-                    <label>발췌 문장</label>
-                    <a href="#" onclick="clearInputs('quote', 'title', 'author')">지우기</a>
+        <form>
+            <fieldset>
+                <div class="flex-container-coloumn">
+                    <div class="flex-container">
+                        <label>발췌 문장</label>
+                        <a href="#" onclick="clearInputs('quote', 'title', 'author')">지우기</a>
+                    </div>
+                    <textarea id="quote" rows="5"></textarea>
                 </div>
-                <textarea id="quote" rows="5">이에 재판관 전원의 일치된 의견으로 주문을 선고합니다. 탄핵 사건이므로 선고시각을 확인하겠습니다. 지금 시각은 오전 11시 22분입니다.
-주문: 피청구인 대통령 윤석열을 파면한다.
-이것으로 선고를 마칩니다.</textarea>
-            </div>
-            <div class="flex-container">
-                <label>글 제목</label>
-                <input id="title" type="text" value="2024헌나8 대통령(윤석열)탄핵 선고요지">
-                <label>저자 이름</label>
-                <input id="author" type="text" value="헌법재판소">
-            </div>
-        </fieldset>
-        <fieldset>
-            <div class="flex-container-coloumn">
+                <div class="flex-container">
+                    <label>글 제목</label>
+                    <input id="title" type="text">
+                    <label>저자 이름</label>
+                    <input id="author" type="text">
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="flex-container-coloumn">
+                    <div class="flex-container">
+                        <div>
+                            <label>배경 이미지 URL 또는</label><button id="local" onclick="clickFileInput()">파일</button>
+                        </div>
+                        <div id="image-controls">
+                            <button class="bg-button" onclick="zoom(1.05)">+</button>
+                            <button class="bg-button" onclick="zoom(0.95)">-</button>
+                            <div style="width:7px;text-align: center;">|</div>
+                            <button class="bg-button" onclick="move(0, -2)" style="font-size: 0.8em">▲</button>
+                            <button class="bg-button" onclick="move(0, 2)" style="font-size: 0.8em">▼</button>
+                            <button class="bg-button" onclick="move(-2, 0)" style="font-size: 0.8em">◀</button>
+                            <button class="bg-button" onclick="move(2, 0)" style="font-size: 0.8em">▶</button>
+                        </div>
+                        <div class="color-picker">
+                            <input type="radio" name="bgColor" id="bgColor0" value="no" checked>
+                            <label for="bgColor0" class="color-option">
+                                <div style="text-align: center;">&times;</div>
+                            </label>
+                            <input type="radio" name="bgColor" id="bgColor1" value="gray">
+                            <label for="bgColor1" class="color-option">
+                                <div style="background-color: gray;"></div>
+                            </label>
+                            <input type="radio" name="bgColor" id="bgColor4" value="#ff002b">
+                            <label for="bgColor4" class="color-option">
+                                <div style="background-color: #ff002b;"></div>
+                            </label>
+                            <input type="radio" name="bgColor" id="bgColor5" value="#ffd500">
+                            <label for="bgColor5" class="color-option">
+                                <div style="background-color: #ffd500;"></div>
+                            </label>
+                            <input type="radio" name="bgColor" id="bgColor6" value="#2bff00">
+                            <label for="bgColor6" class="color-option">
+                                <div style="background-color: #2bff00;"></div>
+                            </label>
+                            <input type="radio" name="bgColor" id="bgColor7" value="#00ffd5">
+                            <label for="bgColor7" class="color-option">
+                                <div style="background-color: #00ffd5;"></div>
+                            </label>
+                            <input type="radio" name="bgColor" id="bgColor8" value="#002aff">
+                            <label for="bgColor8" class="color-option">
+                                <div style="background-color: #002aff;"></div>
+                            </label>
+                            <input type="radio" name="bgColor" id="bgColor9" value="#d400ff">
+                            <label for="bgColor9" class="color-option">
+                                <div style="background-color: #d400ff;"></div>
+                            </label>
+                        </div>
+                        <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                    </div>
+                    <div class="input-wrapper">
+                        <input id="bgUrl">
+                        <button id="clearBgUrl" type="button" onclick="clearInputs('bgUrl')">&times;</button>
+                    </div>
+                </div>
                 <div class="flex-container">
                     <div>
-                        <label>배경 이미지 URL 또는</label><button id="local" onclick="clickFileInput()">파일</button>
+                        <label>밝기<sub>%</sub></label>
+                        <div class="number-input">
+                            <button class="minus" type="button">−</button>
+                            <input id="brightness" type="number" value="70" step="10">
+                            <button class="plus" type="button">+</button>
+                        </div>
                     </div>
-                    <div id="image-controls">
-                        <button class="bg-button" onclick="zoom(1.05)">+</button>
-                        <button class="bg-button" onclick="zoom(0.95)">-</button>
-                        <div style="width:7px;text-align: center;">|</div>
-                        <button class="bg-button" onclick="move(0, -2)" style="font-size: 0.8em">▲</button>
-                        <button class="bg-button" onclick="move(0, 2)" style="font-size: 0.8em">▼</button>
-                        <button class="bg-button" onclick="move(-2, 0)" style="font-size: 0.8em">◀</button>
-                        <button class="bg-button" onclick="move(2, 0)" style="font-size: 0.8em">▶</button>
+                    <div>
+                        <label>대비<sub>%</sub></label>
+                        <div class="number-input">
+                            <button class="minus" type="button">−</button>
+                            <input id="contrast" type="number" value="100" step="10">
+                            <button class="plus" type="button">+</button>
+                        </div>
                     </div>
-                    <div class="color-picker">
-                        <input type="radio" name="bgColor" id="bgColor0" value="no" checked>
-                        <label for="bgColor0" class="color-option">
-                            <div style="text-align: center;">&times;</div>
-                        </label>
-                        <input type="radio" name="bgColor" id="bgColor1" value="gray">
-                        <label for="bgColor1" class="color-option">
-                            <div style="background-color: gray;"></div>
-                        </label>
-                        <input type="radio" name="bgColor" id="bgColor4" value="#ff002b">
-                        <label for="bgColor4" class="color-option">
-                            <div style="background-color: #ff002b;"></div>
-                        </label>
-                        <input type="radio" name="bgColor" id="bgColor5" value="#ffd500">
-                        <label for="bgColor5" class="color-option">
-                            <div style="background-color: #ffd500;"></div>
-                        </label>
-                        <input type="radio" name="bgColor" id="bgColor6" value="#2bff00">
-                        <label for="bgColor6" class="color-option">
-                            <div style="background-color: #2bff00;"></div>
-                        </label>
-                        <input type="radio" name="bgColor" id="bgColor7" value="#00ffd5">
-                        <label for="bgColor7" class="color-option">
-                            <div style="background-color: #00ffd5;"></div>
-                        </label>
-                        <input type="radio" name="bgColor" id="bgColor8" value="#002aff">
-                        <label for="bgColor8" class="color-option">
-                            <div style="background-color: #002aff;"></div>
-                        </label>
-                        <input type="radio" name="bgColor" id="bgColor9" value="#d400ff">
-                        <label for="bgColor9" class="color-option">
-                            <div style="background-color: #d400ff;"></div>
-                        </label>
+                    <div>
+                        <label>채도<sub>%</sub></label>
+                        <div class="number-input">
+                            <button class="minus" type="button">−</button>
+                            <input id="saturate" type="number" value="100" step="10">
+                            <button class="plus" type="button">+</button>
+                        </div>
                     </div>
-                    <input type="file" id="fileInput" accept="image/*" style="display: none;">
-                </div>
-                <div class="input-wrapper">
-                    <input id="bgUrl">
-                    <button id="clearBgUrl" type="button" onclick="clearInputs('bgUrl')">&times;</button>
-                </div>
-            </div>
-            <form id="imageFilters" class="flex-container">
-                <div>
-                    <label>밝기<sub>%</sub></label>
-                    <div class="number-input">
-                        <button class="minus" type="button">−</button>
-                        <input id="brightness" type="number" value="70" step="10">
-                        <button class="plus" type="button">+</button>
+                    <div>
+                        <label>흐리게<sub>px</sub></label>
+                        <div class="number-input">
+                            <button class="minus" type="button">−</button>
+                            <input id="blur" type="number" value="0" step="1">
+                            <button class="plus" type="button">+</button>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <label>대비<sub>%</sub></label>
-                    <div class="number-input">
-                        <button class="minus" type="button">−</button>
-                        <input id="contrast" type="number" value="100" step="10">
-                        <button class="plus" type="button">+</button>
-                    </div>
-                </div>
-                <div>
-                    <label>채도<sub>%</sub></label>
-                    <div class="number-input">
-                        <button class="minus" type="button">−</button>
-                        <input id="saturate" type="number" value="100" step="10">
-                        <button class="plus" type="button">+</button>
-                    </div>
-                </div>
-                <div>
-                    <label>흐리게<sub>px</sub></label>
-                    <div class="number-input">
-                        <button class="minus" type="button">−</button>
-                        <input id="blur" type="number" value="0" step="1">
-                        <button class="plus" type="button">+</button>
-                    </div>
-                </div>
-            </form>
-        </fieldset>
-        <form id="textStyle">
+            </fieldset>
             <fieldset>
                 <div class="flex-container">
                     <div>
@@ -317,7 +314,12 @@ font-display: swap;
             document.querySelectorAll('input, select, textarea').forEach(el => {
                 if (el.id && el.type !== 'file') {
                     const value = getCookie(el.id);
-                    if (value !== '') el.value = value;
+                    if (el.tagName === 'textarea' || el.type === 'text') {
+                        el.value = value;
+                    }
+                    else {
+                        if (value !== '') el.value = value;
+                    }
                 }
             });
             if ($('fontSelect').value == 'localFont') {
@@ -333,7 +335,6 @@ font-display: swap;
 
         function clearInputs(...ids) {
             ids.forEach(id => $(id).value = '');
-            return false;
         }
 
         const img = $('background-img');
@@ -656,7 +657,7 @@ font-display: swap;
 
             bindNumberInputButtons();
 
-            document.querySelectorAll('form button:not([type="submit"])').forEach(btn =>
+            document.querySelectorAll('form button:not([type="submit"]), a').forEach(btn =>
                 btn.addEventListener('click', e => {
                     e.preventDefault();
                     applyFilters();
@@ -667,7 +668,7 @@ font-display: swap;
             );
             const inputs = document.querySelectorAll('input, select, textarea');
             for (const el of inputs) {
-                const eventType = (el.tagName === 'SELECT' || el.type === 'radio') ? 'change' : 'input';
+                const eventType = (el.tagName === 'SELECT' || el.type === 'radio' || el.type === 'file') ? 'change' : 'input';
                 el.addEventListener(eventType, () => {
                     applyFilters();
                     applyQuoteStyles();
