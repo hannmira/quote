@@ -36,7 +36,7 @@
                 <div class="flex-container-coloumn">
                     <div class="flex-container">
                         <label>발췌 문장</label>
-                        <a href="#" onclick="clearInputs('quote', 'title', 'author')">지우기</a>
+                        <a href="#" onclick="clearInputs('quote', 'title', 'author'); changeText();">지우기</a>
                     </div>
                     <textarea id="quote" rows="5"></textarea>
                 </div>
@@ -100,7 +100,7 @@
                     </div>
                     <div class="input-wrapper">
                         <input id="bgUrl">
-                        <button id="clearBgUrl" type="button" onclick="clearInputs('bgUrl')">&times;</button>
+                        <button id="clearBgUrl" type="button" onclick="clearInputs('bgUrl'); setBgImgSrc('');">&times;</button>
                     </div>
                 </div>
                 <div class="flex-container">
@@ -645,6 +645,7 @@ font-display: swap;
             document.querySelectorAll('input[name="bgColor"]').forEach(input => {
                 input.addEventListener('change', () => {
                     if (input.value == 'no') {
+                        $('bgUrl').value = '';
                         setBgImgSrc('');
                         return;
                     }
