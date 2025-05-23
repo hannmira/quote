@@ -288,8 +288,8 @@ font-display: swap;
             scale: 1,
             translateX: -50,
             translateY: -50,
-            OriginX: 50,
-            OriginY: 50
+            originX: 50,
+            originY: 50
         };
 
         const $ = id => document.getElementById(id);
@@ -367,7 +367,7 @@ font-display: swap;
         }
         function updateTransform() {
             img.style.transform = `translate(${transform.translateX}%, ${transform.translateY}%) scale(${transform.scale})`;
-            img.style.transformOrigin = `${transform.OriginX}% ${transform.OriginY}%`;
+            img.style.transformOrigin = `${transform.originX}% ${transform.originY}%`;
         }
         function zoom(factor) {
             transform.scale *= factor;
@@ -376,8 +376,8 @@ font-display: swap;
         function move(dxPercent, dyPercent) {
             transform.translateX += dxPercent;
             transform.translateY += dyPercent;
-            transform.OriginX -= dxPercent;
-            transform.OriginY -= dyPercent;
+            transform.originX -= dxPercent;
+            transform.originY -= dyPercent;
             updateTransform();
         }
         function resetTransform() {
@@ -391,10 +391,11 @@ font-display: swap;
 
             transform.translateX = -50;
             transform.translateY = -50;
-            transform.OriginX = 50;
-            transform.OriginY = 50;
+            transform.originX = 50;
+            transform.originY = 50;
 
             updateTransform();
+            saveImageTransformToCookies();
         }
 
         function centerQuoteOutput() {
