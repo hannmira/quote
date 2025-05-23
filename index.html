@@ -472,12 +472,6 @@ font-display: swap;
             $('fontInput').value = '';
 
             const [fontName, fontURL] = fontMap[$('fontSelect').value];
-            document.querySelectorAll('#quotesOutput p').forEach(p => {
-                p.style.fontFamily = fontName;
-            });
-
-            centerQuotesOutput();
-
             if (fontName !== 'Pretendard' && fontName !== 'Nanum Myeongjo') {
                 $('webfont').innerHTML = buildFontFace(fontName, fontURL);
                 document.fonts.load(`16px "${fontName}"`).then(() => {
@@ -488,6 +482,10 @@ font-display: swap;
                     });
                 });
             }
+            document.querySelectorAll('#quotesOutput p').forEach(p => {
+                p.style.fontFamily = fontName;
+            });
+            centerQuotesOutput();
         }
 
         function changeText() {
