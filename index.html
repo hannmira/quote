@@ -17,8 +17,8 @@
         <div id="result">
             <img id="background-img">
             <div id="container">
-                <div id="quotes-container">
-                    <div id="quotesOutput">
+                <div id="quote-container">
+                    <div id="quoteOutput">
                     </div>
                 </div>
                 <div id="title-container">
@@ -35,9 +35,9 @@
             <div class="flex-container-coloumn">
                 <div class="flex-container">
                     <label>발췌 문장</label>
-                    <a href="#" onclick="clearInputs('quotes', 'title', 'author')">지우기</a>
+                    <a href="#" onclick="clearInputs('quote', 'title', 'author')">지우기</a>
                 </div>
-                <textarea id="quotes" rows="5">이에 재판관 전원의 일치된 의견으로 주문을 선고합니다. 탄핵 사건이므로 선고시각을 확인하겠습니다. 지금 시각은 오전 11시 22분입니다.
+                <textarea id="quote" rows="5">이에 재판관 전원의 일치된 의견으로 주문을 선고합니다. 탄핵 사건이므로 선고시각을 확인하겠습니다. 지금 시각은 오전 11시 22분입니다.
 주문: 피청구인 대통령 윤석열을 파면한다.
 이것으로 선고를 마칩니다.</textarea>
             </div>
@@ -177,9 +177,9 @@
                         <label for="fontColor4" class="color-option">
                             <div style="background-color: black;"></div>
                         </label>
-                        <input type="radio" name="fontColor" id="fontColor5" value="#FE0000">
+                        <input type="radio" name="fontColor" id="fontColor5" value="#ff0800">
                         <label for="fontColor5" class="color-option">
-                            <div style="background-color: #FE0000;"></div>
+                            <div style="background-color: #ff0800;"></div>
                         </label>
                         <input type="radio" name="fontColor" id="fontColor6" value="#0f52ba">
                         <label for="fontColor6" class="color-option">
@@ -216,7 +216,7 @@
                         <label>문단간격<sub>em</sub></label>
                         <div class="number-input">
                             <button class="minus" type="button">−</button>
-                            <input id="quoteMargin" type="number" value="1" step="0.1">
+                            <input id="quoteGap" type="number" value="1" step="0.1">
                             <button class="plus" type="button">+</button>
                         </div>
                     </div>
@@ -245,12 +245,12 @@
             <button type="submit" onclick="downloadImage()">이미지로 저장</button>
         </div>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/heic-to@1.1.13/dist/iife/heic-to.js"></script>
     <script>
         function loadHtmlToImageScript() {
             const script = document.createElement("script");
             if (/firefox/i.test(navigator.userAgent)) {
-                script.src = "https://cdn.jsdelivr.net/npm/html-to-image@1.9.0/dist/html-to-image.min.js";
+                script.src = "https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js";
             } else {
                 script.src = "https://cdn.jsdelivr.net/npm/html-to-image@1.11.13/dist/html-to-image.min.js";
             }
@@ -270,7 +270,6 @@
             KyoboHand: ['KyoboHand', 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff'],
             MapoFlowerIsland: ['MapoFlowerIsland', 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff'],
             NanumBarunpen: ['NanumBarunpen', 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumBarunpen.woff'],
-            NanumMyeongjo: ['Nanum Myeongjo', ''],
             Ownglyph_wiseelist: ['Ownglyph_wiseelist', 'https://fastly.jsdelivr.net/gh/projectnoonnu/2501-1@1.1/Ownglyph_wiseelist-Rg.woff2'],
             Pretendard: ['Pretendard', ''],
             RIDIBatang: ['RIDIBatang', 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff'],
@@ -285,38 +284,35 @@ font-style: normal;
 font-display: swap;
 }`;
 
+        const transform = {
+            scale: 1,
+            translateX: -50,
+            translateY: -50,
+            OriginX: 50,
+            OriginY: 50
+        };
+
         const $ = id => document.getElementById(id);
 
-        // 쿠키 관련
         function setCookie(name, value, days = 90) {
             const expires = new Date(Date.now() + days * 864e5).toUTCString();
             document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
         }
-
         function getCookie(name) {
             return document.cookie.split('; ').reduce((res, cookie) => {
                 const [key, val] = cookie.split('=');
                 return key === encodeURIComponent(name) ? decodeURIComponent(val) : res;
             }, '');
         }
-
-        // 입력 저장/복원
         function saveInputsToCookies() {
             document.querySelectorAll('input, select, textarea').forEach(el => {
                 if (el.id && el.type !== 'file') {
                     setCookie(el.id, el.value);
                 }
             });
-            let selected = document.querySelector('input[name="bgColor"]:checked');
-            if (selected) {
-                setCookie('selectedBgColor', selected.value);
-            }
-            selected = document.querySelector('input[name="fontColor"]:checked');
-            if (selected) {
-                setCookie('selectedFontColor', selected.value);
-            }
+            setCookie('selectedBgColor', document.querySelector('input[name="bgColor"]:checked').value);
+            setCookie('selectedFontColor', document.querySelector('input[name="fontColor"]:checked').value);
         }
-
         function loadInputsFromCookies() {
             document.querySelectorAll('input, select, textarea').forEach(el => {
                 if (el.id && el.type !== 'file') {
@@ -327,19 +323,11 @@ font-display: swap;
             if ($('fontSelect').value == 'localFont') {
                 $('fontSelect').value = 'Pretendard';
             }
-            let savedColor = getCookie('selectedBgColor');
-            if (savedColor) {
-                const radio = document.querySelector(`input[name="bgColor"][value="${savedColor}"]`);
-                if (radio) {
-                    radio.checked = true;
-                }
+            if (getCookie('selectedBgColor')) {
+                document.querySelector(`input[name="bgColor"][value="${getCookie('selectedBgColor')}"]`).checked = true;
             }
-            savedColor = getCookie('selectedFontColor');
-            if (savedColor) {
-                const radio = document.querySelector(`input[name="fontColor"][value="${savedColor}"]`);
-                if (radio) {
-                    radio.checked = true;
-                }
+            if (getCookie('selectedFontColor')) {
+                document.querySelector(`input[name="fontColor"][value="${getCookie('selectedFontColor')}"]`).checked = true;
             }
         }
 
@@ -359,83 +347,65 @@ font-display: swap;
                 $('info-text').style.visibility = 'hidden';
             }
         }
-
-        let scale = 1;
-        let translateX = -50;
-        let translateY = -50;
-        let transformOriginX = 50;
-        let transformOriginY = 50;
-        let resetImg = false;
-
-        function updateTransform() {
-            img.style.transform = `translate(${translateX}%, ${translateY}%) scale(${scale})`;
-            img.style.transformOrigin = `${transformOriginX}% ${transformOriginY}%`;
-            saveImageTransformToCookies();
+        function applyFilters() {
+            $('background-img').style.filter = `brightness(${$('brightness').value}%) contrast(${$('contrast').value}%) saturate(${$('saturate').value}%) blur(${$('blur').value}px)`;
         }
-        function saveImageTransformToCookies() {
-            setCookie('image_scale', scale);
-            setCookie('image_translateX', translateX);
-            setCookie('image_translateY', translateY);
-            setCookie('image_transformOriginX', transformOriginX);
-            setCookie('image_transformOriginY', transformOriginY);
-        }
-        function loadImageTransformFromCookies() {
-            const savedScale = parseFloat(getCookie('image_scale'));
-            const savedX = parseFloat(getCookie('image_translateX'));
-            const savedY = parseFloat(getCookie('image_translateY'));
-            const savedOriginX = parseFloat(getCookie('image_transformOriginX'));
-            const savedOriginY = parseFloat(getCookie('image_transformOriginY'));
-
-            if (!isNaN(savedScale)) scale = savedScale;
-            if (!isNaN(savedX)) translateX = savedX;
-            if (!isNaN(savedY)) translateY = savedY;
-            if (!isNaN(savedOriginX)) transformOriginX = savedOriginX;
-            if (!isNaN(savedOriginY)) transformOriginY = savedOriginY;
-
-            updateTransform();
-        }
-        function zoom(factor) {
-            scale *= factor;
-            updateTransform();
-        }
-        function move(dxPercent, dyPercent) {
-            translateX += dxPercent;
-            translateY += dyPercent;
-            transformOriginX -= dxPercent;
-            transformOriginY -= dyPercent;
-            updateTransform();
-        }
-        function resetImage() {
-            const imgRatio = img.naturalWidth / img.naturalHeight;
-
-            if (imgRatio > 1) {
-                scale = 1200 / img.naturalHeight;
-            } else {
-                scale = 1200 / img.naturalWidth;
-            }
-
-            translateX = -50;
-            translateY = -50;
-            transformOriginX = 50;
-            transformOriginY = 50;
-
-            updateTransform();
-        }
-
         function clickFileInput() {
             $('fileInput').click();
         }
 
-        // 텍스트 포맷팅
-        function formatParagraphs(text) {
-            return text.trim().split('\n').map(line => line.trim()).filter(Boolean).map(line => `<p>${line}</p>`).join('\n');
+        let keepTransform = true;
+        function updateTransform() {
+            img.style.transform = `translate(${transform.translateX}%, ${transform.translateY}%) scale(${transform.scale})`;
+            img.style.transformOrigin = `${transform.OriginX}% ${transform.OriginY}%`;
+        }
+        function saveImageTransformToCookies() {
+            Object.entries(transform).forEach(([key, val]) => setCookie(`transform_${key}`, val));
+        }
+        function loadImageTransformFromCookies() {
+            const cookieKeys = {};
+            Object.keys(transform).forEach((key) => cookieKeys[`transform_${key}`] = key);
+
+            for (const [cookieKey, varName] of Object.entries(cookieKeys)) {
+                const value = parseFloat(getCookie(cookieKey));
+                if (!isNaN(value)) {
+                    window[varName] = value;
+                }
+            }
+            updateTransform();
+        }
+        function zoom(factor) {
+            transform.scale *= factor;
+            updateTransform();
+        }
+        function move(dxPercent, dyPercent) {
+            transform.translateX += dxPercent;
+            transform.translateY += dyPercent;
+            transform.OriginX -= dxPercent;
+            transform.OriginY -= dyPercent;
+            updateTransform();
+        }
+        function resetTransform() {
+            const imgRatio = img.naturalWidth / img.naturalHeight;
+
+            if (imgRatio > 1) {
+                transform.scale = 1200 / img.naturalHeight;
+            } else {
+                transform.scale = 1200 / img.naturalWidth;
+            }
+
+            transform.translateX = -50;
+            transform.translateY = -50;
+            transform.OriginX = 50;
+            transform.OriginY = 50;
+
+            updateTransform();
         }
 
-        // 레이아웃 중앙 정렬
-        function centerQuotesOutput() {
+        function centerQuoteOutput() {
             const titleHeight = $('title-container').clientHeight;
             const authorHeight = $('author-container').clientHeight;
-            const outputHeight = $('quotesOutput').clientHeight;
+            const outputHeight = $('quoteOutput').clientHeight;
 
             let containerMarginBottom = 0;
             let titleBottom = 0;
@@ -455,65 +425,45 @@ font-display: swap;
             const marginTop = (containerHeight - outputHeight) / 2;
 
             $('title-container').style.bottom = `${titleBottom}px`;
-            $('quotes-container').style.height = `${containerHeight}px`;
-            $('quotesOutput').style.marginTop = `${marginTop}px`;
+            $('quote-container').style.height = `${containerHeight}px`;
+            $('quoteOutput').style.marginTop = `${marginTop}px`;
+        }
+
+        function formatParagraphs(text) {
+            return text.trim().split('\n').map(line => line.trim()).filter(Boolean).map(line => `<p>${line}</p>`).join('\n');
+        }
+        function changeText() {
+            $('quoteOutput').innerHTML = formatParagraphs($('quote').value);
+            $('titleOutput').textContent = $('title').value;
+            $('authorOutput').textContent = $('author').value;
+            centerQuoteOutput()
         }
 
         let previousFont;
         function changeFont() {
-            saveInputsToCookies();
-
             if ($('fontSelect').value == 'localFont') {
                 $('fontSelect').value = previousFont;
                 $('fontInput').click();
                 return;
             }
             previousFont = $('fontSelect').value;
-            $('fontInput').value = '';
 
             const [fontName, fontURL] = fontMap[$('fontSelect').value];
-            if (fontName !== 'Pretendard' && fontName !== 'Nanum Myeongjo') {
+            if (fontName !== 'Pretendard') {
                 $('webfont').innerHTML = buildFontFace(fontName, fontURL);
-                document.fonts.load(`16px "${fontName}"`).then(() => {
-                    $('quotesOutput').style.display = 'none';
-                    requestAnimationFrame(() => {
-                        $('quotesOutput').style.display = '';
-                        centerQuotesOutput();
-                    });
-                });
             }
-            document.querySelectorAll('#quotesOutput p').forEach(p => {
-                p.style.fontFamily = fontName;
-            });
-            centerQuotesOutput();
+            $('quoteOutput').style.fontFamily = fontName;
+            document.fonts.load(`16px "${fontName}"`).then(() => centerQuoteOutput());
         }
 
-        function changeText() {
-            $('quotesOutput').innerHTML = formatParagraphs($('quotes').value);
-            $('titleOutput').textContent = $('title').value;
-            $('authorOutput').textContent = $('author').value;
-            changeFont();
-        }
-
-        // 스타일 반영
-        function applyChanges() {
-            saveInputsToCookies();
-
-            $('background-img').style.filter = `brightness(${$('brightness').value}%) contrast(${$('contrast').value}%) saturate(${$('saturate').value}%) blur(${$('blur').value}px)`;
-
-            $('result').style.color = document.querySelector('input[name="fontColor"]:checked').value;
-            document.querySelectorAll('#quotesOutput p').forEach(p => {
-                p.style.fontSize = $('quoteSize').value + 'px';
-                p.style.lineHeight = $('quoteLineHeight').value;
-                p.style.marginBottom = $('quoteMargin').value + 'em';
-                p.style.letterSpacing = $('quoteLetterSpacing').value + 'px';
-                p.style.wordSpacing = $('quoteWordSpacing').value + 'px';
-            });
-            $('quotesOutput').style.display = 'none';
-            requestAnimationFrame(() => {
-                $('quotesOutput').style.display = '';
-                centerQuotesOutput();
-            });
+        function applyQuoteStyles() {
+            $('quoteOutput').style.fontSize = $('quoteSize').value + 'px';
+            $('container').style.color = document.querySelector('input[name="fontColor"]:checked').value;
+            $('quoteOutput').style.gap = $('quoteGap').value + 'em';
+            $('quoteOutput').style.lineHeight = $('quoteLineHeight').value;
+            $('quoteOutput').style.letterSpacing = $('quoteLetterSpacing').value + 'px';
+            $('quoteOutput').style.wordSpacing = $('quoteWordSpacing').value + 'px';
+            centerQuoteOutput()
         }
 
         function bindNumberInputButtons() {
@@ -523,21 +473,19 @@ font-display: swap;
                 wrapper.querySelector('.minus').addEventListener('click', e => {
                     e.preventDefault();
                     input.stepDown();
-                    applyChanges();
                 });
 
                 wrapper.querySelector('.plus').addEventListener('click', e => {
                     e.preventDefault();
                     input.stepUp();
-                    applyChanges();
                 });
             });
         }
 
-        // 이미지 다운로드
+        // 이미지로 저장
         async function downloadImage() {
             const title = $('title').value;
-            const para = $('quotes').value;
+            const para = $('quote').value;
             const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
 
             htmlToImage.toJpeg($('result'), {
@@ -564,7 +512,7 @@ font-display: swap;
             const resultStyle = await resultStyleRes.text();
 
             const title = $('title').value;
-            const para = $('quotes').value;
+            const para = $('quote').value;
             const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
 
             const webfontStyleHTML = document.querySelector('#webfont').outerHTML;
@@ -609,40 +557,30 @@ font-display: swap;
             window.addEventListener('resize', updateContentWidth);
 
             img.onload = () => {
-                if (resetImg) {
-                    $('imageFilters').reset();
-                    applyChanges();
-                    resetImage();
-                    resetImg = false;
-                }
-                else {
+                if (keepTransform) { // 쿠키에 저장된 이미지 주소 사용 시
                     updateTransform();
+                    keepTransform = false;
+                    return;
                 }
+                resetTransform();
             };
             img.onerror = () => {
-                resetImg = true;
+                keepTransform = false;
                 setBgImgSrc('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjEyMDAiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNCOUQ5RUIiIC8+PC9zdmc+');
             };
-            document.fonts.ready.then(function () {
-                $('quotesOutput').style.display = 'none';
-                requestAnimationFrame(() => {
-                    $('quotesOutput').style.display = '';
-                    centerQuotesOutput();
-                });
-            });
 
-            $('quotes').addEventListener('input', () => {
-                const ifRidi = $('quotes').value.match(/([\s\S]+?)\r?\n\r?\n(.+?) \| (.+?) 저\r?\n\r?\n리디에서 자세히 보기:/);
-                const ifKyobo = $('quotes').value.match(/([\s\S]+?)\r?\n\r?\n (.+?) 중에서\r?\n\r?\n 교보eBook/);
-                const ifYes24 = $('quotes').value.match(/([\s\S]+?)\r?\n\r?\n(.+?) [|｜∣] (.+?)\r?\n\r?\n\[크레마 예스24 eBook\]/);
-                const ifAladin = $('quotes').value.match(/([\s\S]+?)\r?\n\r?\n-알라딘 eBook \<(.+?)\> \((.+?)\) 중에서/);
+            $('quote').addEventListener('input', () => {
+                const ifRidi = $('quote').value.match(/([\s\S]+?)\r?\n\r?\n(.+?) \| (.+?) 저\r?\n\r?\n리디에서 자세히 보기:/);
+                const ifKyobo = $('quote').value.match(/([\s\S]+?)\r?\n\r?\n (.+?) 중에서\r?\n\r?\n 교보eBook/);
+                const ifYes24 = $('quote').value.match(/([\s\S]+?)\r?\n\r?\n(.+?) [|｜∣] (.+?)\r?\n\r?\n\[크레마 예스24 eBook\]/);
+                const ifAladin = $('quote').value.match(/([\s\S]+?)\r?\n\r?\n-알라딘 eBook \<(.+?)\> \((.+?)\) 중에서/);
                 let body = '', title = '', author = '';
                 if (ifRidi) [, body, title, author,] = ifRidi;
                 if (ifKyobo) [, body, title,] = ifKyobo;
                 if (ifYes24) [, body, title, author,] = ifYes24;
                 if (ifAladin) [, body, title, author,] = ifAladin;
                 if (ifRidi || ifKyobo || ifYes24 || ifAladin) {
-                    $('quotes').value = body;
+                    $('quote').value = body;
                     $('title').value = title;
                     $('author').value = author;
                 }
@@ -661,23 +599,15 @@ font-display: swap;
             $('fontInput').addEventListener('change', async (event) => {
                 const file = event.target.files[0];
                 if (!file) return;
+
                 $('fontSelect').value = 'localFont';
+                $('fontInput').value = '';
 
                 const fontURL = URL.createObjectURL(file); // Blob URL 생성
                 const fontName = 'localFont'; // 사용할 폰트 이름
-                document.querySelectorAll('#quotesOutput p').forEach(p => {
-                    p.style.fontFamily = fontName;
-                });
-
                 $('webfont').innerHTML = buildFontFace(fontName, fontURL);
-
-                document.fonts.load(`16px "${fontName}"`).then(() => {
-                    $('quotesOutput').style.display = 'none';
-                    requestAnimationFrame(() => {
-                        $('quotesOutput').style.display = '';
-                        centerQuotesOutput();
-                    });
-                });
+                $('quoteOutput').style.fontFamily = fontName;
+                document.fonts.load(`16px "${fontName}"`).then(() => centerQuoteOutput());
             });
 
             $('bgUrl').addEventListener('paste', (event) => {
@@ -691,50 +621,63 @@ font-display: swap;
                 }
             });
             $('bgUrl').addEventListener('input', () => {
-                $('bgUrl').value = $('bgUrl').value.split(' ')[0];
-                resetImg = true;
                 document.getElementById("bgColor0").checked = true;
+                $('bgUrl').value = $('bgUrl').value.split(' ')[0];
                 setBgImgSrc($('bgUrl').value);
             });
             $('fileInput').addEventListener('change', async () => {
-                const file = $('fileInput').files[0];
+                let file = $('fileInput').files[0];
                 if (!file) return;
 
+                $('fileInput').value = '';
+
+                if (file.type === 'image/heic' || file.name.endsWith('.heic')) {
+                    const output = await HeicTo({
+                        blob: file,
+                        toType: "image/jpeg",
+                        quality: 0.95,
+                    });
+                    file = Array.isArray(output) ? output[0] : output;
+                }
+
                 document.getElementById("bgColor0").checked = true;
-                resetImg = true;
                 $('bgUrl').value = URL.createObjectURL(file);
                 setBgImgSrc($('bgUrl').value);
             });
             document.querySelectorAll('input[name="bgColor"]').forEach((input) => {
                 input.addEventListener('change', () => {
                     if (input.value == 'no') {
-                        resetImg = true;
                         setBgImgSrc('');
                         return;
                     }
                     const svgString = '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200"><rect width="100%" height="100%" fill="{{color}}" /></svg>';
                     const base64 = btoa(unescape(encodeURIComponent(svgString.replace('{{color}}', input.value))));
                     $('bgUrl').value = `data:image/svg+xml;base64,${base64}`
-
-                    resetImg = true;
                     setBgImgSrc($('bgUrl').value);
                 });
             });
 
+            bindNumberInputButtons();
+
             document.querySelectorAll('form button:not([type="submit"])').forEach(btn =>
                 btn.addEventListener('click', e => {
                     e.preventDefault();
-                    applyChanges();
+                    applyFilters();
+                    applyQuoteStyles();
+                    saveInputsToCookies();
+                    saveImageTransformToCookies();
                 })
             );
             const inputs = document.querySelectorAll('input, select, textarea');
             for (const el of inputs) {
                 const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
                 el.addEventListener(eventType, () => {
-                    applyChanges();
+                    applyFilters();
+                    applyQuoteStyles();
+                    saveInputsToCookies();
+                    saveImageTransformToCookies();
                 });
             }
-            bindNumberInputButtons();
         }
 
         async function fetchCss() {
@@ -758,11 +701,9 @@ font-display: swap;
             bindEvents();
             changeText();
             setBgImgSrc($('bgUrl').value);
-            applyChanges();
+            applyFilters();
+            applyQuoteStyles();
             loadHtmlToImageScript();
-
-            console.log(getComputedStyle(document.querySelector('#quotesOutput p')).fontFamily);
-
         });
     </script>
 </body>

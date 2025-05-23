@@ -46,17 +46,11 @@ body {
     z-index: 1;
 }
 
-#quote-container {
+#quotes-container {
     position: absolute;
     top: 0;
     left: 0;
     width: 1020px;
-}
-
-#quoteOutput {
-    display: flex;
-    flex-direction: column;
-    align-content: flex-start;
 }
 
 #title-container p,
@@ -69,6 +63,7 @@ body {
 
 #title-container {
     position: absolute;
+    bottom: 62px;
     line-height: 1.2;
     font-weight: 300;
 }
