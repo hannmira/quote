@@ -354,11 +354,6 @@ font-display: swap;
             $('fileInput').click();
         }
 
-        let keepTransform = true;
-        function updateTransform() {
-            img.style.transform = `translate(${transform.translateX}%, ${transform.translateY}%) scale(${transform.scale})`;
-            img.style.transformOrigin = `${transform.OriginX}% ${transform.OriginY}%`;
-        }
         function saveImageTransformToCookies() {
             Object.entries(transform).forEach(([key, val]) => setCookie(`transform_${key}`, val));
         }
@@ -372,7 +367,11 @@ font-display: swap;
                     window[varName] = value;
                 }
             }
-            updateTransform();
+        }
+
+        function updateTransform() {
+            img.style.transform = `translate(${transform.translateX}%, ${transform.translateY}%) scale(${transform.scale})`;
+            img.style.transformOrigin = `${transform.OriginX}% ${transform.OriginY}%`;
         }
         function zoom(factor) {
             transform.scale *= factor;
@@ -556,6 +555,7 @@ font-display: swap;
         function bindEvents() {
             window.addEventListener('resize', updateContentWidth);
 
+            let keepTransform = true;
             img.onload = () => {
                 if (keepTransform) { // 쿠키에 저장된 이미지 주소 사용 시
                     updateTransform();
