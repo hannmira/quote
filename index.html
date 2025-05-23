@@ -342,15 +342,12 @@ font-display: swap;
             Object.entries(transform).forEach(([key, val]) => setCookie(`transform_${key}`, val));
         }
         function loadImageTransformFromCookies() {
-            const cookieKeys = {};
-            Object.keys(transform).forEach(key => cookieKeys[`transform_${key}`] = key);
-
-            for (const [cookieKey, varName] of Object.entries(cookieKeys)) {
-                const value = parseFloat(getCookie(cookieKey));
+            Object.keys(transform).forEach(key => {
+                const value = parseFloat(getCookie(`transform_${key}`));
                 if (!isNaN(value)) {
-                    window[varName] = value;
+                    transform[key] = value;
                 }
-            }
+            });
         }
 
         function setBgImgSrc(src) {
