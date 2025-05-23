@@ -284,7 +284,13 @@ font-style: normal;
 font-display: swap;
 }`;
 
-        const transform = {scale, translateX, translateY, OriginX, OriginY};
+        const transform = {
+            scale: 1,
+            translateX: -50,
+            translateY: -50,
+            OriginX: 50,
+            OriginY: 50
+        };
 
         const $ = id => document.getElementById(id);
 
