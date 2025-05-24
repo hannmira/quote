@@ -105,6 +105,14 @@
                 </div>
                 <div class="flex-container">
                     <div>
+                        <label>채도<sub>%</sub></label>
+                        <div class="number-input">
+                            <button class="minus" type="button">−</button>
+                            <input id="saturate" type="number" value="100" step="10">
+                            <button class="plus" type="button">+</button>
+                        </div>
+                    </div>
+                    <div>
                         <label>밝기<sub>%</sub></label>
                         <div class="number-input">
                             <button class="minus" type="button">−</button>
@@ -117,14 +125,6 @@
                         <div class="number-input">
                             <button class="minus" type="button">−</button>
                             <input id="contrast" type="number" value="100" step="10">
-                            <button class="plus" type="button">+</button>
-                        </div>
-                    </div>
-                    <div>
-                        <label>채도<sub>%</sub></label>
-                        <div class="number-input">
-                            <button class="minus" type="button">−</button>
-                            <input id="saturate" type="number" value="100" step="10">
                             <button class="plus" type="button">+</button>
                         </div>
                     </div>
@@ -361,7 +361,7 @@ font-display: swap;
             }
         }
         function applyFilters() {
-            img.style.filter = `brightness(${$('brightness').value}%) contrast(${$('contrast').value}%) saturate(${$('saturate').value}%) blur(${$('blur').value}px)`;
+            img.style.filter = `saturate(${$('saturate').value}%) brightness(${$('brightness').value}%) contrast(${$('contrast').value}%) blur(${$('blur').value}px)`;
         }
         function clickFileInput() {
             $('fileInput').click();
