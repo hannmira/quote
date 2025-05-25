@@ -217,7 +217,7 @@ select+label {
     margin-left: 20px;
 }
 
-.color-picker {
+.color-radio {
     width: 192px;
 }
 
@@ -246,4 +246,10 @@ input[type="radio"] {
 
 input[type="radio"]:checked+label {
     border-color: black;
+}
+
+.colorpicker {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
 }

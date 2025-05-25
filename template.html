@@ -12,6 +12,8 @@
     {{result}}
     <button id="downlaod-image" type="submit" onclick="downloadImage()">이미지로 저장</button>
     <script>
+        const $ = id => document.getElementById(id);
+
         function loadHtmlToImageScript() {
             const script = document.createElement("script");
             if (/firefox/i.test(navigator.userAgent)) {
@@ -22,18 +24,21 @@
             document.head.appendChild(script);
         }
         function downloadImage() {
-            const title = document.title;
-            const para = document.getElementById('quotesOutput').innerText;
-            const filename = `${title.slice(0, 10).trim()}-${para.slice(0, 10).trim()}`;
+            const title = document.title.slice(0, 10).trim();
+            const para = $('quoteOutput').innerText.slice(0, 10).trim();
+            const img = $('background-img');
 
-            htmlToImage.toJpeg(document.getElementById('result'), {
+            const saveImage = img.src.startsWith('data:') ? htmlToImage.toPng : htmlToImage.toJpeg;
+            const filename = img.src.startsWith('data:') ? `${title}-${para}.png` : `${title}-${para}.jpg`;
+
+            saveImage($('result'), {
                 quality: 0.95,
                 width: 1200,
                 height: 1200,
                 pixelRatio: 1,
             }).then(dataUrl => {
                 const link = document.createElement('a');
-                link.download = `${filename}.jpg`;
+                link.download = filename;
                 link.href = dataUrl;
                 link.click();
             }).catch(error => console.error('이미지 저장 실패:', error));
