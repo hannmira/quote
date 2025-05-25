@@ -51,16 +51,16 @@
                 <div class="flex-container-coloumn">
                     <div class="flex-container">
                         <div>
-                            <label>배경 이미지 URL 또는</label><button id="local" onclick="clickFileInput()">파일</button>
+                            <label>배경 이미지 URL 또는</label><button type="button" id="local" onclick="clickFileInput()">파일</button>
                         </div>
                         <div id="image-controls">
-                            <button class="bg-button" onclick="zoom(1.05)">+</button>
-                            <button class="bg-button" onclick="zoom(0.95)">-</button>
+                            <button type="button" class="bg-button" onclick="zoom(1.05)">+</button>
+                            <button type="button" class="bg-button" onclick="zoom(0.95)">-</button>
                             <div style="width:7px;text-align: center;">|</div>
-                            <button class="bg-button" onclick="move(0, -2)" style="font-size: 0.8em">▲</button>
-                            <button class="bg-button" onclick="move(0, 2)" style="font-size: 0.8em">▼</button>
-                            <button class="bg-button" onclick="move(-2, 0)" style="font-size: 0.8em">◀</button>
-                            <button class="bg-button" onclick="move(2, 0)" style="font-size: 0.8em">▶</button>
+                            <button type="button" class="bg-button" onclick="move(0, -2)" style="font-size: 0.8em">▲</button>
+                            <button type="button" class="bg-button" onclick="move(0, 2)" style="font-size: 0.8em">▼</button>
+                            <button type="button" class="bg-button" onclick="move(-2, 0)" style="font-size: 0.8em">◀</button>
+                            <button type="button" class="bg-button" onclick="move(2, 0)" style="font-size: 0.8em">▶</button>
                         </div>
                         <div class="color-radio">
                             <input type="radio" name="bgColor" id="bgColor0" value="no" checked>
@@ -240,8 +240,8 @@
         </form>
         <div class="flex-container">
             <div id="info-text">HTML로 저장 시 사용자 파일 또는 복사한 이미지는 저장되지 않습니다.</div>
-            <button type="submit" onclick="saveHTML()">HTML로 저장</button>
-            <button type="submit" onclick="downloadImage()">이미지로 저장</button>
+            <button type="button" class="save-button" onclick="saveHTML()">HTML로 저장</button>
+            <button type="button" class="save-button" onclick="downloadImage()">이미지로 저장</button>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/heic-to@1.1.13/dist/iife/heic-to.js"></script>
@@ -706,7 +706,7 @@ font-display: swap;
 
             bindNumberInputButtons();
 
-            document.querySelectorAll('form button:not([type="submit"]), a').forEach(btn =>
+            document.querySelectorAll('form button, a').forEach(btn =>
                 btn.addEventListener('click', e => {
                     e.preventDefault();
                     applyFilters();
