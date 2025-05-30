@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <title>발췌 이미지 생성기</title>
+    <style id="webfont">
+    </style>
+    <style id="result-style">
+    </style>
+    <style id="control-style">
+    </style>
+</head>
+<body>
+    <div id="result-wrapper">
+        <div id="result">
+            <img id="background-img" crossorigin="anonymous">
+            <div id="container">
+                <div id="quote-container">
+                    <div id="quoteOutput">
+                    </div>
+                </div>
+                <div id="title-container">
+                    <p id="titleOutput"></p>
+                </div>
+                <div id="author-container">
+                    <p id="authorOutput"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="controls">
+        <form>
+            <fieldset>
+                <div class="flex-container-coloumn">
+                    <div class="flex-container">
+                        <label>발췌 문장</label>
+                        <a href="#" onclick="clearInputs('quote', 'title', 'author'); changeText();">지우기</a>
+                    </div>
+                    <textarea id="quote" rows="5"></textarea>
+                </div>
+                <div class="flex-container">
+                    <label>제목</label>
+                    <input id="title" type="text">
+                    <label>이름</label>
+                    <input id="author" type="text">
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="flex-container-coloumn">
+                    <div class="flex-container">
+                        <div>
+                            <label>배경 이미지 URL 또는</label><button type="button" id="local" onclick="clickFileInput()">파일</button>
+                        </div>
+                        <div id="image-controls">
+                            <button type="button" class="bg-button" onclick="zoom(1.05)">+</button>
+                            <button type="button" class="bg-button" onclick="zoom(0.95)">-</button>
+                            <div style="width:7px;text-align: center;">|</div>
+                            <button type="button" class="bg-button" onclick="move(0, -2)" style="font-size: 0.8em">▲</button>
+                            <button type="button" class="bg-button" onclick="move(0, 2)" style="font-size: 0.8em">▼</button>
+                            <button type="button" class="bg-button" onclick="move(-2, 0)" style="font-size: 0.8em">◀</button>
+                            <button type="button" class="bg-button" onclick="move(2, 0)" style="font-size: 0.8em">▶</button>
+                        </div>
+                        <div class="color-radio">
+                            <input type="radio" name="bgColor" id="bgColor0" value="no" checked>
+                            <label for="bgColor0" class="color-option">
+                                <div style="text-align: center;">&times;</div>
+                            </label>
+                            <input type="radio" name="bgColor" id="bgColor1" value="#0F0F0F">
+                            <label for="bgColor1" class="color-option">
+                                <div style="background-color: #0F0F0F;"></div>
+                            </label>
+                            <input type="radio" name="bgColor" id="bgColor2" value="#FFFFFF">
+                            <label for="bgColor2" class="color-option">
+                                <div style="background-color: #FFFFFF;"></div>
+                            </label>
+                            <input type="radio" name="bgColor" id="bgColor3" value="#FEBAD4">
+                            <label for="bgColor3" class="color-option">
+                                <div style="background-color: #FEBAD4;"></div>
+                            </label>
+                            <input type="radio" name="bgColor" id="bgColor4" value="#FCF3AB">
+                            <label for="bgColor4" class="color-option">
+                                <div style="background-color: #FCF3AB;"></div>
+                            </label>
+                            <input type="radio" name="bgColor" id="bgColor5" value="#B4E2DE">
+                            <label for="bgColor5" class="color-option">
+                                <div style="background-color: #B4E2DE;"></div>
+                            </label>
+                            <input type="radio" name="bgColor" id="bgColor6" value="#919FE4">
+                            <label for="bgColor6" class="color-option">
+                                <div style="background-color: #919FE4;"></div>
+                            </label>
+                            <input type="radio" name="bgColor" id="userbgcolorInput" value="userBgColor" onclick="document.getElementById('bgColorPicker').click()">
+                            <label for="userbgcolorInput" class="color-option" style="position: relative;">
+                                <div id="userBgColorDiv" style="background-color: lightgray;">✎</div>
+                                <input class="colorpicker" type="color" id="bgColorPicker" value="#D3D3D3">
+                            </label>
+                        </div>
+                        <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                    </div>
+                    <div class="input-wrapper">
+                        <input id="bgUrl">
+                        <button id="clearBgUrl" type="button" onclick="clearInputs('bgUrl'); setBgImgSrc('');">&times;</button>
+                    </div>
+                </div>
+                <div class="flex-container">
+                    <div>
+                        <label>밝기<sub>%</sub></label>
+                        <div class="number-input">
+                            <button class="minus" type="button">−</button>
+                            <input id="brightness" type="number" value="100" step="10">
+                            <button class="plus" type="button">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label>채도<sub>%</sub></label>
+                        <div class="number-input">
+                            <button class="minus" type="button">−</button>
+                            <input id="saturate" type="number" value="100" step="10">
+                            <button class="plus" type="button">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label>대비<sub>%</sub></label>
+                        <div class="number-input">
+                            <button class="minus" type="button">−</button>
+                            <input id="contrast" type="number" value="100" step="10">
+                            <button class="plus" type="button">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label>흐리게<sub>px</sub></label>
+                        <div class="number-input">
+                            <button class="minus" type="button">−</button>
+                            <input id="blur" type="number" value="0" step="1">
+                            <button class="plus" type="button">+</button>
+                        </div>
+                    </div>
+            </fieldset>
+            <fieldset>
+                <div class="flex-container">
+                    <div>
+                        <label>글꼴</label>
+                        <select id="fontSelect">
+                            <option value="RIDIBatang" selected>리디바탕</option>
+                            <option value="Pretendard">프리텐다드</option>
+                            <option value="GangwonEdu">강원교육모두체</option>
+                            <option value="GangwonEduSaeeum">강원교육새음체</option>
+                            <option value="GowunDodum">고운돋움</option>
+                            <option value="NanumBarunpen">나눔바른펜</option>
+                            <option value="DungGeunMo">둥근모꼴+Fixedsys</option>
+                            <option value="Handletter">손편지체</option>
+                            <option value="SCDreamLight">에스코어 드림</option>
+                            <option value="omyu_pretty">오뮤 다예쁨체</option>
+                            <option value="Ownglyph_wiseelist">온글잎 위씨리스트</option>
+                            <option value="Ownglyph_corncorn">온글잎 콘콘체</option>
+                            <option value="InkLipquid">잉크립퀴드체</option>
+                            <option value="HakgyoansimGaeulsopung">학교안심 가을소풍</option>
+                            <option value="HakgyoansimNadeuri">학교안심 나들이</option>
+                            <option value="HakgyoansimChilpanjiugae">학교안심 칠판지우개</option>
+                            <option value="IM_Hyemin">IM혜민체</option>
+                            <option value="localFont">사용자 파일</option>
+                        </select>
+                    </div>
+                    <input type="file" id="fontInput" accept=".ttf,.otf,.woff,.woff2" style="display: none;">
+                    <div>
+                        <label>글씨 크기<sub>px</sub></label>
+                        <div class="number-input">
+                            <button class="minus" type="button">−</button>
+                            <input id="quoteSize" type="number" value="50" step="1">
+                            <button class="plus" type="button">+</button>
+                        </div>
+                    </div>
+                    <div class="color-radio">
+                        <input type="radio" name="fontColor" id="fontColor1" value="white" checked>
+                        <label for="fontColor1" class="color-option">
+                            <div style="background-color: white;"></div>
+                        </label>
+                        <input type="radio" name="fontColor" id="fontColor2" value="black">
+                        <label for="fontColor2" class="color-option">
+                            <div style="background-color: black;"></div>
+                        </label>
+                        <input type="radio" name="fontColor" id="fontColor3" value="#ff0000">
+                        <label for="fontColor3" class="color-option">
+                            <div style="background-color: #ff0000;"></div>
+                        </label>
+                        <input type="radio" name="fontColor" id="fontColor4" value="#ffbf00">
+                        <label for="fontColor4" class="color-option">
+                            <div style="background-color: #ffbf00;"></div>
+                        </label>
+                        <input type="radio" name="fontColor" id="fontColor5" value="#2a6099">
+                        <label for="fontColor5" class="color-option">
+                            <div style="background-color: #2a6099;"></div>
+                        </label>
+                        <input type="radio" name="fontColor" id="fontColor6" value="#FEBAD4">
+                        <label for="fontColor6" class="color-option">
+                            <div style="background-color: #FEBAD4;"></div>
+                        </label>
+                        <input type="radio" name="fontColor" id="fontColor7" value="#B4E2DE">
+                        <label for="fontColor7" class="color-option">
+                            <div style="background-color: #B4E2DE;"></div>
+                        </label>
+                        <input type="radio" name="fontColor" id="userFontColorInput" value="userFontColor" onclick="document.getElementById('fontColorPicker').click()">
+                        <label for="userFontColorInput" class="color-option" style="position: relative;">
+                            <div id="userFontColorDiv" style="background-color: lightgray;">✎</div>
+                            <input class="colorpicker" type="color" id="fontColorPicker" value="#D3D3D3">
+                        </label>
+                    </div>
+                </div>
+                <div class="flex-container">
+                    <div>
+                        <label>줄높이</label>
+                        <div class="number-input">
+                            <button class="minus" type="button">−</button>
+                            <input id="quoteLineHeight" type="number" value="1.6" step="0.1">
+                            <button class="plus" type="button">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label>문단간격<sub>em</sub></label>
+                        <div class="number-input">
+                            <button class="minus" type="button">−</button>
+                            <input id="quoteGap" type="number" value="0.5" step="0.1">
+                            <button class="plus" type="button">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label>자간<sub>px</sub></label>
+                        <div class="number-input">
+                            <button class="minus" type="button">−</button>
+                            <input id="quoteLetterSpacing" type="number" value="-1" step="1">
+                            <button class="plus" type="button">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label>어간<sub>px</sub></label>
+                        <div class="number-input">
+                            <button class="minus" type="button">−</button>
+                            <input id="quoteWordSpacing" type="number" value="0" step="1">
+                            <button class="plus" type="button">+</button>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+        <div class="flex-container">
+            <div id="info-text">HTML로 저장 시 사용자 파일 또는 복사한 이미지는 저장되지 않습니다.</div>
+            <button type="button" class="save-button" onclick="saveHTML()">HTML로 저장</button>
+            <button type="button" class="save-button" onclick="downloadImage()">이미지로 저장</button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/heic-to@1.1.13/dist/iife/heic-to.js"></script>
+    <script>
+        function loadHtmlToImageScript() {
+            const script = document.createElement("script");
+            if (/firefox/i.test(navigator.userAgent)) {
+                script.src = "https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js";
+            } else {
+                script.src = "https://cdn.jsdelivr.net/npm/html-to-image@1.11.13/dist/html-to-image.min.js";
+            }
+            document.head.appendChild(script);
+        }
+
+        const fontMap = {
+            DungGeunMo: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff',
+            GangwonEdu: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFLightA.woff',
+            GangwonEduHyeonokT: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduHyeonokT_OTFMediumA.woff',
+            GangwonEduSaeeum: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff',
+            GowunBatang: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunBatang-Regular.woff',
+            GowunDodum: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff',
+            Gyeonggi_Batang_Regular: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2410-3@1.0/Batang_Regular.woff',
+            HakgyoansimBadasseugiTTF: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimBadasseugiTTF-L.woff2',
+            HakgyoansimBareonbatangB: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimBareonbatangB.woff2',
+            HakgyoansimChilpanjiugae: 'https://cdn.jsdelivr.net/gh/fonts-archive/HakgyoansimChilpanjiugae/HakgyoansimChilpanjiugae-L.woff2',
+            HakgyoansimGaeulsopung: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimGaeulsopungL.woff2',
+            HakgyoansimNadeuri: 'https://cdn.jsdelivr.net/gh/fonts-archive/HakgyoansimNadeuri/HakgyoansimNadeuri-L.woff2',
+            Handletter: 'https://fastly.jsdelivr.net/gh/projectnoonnu/naverfont_05@1.0/Handletter.woff',
+            IM_Hyemin: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/IM_Hyemin-Regular.woff2',
+            InkLipquid: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/InkLipquid.woff',
+            KyoboHand: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff',
+            MapoFlowerIsland: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff',
+            MaruBuri: 'https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff2',
+            NanumBarunpen: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumBarunpen.woff',
+            omyu_pretty: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2',
+            Ownglyph_corncorn: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2412-1@1.0/Ownglyph_corncorn-Rg.woff2',
+            Ownglyph_wiseelist: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2501-1@1.1/Ownglyph_wiseelist-Rg.woff2',
+            Pretendard: 'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/packages/pretendard/dist/web/static/woff2/Pretendard-Regular.woff2',
+            RIDIBatang: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff',
+            SCDreamLight: 'https://cdn.jsdelivr.net/gh/fonts-archive/S-CoreDream/SCDreamLight.woff2',
+            SunBatang: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/SunBatang-Light.woff',
+        };
+
+        const buildFontFace = (name, url) => `
+@font-face {
+font-family: '${name}';
+src: url('${url}');
+font-weight: normal;
+font-style: normal;
+font-display: swap;
+}`;
+
+        const transform = {
+            scale: 1,
+            translateX: -50,
+            translateY: -50,
+            originX: 50,
+            originY: 50
+        };
+
+        const $ = id => document.getElementById(id);
+
+        function setCookie(name, value, days = 90) {
+            const expires = new Date(Date.now() + days * 864e5).toUTCString();
+            document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
+        }
+        function getCookie(name) {
+            return document.cookie.split('; ').reduce((res, cookie) => {
+                const [key, val] = cookie.split('=');
+                return key === encodeURIComponent(name) ? decodeURIComponent(val) : res;
+            }, '');
+        }
+        function saveInputsToCookies() {
+            document.querySelectorAll('input, select, textarea').forEach(el => {
+                if (el.id && el.type !== 'file') {
+                    setCookie(el.id, el.value);
+                }
+            });
+            setCookie('selectedBgColor', document.querySelector('input[name="bgColor"]:checked').value);
+            setCookie('selectedFontColor', document.querySelector('input[name="fontColor"]:checked').value);
+        }
+        function loadInputsFromCookies() {
+            document.querySelectorAll('input, select, textarea').forEach(el => {
+                if (el.id && el.type !== 'file') {
+                    const value = getCookie(el.id);
+                    if (el.tagName === 'textarea' || el.type === 'text') {
+                        el.value = value;
+                    }
+                    else {
+                        if (value !== '') el.value = value;
+                    }
+                }
+            });
+            if ($('fontSelect').value == 'localFont') {
+                $('fontSelect').value = 'RIDIBatang';
+            }
+            if (getCookie('selectedBgColor')) {
+                document.querySelector(`input[name="bgColor"][value="${getCookie('selectedBgColor')}"]`).checked = true;
+            }
+            if (getCookie('selectedFontColor')) {
+                document.querySelector(`input[name="fontColor"][value="${getCookie('selectedFontColor')}"]`).checked = true;
+            }
+            if (getCookie('bgColorPicker')) {
+                $('userBgColorDiv').style.backgroundColor = getCookie('bgColorPicker');
+                $('userBgColorDiv').style.color = fontColorFromBg(getCookie('bgColorPicker'));
+            }
+            if (getCookie('fontColorPicker')) {
+                $('userFontColorDiv').style.backgroundColor = getCookie('fontColorPicker');
+                $('userFontColorDiv').style.color = fontColorFromBg(getCookie('fontColorPicker'));
+            }
+        }
+
+        function clearInputs(...ids) {
+            ids.forEach(id => $(id).value = '');
+        }
+
+        const img = $('background-img');
+
+        function saveImageTransformToCookies() {
+            Object.entries(transform).forEach(([key, val]) => setCookie(`transform_${key}`, val));
+        }
+        function loadImageTransformFromCookies() {
+            Object.keys(transform).forEach(key => {
+                const value = parseFloat(getCookie(`transform_${key}`));
+                if (!isNaN(value)) {
+                    transform[key] = value;
+                }
+            });
+        }
+
+        function fontColorFromBg(color) {
+            const r = parseInt(color.substr(1, 2), 16);
+            const g = parseInt(color.substr(3, 2), 16);
+            const b = parseInt(color.substr(5, 2), 16);
+
+            const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+            return brightness > 128 ? '#000000' : '#ffffff';
+        }
+        function setBgImgSrc(src) {
+            img.src = src;
+            if (src.startsWith('blob:')) {
+                $('info-text').style.visibility = 'visible';
+            }
+            else {
+                $('info-text').style.visibility = 'hidden';
+            }
+        }
+        function setBgImgSrcColor(color) {
+            const svgString = '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200"><rect width="100%" height="100%" fill="{{color}}" /></svg>';
+            const base64 = btoa(unescape(encodeURIComponent(svgString.replace('{{color}}', color))));
+            $('bgUrl').value = `data:image/svg+xml;base64,${base64}`
+            setBgImgSrc($('bgUrl').value);
+        }
+        function applyFilters() {
+            img.style.filter = `saturate(${$('saturate').value}%) contrast(${$('contrast').value}%) brightness(${$('brightness').value}%) blur(${$('blur').value}px)`;
+        }
+        function clickFileInput() {
+            $('fileInput').click();
+        }
+        function updateTransform() {
+            img.style.transform = `translate(${transform.translateX}%, ${transform.translateY}%) scale(${transform.scale})`;
+            img.style.transformOrigin = `${transform.originX}% ${transform.originY}%`;
+        }
+        function zoom(factor) {
+            transform.scale *= factor;
+            updateTransform();
+        }
+        function move(dxPercent, dyPercent) {
+            transform.translateX += dxPercent;
+            transform.translateY += dyPercent;
+            transform.originX -= dxPercent;
+            transform.originY -= dyPercent;
+            updateTransform();
+        }
+        function resetTransform() {
+            const imgRatio = img.naturalWidth / img.naturalHeight;
+
+            if (imgRatio > 1) {
+                transform.scale = 1200 / img.naturalHeight;
+            } else {
+                transform.scale = 1200 / img.naturalWidth;
+            }
+
+            transform.translateX = -50;
+            transform.translateY = -50;
+            transform.originX = 50;
+            transform.originY = 50;
+
+            updateTransform();
+            saveImageTransformToCookies();
+        }
+
+        function centerQuoteOutput() {
+            const titleHeight = $('title-container').clientHeight;
+            const authorHeight = $('author-container').clientHeight;
+            const outputHeight = $('quoteOutput').clientHeight;
+
+            let containerMarginBottom = 0;
+            let titleBottom = 0;
+
+            if (authorHeight != 0 && titleHeight != 0) {
+                titleBottom = authorHeight + 14;
+                containerMarginBottom = titleBottom + titleHeight + 16;
+            }
+            else if (authorHeight != 0) {
+                containerMarginBottom = authorHeight + 16;
+            }
+            else if (titleHeight != 0) {
+                containerMarginBottom = titleHeight + 16;
+            }
+
+            const containerHeight = 960 - containerMarginBottom;
+            const marginTop = (containerHeight - outputHeight) / 2;
+
+            $('title-container').style.bottom = `${titleBottom}px`;
+            $('quote-container').style.height = `${containerHeight}px`;
+            $('quoteOutput').style.marginTop = `${marginTop}px`;
+        }
+
+        function formatParagraphs(text) {
+            return text.trim().split('\n').map(line => line.trim()).filter(Boolean).map(line => `<p>${line}</p>`).join('\n');
+        }
+        function changeText() {
+            $('quoteOutput').innerHTML = formatParagraphs($('quote').value);
+            $('titleOutput').textContent = $('title').value.trim();
+            $('authorOutput').textContent = $('author').value.trim();
+            centerQuoteOutput()
+        }
+
+        let previousFont;
+        function changeFont() {
+            if ($('fontSelect').value == 'localFont') {
+                $('fontSelect').value = previousFont;
+                $('fontInput').click();
+                return;
+            }
+            previousFont = $('fontSelect').value;
+
+            const fontName = $('fontSelect').value;
+            const fontURL = fontMap[$('fontSelect').value];
+            if (fontURL) $('webfont').innerHTML = buildFontFace(fontName, fontURL);
+            $('quoteOutput').style.fontFamily = fontName;
+            document.fonts.load(`16px "${fontName}"`).then(() => centerQuoteOutput());
+        }
+
+        function applyQuoteStyles() {
+            const color = document.querySelector('input[name="fontColor"]:checked').value;
+            $('container').style.color = (color == 'userFontColor') ? $('fontColorPicker').value : color;
+
+            $('quoteOutput').style.fontSize = $('quoteSize').value + 'px';
+            $('quoteOutput').style.gap = $('quoteGap').value + 'em';
+            $('quoteOutput').style.lineHeight = $('quoteLineHeight').value;
+            $('quoteOutput').style.letterSpacing = $('quoteLetterSpacing').value + 'px';
+            $('quoteOutput').style.wordSpacing = $('quoteWordSpacing').value + 'px';
+            centerQuoteOutput()
+        }
+
+        function bindNumberInputButtons() {
+            document.querySelectorAll('.number-input').forEach(wrapper => {
+                const input = wrapper.querySelector('input');
+
+                wrapper.querySelector('.minus').addEventListener('click', e => {
+                    e.preventDefault();
+                    input.stepDown();
+                });
+
+                wrapper.querySelector('.plus').addEventListener('click', e => {
+                    e.preventDefault();
+                    input.stepUp();
+                });
+            });
+        }
+
+        // 이미지로 저장
+        function downloadImage() {
+            const title = $('titleOutput').innerText.slice(0, 30).trim();
+            const para = $('quoteOutput').innerText.slice(0, 10).trim();
+
+            const saveImage = img.src.startsWith('data:') ? htmlToImage.toPng : htmlToImage.toJpeg;
+            const filename = img.src.startsWith('data:') ? `${title}-${para}.png` : `${title}-${para}.jpg`;
+
+            saveImage($('result'), {
+                quality: 0.95,
+                width: 1200,
+                height: 1200,
+                pixelRatio: 1,
+            }).then(dataUrl => {
+                const link = document.createElement('a');
+                link.download = filename;
+                link.href = dataUrl;
+                link.click();
+            }).catch(error => console.error('이미지 저장 실패:', error));
+        }
+
+        // HTML 저장
+        async function saveHTML() {
+            const [templateRes, resultStyleRes] = await Promise.all([
+                fetch('template.html'),
+                fetch('result.css')
+            ]);
+
+            let template = await templateRes.text();
+            const resultStyle = await resultStyleRes.text();
+
+            const title = $('titleOutput').innerText;
+            const para = $('quoteOutput').innerText;
+            const filename = `${title.slice(0, 30).trim()}-${para.slice(0, 10).trim()}`;
+
+            const webfontStyleHTML = document.querySelector('#webfont').outerHTML;
+            const resultStyleHTML = `<style>\n${resultStyle}\n</style>`;
+
+            let resultHTML = document.querySelector('#result-wrapper').outerHTML;
+
+            if (img.src.startsWith('blob:')) {
+                resultHTML = resultHTML.replace(/<img\b[^>]*?>/gi, '');
+            }
+
+            template = template
+                .replace('{{title}}', title)
+                .replace('{{resultStyle}}', resultStyleHTML)
+                .replace('{{result}}', resultHTML);
+
+            if ($('fontSelect').value == 'localFont') {
+                template = template.replace('{{webfontStyle}}', '');
+            }
+            else {
+                template = template.replace('{{webfontStyle}}', webfontStyleHTML);
+            }
+
+            const blob = new Blob([template], { type: "text/html" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${filename}.html`;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function updateContentWidth() {
+            const isPortrait = window.innerHeight > window.innerWidth;
+
+            if (isPortrait) document.body.style.width = '600px';
+            else document.body.style.width = '1200px';
+        }
+
+        // 이벤트 바인딩
+        function bindEvents() {
+            window.addEventListener('resize', updateContentWidth);
+
+            let keepTransform = true;
+            let triedProxy = false;
+            img.onload = () => {
+                triedProxy = false;
+                if (keepTransform) { // 쿠키에 저장된 이미지 주소 사용 시
+                    updateTransform();
+                    keepTransform = false;
+                    return;
+                }
+                img.decode().then(() => resetTransform()).catch(err => {});
+            };
+            img.onerror = () => {
+                keepTransform = false;
+
+                if (img.src.startsWith('http') && !triedProxy) {
+                    img.src = `https://corsproxy.io/?url=${img.src}`
+                    triedProxy = true;
+                    return;
+                }
+                setBgImgSrc('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjEyMDAiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiM0NjgyQjQiIC8+PC9zdmc+');
+            };
+
+            $('quote').addEventListener('input', () => {
+                const ifRidi = $('quote').value.match(/([\s\S]+?)\r?\n\r?\n(.+?) \| (.+?) 저\r?\n\r?\n리디에서 자세히 보기:/);
+                const ifKyobo = $('quote').value.match(/([\s\S]+?)\r?\n\r?\n (.+?) 중에서\r?\n\r?\n 교보eBook/);
+                const ifYes24 = $('quote').value.match(/([\s\S]+?)\r?\n\r?\n(.+?) [|｜∣] (.+?)\r?\n\r?\n\[크레마 예스24 eBook\]/);
+                const ifAladin = $('quote').value.match(/([\s\S]+?)\r?\n\r?\n-알라딘 eBook \<(.+?)\> \((.+?)\) 중에서/);
+                let body = '', title = '', author = '';
+                if (ifRidi) [, body, title, author,] = ifRidi;
+                else if (ifKyobo) {
+                    [, body, title,] = ifKyobo;
+                    const match = title.match(/(.*)-(\d+)회/);
+                    if (match) {
+                        title = `${match[1]} ${match[2]}화`;
+                    }
+                }
+                else if (ifYes24) [, body, title, author,] = ifYes24;
+                else if (ifAladin) [, body, title, author,] = ifAladin;
+
+                if (ifRidi || ifKyobo || ifYes24 || ifAladin) {
+                    $('quote').value = body;
+                    $('title').value = title;
+                    $('author').value = author;
+                }
+                changeText();
+            });
+            $('title').addEventListener('input', () => {
+                $('titleOutput').textContent = $('title').value.trim();
+            });
+            $('author').addEventListener('input', () => {
+                $('authorOutput').textContent = $('author').value.trim();
+            });
+
+            $('fontSelect').addEventListener('change', () => {
+                changeFont();
+            });
+            $('fontInput').addEventListener('change', async (event) => {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                $('fontSelect').value = 'localFont';
+                $('fontInput').value = '';
+
+                const fontURL = URL.createObjectURL(file); // Blob URL 생성
+                const fontName = 'localFont'; // 사용할 폰트 이름
+                $('webfont').innerHTML = buildFontFace(fontName, fontURL);
+                $('quoteOutput').style.fontFamily = fontName;
+                document.fonts.load(`16px "${fontName}"`).then(() => centerQuoteOutput());
+            });
+            $('fontColorPicker').addEventListener('click', () => {
+                $('userFontColorInput').checked = true;
+                applyQuoteStyles();
+                saveInputsToCookies();
+            });
+            $('fontColorPicker').addEventListener('input', () => {
+                const color = $('fontColorPicker').value;
+
+                $('userFontColorDiv').style.color = fontColorFromBg(color);
+                $('userFontColorDiv').style.backgroundColor = color;
+                applyQuoteStyles();
+            });
+
+            $('bgUrl').addEventListener('paste', (event) => {
+                const items = event.clipboardData.items;
+                for (let i = 0; i < items.length; i++) {
+                    if (items[i].type.indexOf("image") !== -1) {
+                        const blob = items[i].getAsFile();
+                        $('bgUrl').value = URL.createObjectURL(blob);
+                        break;
+                    }
+                }
+            });
+            $('bgUrl').addEventListener('input', () => {
+                document.getElementById("bgColor0").checked = true;
+                $('bgUrl').value = $('bgUrl').value.split(' ')[0];
+                setBgImgSrc($('bgUrl').value);
+            });
+            $('fileInput').addEventListener('change', async () => {
+                let file = $('fileInput').files[0];
+                if (!file) return;
+
+                $('fileInput').value = '';
+
+                if (file.type === 'image/heic' || file.name.endsWith('.heic')) {
+                    const output = await HeicTo({
+                        blob: file,
+                        toType: "image/jpeg",
+                        quality: 0.95,
+                    });
+                    file = Array.isArray(output) ? output[0] : output;
+                }
+
+                document.getElementById("bgColor0").checked = true;
+                $('bgUrl').value = URL.createObjectURL(file);
+                setBgImgSrc($('bgUrl').value);
+            });
+            $('bgColorPicker').addEventListener('click', () => {
+                setBgImgSrcColor($('bgColorPicker').value);
+                $('userbgcolorInput').checked = true;
+                saveInputsToCookies();
+            });
+            $('bgColorPicker').addEventListener('input', () => {
+                const color = $('bgColorPicker').value;
+
+                $('userBgColorDiv').style.color = fontColorFromBg(color);
+                $('userBgColorDiv').style.backgroundColor = color;
+                setBgImgSrcColor(color);
+            });
+            document.querySelectorAll('input[name="bgColor"]').forEach(input => {
+                input.addEventListener('change', () => {
+                    if (input.value == 'userBgColor') return;
+                    if (input.value == 'no') {
+                        $('bgUrl').value = '';
+                        setBgImgSrc('');
+                        return;
+                    }
+                    setBgImgSrcColor(input.value);
+                });
+            });
+
+            bindNumberInputButtons();
+
+            document.querySelectorAll('form button, a').forEach(btn =>
+                btn.addEventListener('click', e => {
+                    e.preventDefault();
+                    applyFilters();
+                    applyQuoteStyles();
+                    saveInputsToCookies();
+                    saveImageTransformToCookies();
+                })
+            );
+            const inputs = document.querySelectorAll('input, select, textarea');
+            for (const el of inputs) {
+                const eventType = (el.tagName === 'SELECT' || el.type === 'radio' || el.type === 'file') ? 'change' : 'input';
+                el.addEventListener(eventType, () => {
+                    applyFilters();
+                    applyQuoteStyles();
+                    saveInputsToCookies();
+                    saveImageTransformToCookies();
+                });
+            }
+        }
+
+        async function fetchCss() {
+            const [resultStyleRes, controlStyleRes] = await Promise.all([
+                fetch('result.css'),
+                fetch('control.css')
+            ]);
+
+            const resultStyle = await resultStyleRes.text();
+            const controlStyle = await controlStyleRes.text();
+
+            $('result-style').innerHTML = resultStyle;
+            $('control-style').innerHTML = controlStyle;
+
+        }
+        window.addEventListener('DOMContentLoaded', async () => {
+            await fetchCss();
+
+            loadInputsFromCookies();
+            const param = new URLSearchParams(window.location.search).get("param");
+            if (param) {
+                $('quote').value = param;
+                saveInputsToCookies();
+                history.replaceState(null, "", window.location.origin + window.location.pathname);
+            }
+
+            loadImageTransformFromCookies();
+            updateContentWidth();
+            bindEvents();
+            setBgImgSrc($('bgUrl').value);
+            applyFilters();
+            changeText();
+            changeFont();
+            applyQuoteStyles();
+            loadHtmlToImageScript();
+        });
+    </script>
+</body>
+</html>

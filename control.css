@@ -1,0 +1,255 @@
+fieldset,
+input,
+textarea,
+select,
+button,
+label {
+    margin: 0;
+    padding: 0;
+}
+
+fieldset,
+input,
+textarea,
+select,
+button,
+label {
+    font-family: sans-serif;
+    font-size: 16px;
+}
+
+fieldset,
+input,
+select,
+button,
+label {
+    line-height: 1;
+}
+
+.controls {
+    width: 580px;
+    position: relative;
+    margin: 0;
+    padding: 0 10px 0 10px;
+}
+
+fieldset {
+    display: flex;
+    flex-direction: column;
+    width: 580px;
+    padding: 10px 0 10px 0;
+    border-color: gray;
+    border-width: 0 0 1px 0;
+    border-style: solid;
+    gap: 10px;
+    align-content: space-around;
+    justify-content: space-between;
+}
+
+.flex-container {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex-container>div {
+    display: flex;
+    align-items: center;
+}
+
+.flex-container-coloumn {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: space-between;
+}
+
+#image-controls button {
+    width: 20px;
+    height: 20px;
+    margin: 0 3px;
+    padding: 0;
+}
+
+#title {
+    flex: 1;
+}
+
+label {
+    font-weight: 500;
+    margin-right: 3px;
+}
+
+sub {
+    vertical-align: baseline;
+    margin-left: 1px;
+    font-weight: 300;
+}
+
+textarea,
+input,
+select {
+    padding: 2px;
+}
+
+.input-wrapper {
+    position: relative;
+    width: 100%;
+    display: inline-block;
+}
+
+#bgUrl {
+    width: 100%;
+    padding-right: 28px;
+    box-sizing: border-box;
+}
+
+#clearBgUrl {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: transparent;
+    line-height: 1;
+}
+
+.bg-button {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #aaa;
+    border-radius: 20%;
+    background-color: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+textarea {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    word-break: break-all;
+}
+
+input[type="number"] {
+    appearance: textfield;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+.number-input {
+    display: inline-flex;
+    border: 1px solid #aaa;
+    box-sizing: border-box;
+    height: 24px;
+}
+
+.number-input * {
+    box-sizing: border-box;
+}
+
+.number-input input[type=number] {
+    width: 34px;
+    padding: 0;
+    font-family: 'Pretendard';
+    font-feature-settings: "tnum", "lnum";
+    text-align: center;
+    border: solid #aaa;
+    border-width: 0 1px;
+}
+
+.number-input button {
+    width: 20px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background-color: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+}
+
+input#title {
+    width: 290px;
+}
+
+input#author {
+    width: 150px;
+}
+
+#local {
+    padding: 1px;
+    margin: 0;
+}
+
+select#quoteColor {
+    width: 100px;
+}
+
+.save-button {
+    float: right;
+    margin: 10px 0 10px 10px;
+    padding: 10px 10px;
+}
+
+#info-text {
+    flex: 1;
+    color: #666;
+    font-size: 0.9em;
+    vertical-align: middle;
+    word-break: keep-all;
+    visibility: hidden
+}
+
+input+label,
+select+label {
+    margin-left: 20px;
+}
+
+.color-radio {
+    width: 192px;
+}
+
+.color-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    border: 2px solid transparent;
+}
+
+.color-option div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 16px;
+    height: 16px;
+    border: 1px solid black;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+input[type="radio"]:checked+label {
+    border-color: black;
+}
+
+.colorpicker {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+}

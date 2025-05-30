@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=0.5">
+<title>{{title}}</title>
+{{webfontStyle}}
+{{resultStyle}}
+</head>
+<body>
+    {{result}}
+    <button id="downlaod-image" type="submit" onclick="downloadImage()">이미지로 저장</button>
+    <script>
+        const $ = id => document.getElementById(id);
+
+        function loadHtmlToImageScript() {
+            const script = document.createElement("script");
+            if (/firefox/i.test(navigator.userAgent)) {
+                script.src = "https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js";
+            } else {
+                script.src = "https://cdn.jsdelivr.net/npm/html-to-image@1.11.13/dist/html-to-image.min.js";
+            }
+            document.head.appendChild(script);
+        }
+        function downloadImage() {
+            const title = document.title.slice(0, 30).trim();
+            const para = $('quoteOutput').innerText.slice(0, 10).trim();
+            const img = $('background-img');
+
+            const saveImage = img.src.startsWith('data:') ? htmlToImage.toPng : htmlToImage.toJpeg;
+            const filename = img.src.startsWith('data:') ? `${title}-${para}.png` : `${title}-${para}.jpg`;
+
+            saveImage($('result'), {
+                quality: 0.95,
+                width: 1200,
+                height: 1200,
+                pixelRatio: 1,
+            }).then(dataUrl => {
+                const link = document.createElement('a');
+                link.download = filename;
+                link.href = dataUrl;
+                link.click();
+            }).catch(error => console.error('이미지 저장 실패:', error));
+        }
+        loadHtmlToImageScript();
+    </script>
+</body>
+</html>
