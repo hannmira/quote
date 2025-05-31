@@ -144,21 +144,16 @@
                         <select id="fontSelect">
                             <option value="RIDIBatang" selected>리디바탕</option>
                             <option value="Pretendard">프리텐다드</option>
-                            <option value="GangwonEdu">강원교육모두체</option>
+                            <option value="GangwonEduModu">강원교육모두체</option>
                             <option value="GangwonEduSaeeum">강원교육새음체</option>
                             <option value="GowunDodum">고운돋움</option>
-                            <option value="NanumBarunpen">나눔바른펜</option>
                             <option value="DungGeunMo">둥근모꼴+Fixedsys</option>
                             <option value="Handletter">손편지체</option>
                             <option value="SCDreamLight">에스코어 드림</option>
-                            <option value="omyu_pretty">오뮤 다예쁨체</option>
                             <option value="Ownglyph_wiseelist">온글잎 위씨리스트</option>
-                            <option value="Ownglyph_corncorn">온글잎 콘콘체</option>
                             <option value="InkLipquid">잉크립퀴드체</option>
                             <option value="HakgyoansimGaeulsopung">학교안심 가을소풍</option>
-                            <option value="HakgyoansimNadeuri">학교안심 나들이</option>
                             <option value="HakgyoansimChilpanjiugae">학교안심 칠판지우개</option>
-                            <option value="IM_Hyemin">IM혜민체</option>
                             <option value="localFont">사용자 파일</option>
                         </select>
                     </div>
@@ -262,30 +257,31 @@
         }
 
         const fontMap = {
-            DungGeunMo: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff',
-            GangwonEdu: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFLightA.woff',
-            GangwonEduHyeonokT: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduHyeonokT_OTFMediumA.woff',
-            GangwonEduSaeeum: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff',
+            DungGeunMo: 'https://cdn.jsdelivr.net/gh/fonts-archive/DungGeunMo/DungGeunMo.woff2',
+            GangwonEduModu: 'https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Light.woff2',
+            GangwonEduHyeonok: 'https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduHyeonok/GangwonEduHyeonok.woff2',
+            GangwonEduSaeeum: 'https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduSaeeum/GangwonEduSaeeum.woff2',
             GowunBatang: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunBatang-Regular.woff',
             GowunDodum: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff',
-            Gyeonggi_Batang_Regular: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2410-3@1.0/Batang_Regular.woff',
-            HakgyoansimBadasseugiTTF: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimBadasseugiTTF-L.woff2',
-            HakgyoansimBareonbatangB: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimBareonbatangB.woff2',
+            GyeonggiBatang: 'https://cdn.jsdelivr.net/gh/fonts-archive/GyeonggiBatang/GyeonggiBatang-Regular.woff2',
+            HakgyoansimBadasseugi: 'https://cdn.jsdelivr.net/gh/fonts-archive/HakgyoansimBadasseugi/HakgyoansimBadasseugi-L.woff2',
+            HakgyoansimBareonbatang: 'https://cdn.jsdelivr.net/gh/fonts-archive/HakgyoansimBareonbatang/HakgyoansimBareonbatang-Regular.woff2',
             HakgyoansimChilpanjiugae: 'https://cdn.jsdelivr.net/gh/fonts-archive/HakgyoansimChilpanjiugae/HakgyoansimChilpanjiugae-L.woff2',
-            HakgyoansimGaeulsopung: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimGaeulsopungL.woff2',
+            HakgyoansimGaeulsopung: 'https://cdn.jsdelivr.net/gh/fonts-archive/HakgyoansimGaeulsopung/HakgyoansimGaeulsopung-Light.woff2',
             HakgyoansimNadeuri: 'https://cdn.jsdelivr.net/gh/fonts-archive/HakgyoansimNadeuri/HakgyoansimNadeuri-L.woff2',
             Handletter: 'https://fastly.jsdelivr.net/gh/projectnoonnu/naverfont_05@1.0/Handletter.woff',
             IM_Hyemin: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/IM_Hyemin-Regular.woff2',
-            InkLipquid: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/InkLipquid.woff',
+            InkLipquid: 'https://cdn.jsdelivr.net/gh/fonts-archive/InkLipquid/InkLipquid.woff2',
             KyoboHand: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff',
             MapoFlowerIsland: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff',
             MaruBuri: 'https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff2',
-            NanumBarunpen: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumBarunpen.woff',
+            NanumBarunpen: 'https://cdn.jsdelivr.net/gh/fonts-archive/NanumBarunpen/NanumBarunpen.woff2',
             omyu_pretty: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2',
             Ownglyph_corncorn: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2412-1@1.0/Ownglyph_corncorn-Rg.woff2',
+            Ownglyph_ParkDaHyun: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2',
             Ownglyph_wiseelist: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2501-1@1.1/Ownglyph_wiseelist-Rg.woff2',
             Pretendard: 'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/packages/pretendard/dist/web/static/woff2/Pretendard-Regular.woff2',
-            RIDIBatang: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff',
+            RIDIBatang: 'https://cdn.jsdelivr.net/gh/fonts-archive/RIDIBatang/RIDIBatang.woff2',
             SCDreamLight: 'https://cdn.jsdelivr.net/gh/fonts-archive/S-CoreDream/SCDreamLight.woff2',
             SunBatang: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/SunBatang-Light.woff',
         };
