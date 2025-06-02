@@ -629,9 +629,9 @@ font-display: swap;
             $('quote').addEventListener('input', () => {
                 quoteValue = $('quote').value;
 
-                const ifRidi = quoteValue.match(/([\s\S]+?)\r?\n\r?\n(.+)(?: \| (.+) 저)?\r?\n\r?\n.*https:\/\/ridibooks\.com/);
+                const ifRidi = quoteValue.match(/([\s\S]+?)\r?\n\r?\n(.+?)(?: \| (.+) 저)?\r?\n\r?\n.*https:\/\/ridibooks\.com/);
                 const ifKyobo = quoteValue.match(/([\s\S]+?)\r?\n\r?\n (.+) 중에서\r?\n\r?\n 교보eBook/);
-                const ifYes24 = quoteValue.match(/([\s\S]+?)\r?\n\r?\n(.+) [|｜∣](?: (.+))?\r?\n\r?\n\[크레마 예스24 eBook\]/);
+                const ifYes24 = quoteValue.match(/([\s\S]+?)\r?\n\r?\n(.+) [|｜∣] (.+)\r?\n\r?\n\[크레마 예스24 eBook\]/);
                 const ifAladin = quoteValue.match(/([\s\S]+?)\r?\n\r?\n-알라딘 eBook \<(.+)\> \((.*)\) 중에서/);
                 const ifShare = quoteValue.match(/^(?:Share|공유): (.+) - (.*)$/);
 
