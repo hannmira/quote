@@ -634,12 +634,11 @@ font-display: swap;
             $('quote').addEventListener('input', () => {
                 quoteValue = $('quote').value;
 
-                const ifRidi = quoteValue.match(/([\s\S]+?)\r?\n\r?\n(.+?)(?: \| (.+?) 저)?\r?\n\r?\n.*https:\/\/ridibooks\.com/);
-                const ifKyobo = quoteValue.match(/([\s\S]+?)\r?\n\r?\n (.+?) 중에서\r?\n\r?\n 교보eBook/);
-                const ifYes24 = quoteValue.match(/([\s\S]+?)\r?\n\r?\n(.+?) [|｜∣](?: (.+?))?\r?\n\r?\n\[크레마 예스24 eBook\]/);
-                const ifAladin = quoteValue.match(/([\s\S]+?)\r?\n\r?\n-알라딘 eBook \<(.+?)\> \((.*?)\) 중에서/);
-                const ifShare = quoteValue.match(/^Share: (.+) - (.+)$/);
-                const ifShareTitleOnly = quoteValue.match(/^Share: (.+)$/);
+                const ifRidi = quoteValue.match(/([\s\S]+?)\r?\n\r?\n(.+?)(?: \| (.+) 저)?\r?\n\r?\n.*https:\/\/ridibooks\.com/);
+                const ifKyobo = quoteValue.match(/([\s\S]+?)\r?\n\r?\n (.+) 중에서\r?\n\r?\n 교보eBook/);
+                const ifYes24 = quoteValue.match(/([\s\S]+?)\r?\n\r?\n(.+) [|｜∣] (.+)\r?\n\r?\n\[크레마 예스24 eBook\]/);
+                const ifAladin = quoteValue.match(/([\s\S]+?)\r?\n\r?\n-알라딘 eBook \<(.+)\> \((.*)\) 중에서/);
+                const ifShare = quoteValue.match(/^(?:Share|공유): (.+) - (.*)$/);
 
                 let body = '', title = '', author = '';
                 if (ifRidi) [, body, title, author=''] = ifRidi;
@@ -651,11 +650,10 @@ font-display: swap;
                     }
                 }
                 else if (ifYes24) [, body, title, author=''] = ifYes24;
-                else if (ifAladin) [, body, title, author] = ifAladin;
-                else if (ifShare) [, title, author] = ifShare;
-                else if (ifShareTitleOnly) [, title] = ifShareTitleOnly;
+                else if (ifAladin) [, body, title, author=''] = ifAladin;
+                else if (ifShare) [, title, author=''] = ifShare;
 
-                if (ifRidi || ifKyobo || ifYes24 || ifAladin || ifShare || ifShareTitleOnly) {
+                if (ifRidi || ifKyobo || ifYes24 || ifAladin || ifShare) {
                     $('quote').value = body;
                     $('title').value = title;
                     $('author').value = author;
