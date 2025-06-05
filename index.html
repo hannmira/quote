@@ -623,13 +623,12 @@ font-display: swap;
                 img.decode().then(() => resetTransform()).catch(err => {});
             };
             img.onerror = () => {
-                keepTransform = false;
-
                 if (img.src.startsWith('http') && !triedProxy) {
                     img.src = `https://corsproxy.io/?url=${img.src}`
                     triedProxy = true;
                     return;
                 }
+                keepTransform = false;
                 setBgImgSrc('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjEyMDAiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiM0NjgyQjQiIC8+PC9zdmc+');
             };
 
