@@ -53,21 +53,15 @@ body {
     z-index: 1;
 }
 
-#quote-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 1020px;
-}
-
 #quoteOutput {
     display: flex;
     flex-direction: column;
-    align-content: flex-start;
+    justify-content: center;
 }
 
-#title-container p,
-#author-container p {
+#titleOutput,
+#authorOutput {
+    position: absolute;
     font-family: 'Pretendard';
     font-size: 48px;
     font-weight: 200;
@@ -75,13 +69,11 @@ body {
     word-break: keep-all;
 }
 
-#title-container {
-    position: absolute;
+#titleOutput {
     line-height: 1.2;
 }
 
-#author-container {
-    position: absolute;
+#authorOutput {
     bottom: 0;
     line-height: 1;
     opacity: 0.6;

@@ -16,16 +16,10 @@
         <div id="result">
             <img id="background-img" crossorigin="anonymous">
             <div id="container">
-                <div id="quote-container">
-                    <div id="quoteOutput">
-                    </div>
+                <div id="quoteOutput">
                 </div>
-                <div id="title-container">
-                    <p id="titleOutput"></p>
-                </div>
-                <div id="author-container">
-                    <p id="authorOutput"></p>
-                </div>
+                <p id="titleOutput"></p>
+                <p id="authorOutput"></p>
             </div>
         </div>
     </div>
@@ -454,10 +448,9 @@ font-display: swap;
             saveImageTransformToCookies();
         }
 
-        function centerQuoteOutput() {
-            const titleHeight = $('title-container').clientHeight;
-            const authorHeight = $('author-container').clientHeight;
-            const outputHeight = $('quoteOutput').clientHeight;
+        function calculateOutputPos() {
+            const titleHeight = $('titleOutput').clientHeight;
+            const authorHeight = $('authorOutput').clientHeight;
 
             let containerMarginBottom = 0;
             let titleBottom = 0;
@@ -474,11 +467,9 @@ font-display: swap;
             }
 
             const containerHeight = 960 - containerMarginBottom;
-            const marginTop = (containerHeight - outputHeight) / 2;
 
-            $('title-container').style.bottom = `${titleBottom}px`;
-            $('quote-container').style.height = `${containerHeight}px`;
-            $('quoteOutput').style.marginTop = `${marginTop}px`;
+            $('titleOutput').style.bottom = `${titleBottom}px`;
+            $('quoteOutput').style.height = `${containerHeight}px`;
         }
 
         function formatParagraphs(text) {
@@ -488,7 +479,7 @@ font-display: swap;
             $('quoteOutput').innerHTML = formatParagraphs($('quote').value);
             $('titleOutput').textContent = $('title').value.trim();
             $('authorOutput').textContent = $('author').value.trim();
-            centerQuoteOutput()
+            calculateOutputPos();
         }
 
         let previousFont;
@@ -504,7 +495,6 @@ font-display: swap;
             const fontURL = fontMap[$('fontSelect').value];
             if (fontURL) $('webfont').innerHTML = buildFontFace(fontName, fontURL);
             $('quoteOutput').style.fontFamily = fontName;
-            document.fonts.load(`16px "${fontName}"`).then(() => centerQuoteOutput());
         }
 
         function applyQuoteStyles() {
@@ -516,7 +506,6 @@ font-display: swap;
             $('quoteOutput').style.lineHeight = $('quoteLineHeight').value;
             $('quoteOutput').style.letterSpacing = $('quoteLetterSpacing').value + 'px';
             $('quoteOutput').style.wordSpacing = $('quoteWordSpacing').value + 'px';
-            centerQuoteOutput()
         }
 
         function bindNumberInputButtons() {
@@ -620,7 +609,7 @@ font-display: swap;
                     keepTransform = false;
                     return;
                 }
-                img.decode().then(() => resetTransform()).catch(err => {});
+                img.decode().then(() => resetTransform()).catch(err => { });
             };
             img.onerror = () => {
                 if (img.src.startsWith('http') && !triedProxy) {
@@ -642,7 +631,7 @@ font-display: swap;
                 const ifShare = quoteValue.match(/^(?:Share|공유): (.+) - (.*)$/);
 
                 let body = '', title = '', author = '';
-                if (ifRidi) [, body, title, author=''] = ifRidi;
+                if (ifRidi) [, body, title, author = ''] = ifRidi;
                 else if (ifKyobo) {
                     [, body, title] = ifKyobo;
                     const match = title.match(/(.*)-(\d+)회/);
@@ -650,9 +639,9 @@ font-display: swap;
                         title = `${match[1]} ${match[2]}화`;
                     }
                 }
-                else if (ifYes24) [, body, title, author=''] = ifYes24;
-                else if (ifAladin) [, body, title, author=''] = ifAladin;
-                else if (ifShare) [, title, author=''] = ifShare;
+                else if (ifYes24) [, body, title, author = ''] = ifYes24;
+                else if (ifAladin) [, body, title, author = ''] = ifAladin;
+                else if (ifShare) [, title, author = ''] = ifShare;
 
                 if (ifRidi || ifKyobo || ifYes24 || ifAladin || ifShare) {
                     $('quote').value = body;
@@ -663,9 +652,11 @@ font-display: swap;
             });
             $('title').addEventListener('input', () => {
                 $('titleOutput').textContent = $('title').value.trim();
+                calculateOutputPos();
             });
             $('author').addEventListener('input', () => {
                 $('authorOutput').textContent = $('author').value.trim();
+                calculateOutputPos();
             });
 
             $('fontSelect').addEventListener('change', () => {
@@ -682,7 +673,6 @@ font-display: swap;
                 const fontName = 'localFont'; // 사용할 폰트 이름
                 $('webfont').innerHTML = buildFontFace(fontName, fontURL);
                 $('quoteOutput').style.fontFamily = fontName;
-                document.fonts.load(`16px "${fontName}"`).then(() => centerQuoteOutput());
             });
             $('fontColorPicker').addEventListener('click', () => {
                 $('userFontColorInput').checked = true;
