@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=0.5">
-<title>{{title}}</title>
-{{webfontStyle}}
-{{resultStyle}}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <title>{{title}}</title>
+    {{webfontStyle}}
+    {{resultStyle}}
 </head>
 <body>
     {{result}}
-    <button id="downlaod-image" type="submit" onclick="downloadImage()">이미지로 저장</button>
+    <div class="buttons">
+        <button id="downlaod-image" type="submit" onclick="downloadImage()">이미지로 저장</button>
+        <button id="copy-quote" type="submit" onclick="copyQuote()">발췌 문장 복사</button>
+    </div>
     <script>
         const $ = id => document.getElementById(id);
 
@@ -41,6 +44,14 @@
                 link.href = dataUrl;
                 link.click();
             }).catch(error => console.error('이미지 저장 실패:', error));
+        }
+        function copyQuote() {
+            const title = $('titleOutput').innerText.trim();
+            const author = $('authorOutput').innerText.trim();
+            const quote = $('quoteOutput').innerText.trim();
+
+            const copiedText = `Share: ${title} - ${author}\n\n${quote}`;
+            navigator.clipboard.writeText(copiedText);
         }
         loadHtmlToImageScript();
     </script>
