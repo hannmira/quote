@@ -46,10 +46,10 @@ body {
 
 #container {
     position: absolute;
-    top: 120px;
+    top: 90px;
     left: 90px;
     width: 1020px;
-    height: 960px;
+    height: 1020px;
     z-index: 1;
 }
 
@@ -65,17 +65,13 @@ body {
     font-family: 'Pretendard';
     font-size: 48px;
     font-weight: 200;
+    line-height: 1.2;
     text-align: left;
     word-break: keep-all;
 }
 
-#titleOutput {
-    line-height: 1.2;
-}
-
 #authorOutput {
     bottom: 0;
-    line-height: 1;
     opacity: 0.6;
 }
 

@@ -452,24 +452,22 @@ font-display: swap;
             const titleHeight = $('titleOutput').clientHeight;
             const authorHeight = $('authorOutput').clientHeight;
 
-            let containerMarginBottom = 0;
             let titleBottom = 0;
+            let quoteHeight = 1020;
 
-            if (authorHeight != 0 && titleHeight != 0) {
-                titleBottom = authorHeight + 14;
-                containerMarginBottom = titleBottom + titleHeight + 16;
+            if (authorHeight !== 0 && titleHeight !== 0) {
+                titleBottom = authorHeight + 6;
+                quoteHeight -= titleBottom + titleHeight + 12;
             }
-            else if (authorHeight != 0) {
-                containerMarginBottom = authorHeight + 16;
+            else if (authorHeight !== 0) {
+                quoteHeight -= authorHeight + 12;
             }
-            else if (titleHeight != 0) {
-                containerMarginBottom = titleHeight + 16;
+            else if (titleHeight !== 0) {
+                quoteHeight -= titleHeight + 12;
             }
-
-            const containerHeight = 960 - containerMarginBottom;
 
             $('titleOutput').style.bottom = `${titleBottom}px`;
-            $('quoteOutput').style.height = `${containerHeight}px`;
+            $('quoteOutput').style.height = `${quoteHeight}px`;
         }
 
         function formatParagraphs(text) {
@@ -779,7 +777,6 @@ font-display: swap;
 
             $('result-style').innerHTML = resultStyle;
             $('control-style').innerHTML = controlStyle;
-
         }
         window.addEventListener('DOMContentLoaded', async () => {
             await fetchCss();
