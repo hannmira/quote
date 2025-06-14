@@ -451,23 +451,19 @@ font-display: swap;
         function calculateOutputPos() {
             const titleHeight = $('titleOutput').clientHeight;
             const authorHeight = $('authorOutput').clientHeight;
-
-            let titleBottom = 0;
             let quoteHeight = 1020;
+            let titleBottom = 0;
 
+            if (authorHeight !== 0 || titleHeight !== 0) {
+                quoteHeight -= titleHeight + authorHeight + 12;
+            }
             if (authorHeight !== 0 && titleHeight !== 0) {
+                quoteHeight -= 10;
                 titleBottom = authorHeight + 10;
-                quoteHeight -= titleBottom + titleHeight + 12;
-            }
-            else if (authorHeight !== 0) {
-                quoteHeight -= authorHeight + 12;
-            }
-            else if (titleHeight !== 0) {
-                quoteHeight -= titleHeight + 12;
             }
 
-            $('titleOutput').style.bottom = `${titleBottom}px`;
             $('quoteOutput').style.height = `${quoteHeight}px`;
+            $('titleOutput').style.bottom = `${titleBottom}px`;
         }
 
         function formatParagraphs(text) {
