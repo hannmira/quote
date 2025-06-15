@@ -1,6 +1,7 @@
 const fontMap = {
     Cafe24Simplehae: 'https://cdn.jsdelivr.net/gh/fonts-archive/Cafe24Simplehae/Cafe24Simplehae.woff2',
     Cafe24SsurroundAir: 'https://cdn.jsdelivr.net/gh/fonts-archive/Cafe24SsurroundAir/Cafe24SsurroundAir.woff2',
+    Cafe24OhsquareAir: 'https://cdn.jsdelivr.net/gh/fonts-archive/Cafe24OhsquareAir/Cafe24OhsquareAir.woff2',
     Dokrip: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Dokrip.woff',
     DungGeunMo: 'https://cdn.jsdelivr.net/gh/fonts-archive/DungGeunMo/DungGeunMo.woff2',
     GangwonEduHyeonok: 'https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduHyeonok/GangwonEduHyeonok.woff2',
@@ -24,6 +25,7 @@ const fontMap = {
     JNE: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2408-1@1.0/JNE-Yuna-TTF-Regular.woff2',
     KCCMurukmuruk: 'https://cdn.jsdelivr.net/gh/fonts-archive/KCCMurukmuruk/KCCMurukmuruk.woff2',
     KNPSKkomi: 'https://cdn.jsdelivr.net/gh/fonts-archive/KNPSKkomi/KNPSKkomi.woff2',
+    KOTRAHOPE: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/KOTRAHOPE.woff2',
     KyoboHand: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff',
     Manse: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Manse.woff',
     MapoFlowerIsland: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff',
@@ -34,7 +36,10 @@ const fontMap = {
     NanumSonPyeonJiCe: 'https://cdn.jsdelivr.net/gh/fonts-archive/NanumSonPyeonJiCe/NanumSonPyeonJiCe.woff2',
     omyu_pretty: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2',
     Ownglyph_corncorn: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2412-1@1.0/Ownglyph_corncorn-Rg.woff2',
+    Ownglyph_Dailyokja: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2403@1.0/Ownglyph_Dailyokja-Rg.woff2',
+    Ownglyph_Memo_Okja: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2403@1.0/Ownglyph_Memo_Okja-Rg.woff2',
     Ownglyph_ParkDaHyun: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2',
+    Ownglyph_UNZ: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2406-1@1.0/Ownglyph_UNZ-Rg.woff2',
     Ownglyph_wiseelist: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2501-1@1.1/Ownglyph_wiseelist-Rg.woff2',
     Pretendard: 'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/packages/pretendard/dist/web/static/woff2/Pretendard-Regular.woff2',
     RIDIBatang: 'https://cdn.jsdelivr.net/gh/fonts-archive/RIDIBatang/RIDIBatang.woff2',
@@ -42,10 +47,6 @@ const fontMap = {
     Shilla_CultureM: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/Shilla_CultureM-Medium.woff2',
     SunBatang: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/SunBatang-Medium.woff',
     YeongdeokSea: 'https://cdn.jsdelivr.net/gh/fonts-archive/YeongdeokSea/YeongdeokSea.woff2',
-    Ownglyph_UNZ: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2406-1@1.0/Ownglyph_UNZ-Rg.woff2',
-    Ownglyph_Dailyokja: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2403@1.0/Ownglyph_Dailyokja-Rg.woff2',
-    Ownglyph_Memo_Okja: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2403@1.0/Ownglyph_Memo_Okja-Rg.woff2',
-
 };
 
 const buildFontFace = (name, url) => `
