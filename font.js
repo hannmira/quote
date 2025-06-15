@@ -1,0 +1,58 @@
+const fontMap = {
+    Cafe24Simplehae: 'https://cdn.jsdelivr.net/gh/fonts-archive/Cafe24Simplehae/Cafe24Simplehae.woff2',
+    Cafe24SsurroundAir: 'https://cdn.jsdelivr.net/gh/fonts-archive/Cafe24SsurroundAir/Cafe24SsurroundAir.woff2',
+    Dokrip: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Dokrip.woff',
+    DungGeunMo: 'https://cdn.jsdelivr.net/gh/fonts-archive/DungGeunMo/DungGeunMo.woff2',
+    GangwonEduHyeonok: 'https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduHyeonok/GangwonEduHyeonok.woff2',
+    GangwonEduModu: 'https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduModu/GangwonEduModu-Light.woff2',
+    GangwonEduSaeeum: 'https://cdn.jsdelivr.net/gh/fonts-archive/GangwonEduSaeeum/GangwonEduSaeeum.woff2',
+    GapyeongHanseokbong: 'https://cdn.jsdelivr.net/gh/fonts-archive/GapyeongHanseokbong/GapyeongHanseokbong-Regular.woff2',
+    GowunBatang: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunBatang-Regular.woff',
+    GowunDodum: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff',
+    GyeonggiBatang: 'https://cdn.jsdelivr.net/gh/fonts-archive/GyeonggiBatang/GyeonggiBatang-Regular.woff2',
+    HakgyoansimBadasseugi: 'https://cdn.jsdelivr.net/gh/fonts-archive/HakgyoansimBadasseugi/HakgyoansimBadasseugi-L.woff2',
+    HakgyoansimBareonbatang: 'https://cdn.jsdelivr.net/gh/fonts-archive/HakgyoansimBareonbatang/HakgyoansimBareonbatang-Regular.woff2',
+    HakgyoansimBunpil: 'https://cdn.jsdelivr.net/gh/fonts-archive/HakgyoansimBunpil/HakgyoansimBunpil.woff2',
+    HakgyoansimChilpanjiugae: 'https://cdn.jsdelivr.net/gh/fonts-archive/HakgyoansimChilpanjiugae/HakgyoansimChilpanjiugae-L.woff2',
+    HakgyoansimDotbogi: 'https://cdn.jsdelivr.net/gh/fonts-archive/HakgyoansimDotbogi/HakgyoansimDotbogi.woff2',
+    HakgyoansimGaeulsopung: 'https://cdn.jsdelivr.net/gh/fonts-archive/HakgyoansimGaeulsopung/HakgyoansimGaeulsopung-Light.woff2',
+    HakgyoansimMonggeulmonggeul: 'https://cdn.jsdelivr.net/gh/fonts-archive/HakgyoansimMonggeulmonggeul/HakgyoansimMonggeulmonggeul.woff2',
+    HakgyoansimNadeuri: 'https://cdn.jsdelivr.net/gh/fonts-archive/HakgyoansimNadeuri/HakgyoansimNadeuri-L.woff2',
+    Hanbit: 'https://cdn.jsdelivr.net/gh/fonts-archive/KCC-Hanbit/KCC-Hanbit.woff2',
+    IM_Hyemin: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/IM_Hyemin-Regular.woff2',
+    InkLipquid: 'https://cdn.jsdelivr.net/gh/fonts-archive/InkLipquid/InkLipquid.woff2',
+    JNE: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2408-1@1.0/JNE-Yuna-TTF-Regular.woff2',
+    KCCMurukmuruk: 'https://cdn.jsdelivr.net/gh/fonts-archive/KCCMurukmuruk/KCCMurukmuruk.woff2',
+    KNPSKkomi: 'https://cdn.jsdelivr.net/gh/fonts-archive/KNPSKkomi/KNPSKkomi.woff2',
+    KyoboHand: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff',
+    Manse: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Manse.woff',
+    MapoFlowerIsland: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff',
+    MaruBuri: 'https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff2',
+    NanumBaeEunHyeCe: 'https://cdn.jsdelivr.net/gh/fonts-archive/NanumBaeEunHyeCe/NanumBaeEunHyeCe.woff2',
+    NanumBarunpen: 'https://cdn.jsdelivr.net/gh/fonts-archive/NanumBarunpen/NanumBarunpen.woff2',
+    NanumGoDigANiGoGoDing: 'https://cdn.jsdelivr.net/gh/fonts-archive/NanumGoDigANiGoGoDing/NanumGoDigANiGoGoDing.woff2',
+    NanumSonPyeonJiCe: 'https://cdn.jsdelivr.net/gh/fonts-archive/NanumSonPyeonJiCe/NanumSonPyeonJiCe.woff2',
+    omyu_pretty: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2',
+    Ownglyph_corncorn: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2412-1@1.0/Ownglyph_corncorn-Rg.woff2',
+    Ownglyph_ParkDaHyun: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2',
+    Ownglyph_wiseelist: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2501-1@1.1/Ownglyph_wiseelist-Rg.woff2',
+    Pretendard: 'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/packages/pretendard/dist/web/static/woff2/Pretendard-Regular.woff2',
+    RIDIBatang: 'https://cdn.jsdelivr.net/gh/fonts-archive/RIDIBatang/RIDIBatang.woff2',
+    SCDreamRegular: 'https://cdn.jsdelivr.net/gh/fonts-archive/S-CoreDream/SCDreamRegular.woff2',
+    Shilla_CultureM: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/Shilla_CultureM-Medium.woff2',
+    SunBatang: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/SunBatang-Medium.woff',
+    YeongdeokSea: 'https://cdn.jsdelivr.net/gh/fonts-archive/YeongdeokSea/YeongdeokSea.woff2',
+    Ownglyph_UNZ: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2406-1@1.0/Ownglyph_UNZ-Rg.woff2',
+    Ownglyph_Dailyokja: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2403@1.0/Ownglyph_Dailyokja-Rg.woff2',
+    Ownglyph_Memo_Okja: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2403@1.0/Ownglyph_Memo_Okja-Rg.woff2',
+
+};
+
+const buildFontFace = (name, url) => `
+@font-face {
+font-family: '${name}';
+src: url('${url}');
+font-weight: normal;
+font-style: normal;
+font-display: swap;
+}`;
