@@ -12,129 +12,140 @@
     </style>
 </head>
 <body>
-    <div id="result-wrapper">
-        <div id="result">
-            <img id="background-img" crossorigin="anonymous">
-            <div id="container">
-                <div id="quoteOutput">
+    <div id="result-stage">
+        <div id="result-canvas">
+            <img id="result-background" crossorigin="anonymous">
+            <div id="result-content">
+                <div id="result-quote">
                 </div>
-                <p id="titleOutput"></p>
-                <p id="authorOutput"></p>
+                <p id="result-title"></p>
+                <p id="result-author"></p>
             </div>
         </div>
     </div>
-    <div class="controls">
+    <div class="control-panel">
         <form>
             <fieldset>
-                <div class="flex-container-coloumn">
-                    <div class="flex-container">
-                        <label>발췌 문장</label>
+                <div class="control-stack">
+                    <div class="control-row">
+                        <label for="quote">발췌 문장</label>
                         <a href="#" onclick="clearInputs('quote', 'title', 'author'); changeText();">지우기</a>
                     </div>
                     <textarea id="quote" rows="5"></textarea>
                 </div>
-                <div class="flex-container">
-                    <label>제목</label>
+                <div class="control-row">
+                    <label for="title">제목</label>
                     <input id="title" type="text">
-                    <label>이름</label>
+                </div>
+                <div class="control-row">
+                    <label for="author">이름</label>
                     <input id="author" type="text">
                 </div>
             </fieldset>
             <fieldset>
-                <div class="flex-container-coloumn">
-                    <div class="flex-container">
-                        <div>
-                            <label>배경 이미지 URL 또는</label><button type="button" id="local" onclick="clickFileInput()">파일</button>
-                        </div>
-                        <div id="image-controls">
-                            <button type="button" class="bg-button" onclick="zoom(1.05)">+</button>
-                            <button type="button" class="bg-button" onclick="zoom(0.95)">-</button>
-                            <div style="width:7px;text-align: center;">|</div>
-                            <button type="button" class="bg-button" onclick="move(0, -2)" style="font-size: 0.8em">▲</button>
-                            <button type="button" class="bg-button" onclick="move(0, 2)" style="font-size: 0.8em">▼</button>
-                            <button type="button" class="bg-button" onclick="move(-2, 0)" style="font-size: 0.8em">◀</button>
-                            <button type="button" class="bg-button" onclick="move(2, 0)" style="font-size: 0.8em">▶</button>
-                        </div>
-                        <div class="color-radio">
-                            <input type="radio" name="bgColor" id="bgColor0" value="no" checked>
-                            <label for="bgColor0" class="color-option">
-                                <div style="text-align: center;">&times;</div>
-                            </label>
-                            <input type="radio" name="bgColor" id="bgColor1" value="#0F0F0F">
-                            <label for="bgColor1" class="color-option">
-                                <div style="background-color: #0F0F0F;"></div>
-                            </label>
-                            <input type="radio" name="bgColor" id="bgColor2" value="#FFFFFF">
-                            <label for="bgColor2" class="color-option">
-                                <div style="background-color: #FFFFFF;"></div>
-                            </label>
-                            <input type="radio" name="bgColor" id="bgColor3" value="#FEBAD4">
-                            <label for="bgColor3" class="color-option">
-                                <div style="background-color: #FEBAD4;"></div>
-                            </label>
-                            <input type="radio" name="bgColor" id="bgColor4" value="#FCF3AB">
-                            <label for="bgColor4" class="color-option">
-                                <div style="background-color: #FCF3AB;"></div>
-                            </label>
-                            <input type="radio" name="bgColor" id="bgColor5" value="#B4E2DE">
-                            <label for="bgColor5" class="color-option">
-                                <div style="background-color: #B4E2DE;"></div>
-                            </label>
-                            <input type="radio" name="bgColor" id="bgColor6" value="#919FE4">
-                            <label for="bgColor6" class="color-option">
-                                <div style="background-color: #919FE4;"></div>
-                            </label>
-                            <input type="radio" name="bgColor" id="userbgcolorInput" value="userBgColor" onclick="document.getElementById('bgColorPicker').click()">
-                            <label for="userbgcolorInput" class="color-option" style="position: relative;">
-                                <div id="userBgColorDiv" style="background-color: lightgray;">✎</div>
-                                <input class="colorpicker" type="color" id="bgColorPicker" value="#D3D3D3">
-                            </label>
-                        </div>
-                        <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                <div class="control-stack">
+                    <div class="control-label-group">
+                        <label for="bgUrl">배경 이미지 URL 또는</label><button type="button" id="bg-file-button" onclick="clickFileInput()">파일</button>
                     </div>
-                    <div class="input-wrapper">
+                    <div class="input-group">
                         <input id="bgUrl">
                         <button id="clearBgUrl" type="button" onclick="clearInputs('bgUrl'); setBgImgSrc('');">&times;</button>
+                        <input type="file" id="fileInput" accept="image/*" style="display: none;">
                     </div>
                 </div>
-                <div class="flex-container">
-                    <div>
-                        <label>밝기<sub>%</sub></label>
-                        <div class="number-input">
+                <div class="control-row">
+                    <div id="bg-transform-controls">
+                        <button type="button" class="icon-button" onclick="zoom(1.05)">+</button>
+                        <button type="button" class="icon-button" onclick="zoom(0.95)">-</button>
+                        <div style="width:7px;text-align: center;">|</div>
+                        <button type="button" class="icon-button" onclick="move(0, -2)">▲</button>
+                        <button type="button" class="icon-button" onclick="move(0, 2)">▼</button>
+                        <button type="button" class="icon-button" onclick="move(-2, 0)">◀</button>
+                        <button type="button" class="icon-button" onclick="move(2, 0)">▶</button>
+                    </div>
+                    <div class="color-radio">
+                        <input type="radio" name="bgColor" id="bgColor0" value="no" checked>
+                        <label for="bgColor0" class="color-option">
+                            <div style="text-align: center;">&times;</div>
+                        </label>
+                        <input type="radio" name="bgColor" id="bgColorLG" value="#D7D6D6">
+                        <label for="bgColorLG" class="color-option">
+                            <div style="background-color: #D7D6D6;"></div>
+                        </label>
+                        <input type="radio" name="bgColor" id="bgColorLP" value="#FFE4E1">
+                        <label for="bgColorLP" class="color-option">
+                            <div style="background-color: #FFE4E1;"></div>
+                        </label>
+                        <input type="radio" name="bgColor" id="bgColorYellow" value="#FCF3AB">
+                        <label for="bgColorYellow" class="color-option">
+                            <div style="background-color: #FCF3AB;"></div>
+                        </label>
+                        <input type="radio" name="bgColor" id="bgColorLB" value="#AFDBF5">
+                        <label for="bgColorLB" class="color-option">
+                            <div style="background-color: #AFDBF5;"></div>
+                        </label>
+                        <input type="radio" name="bgColor" id="bgColorDG" value="#575655">
+                        <label for="bgColorDG" class="color-option">
+                            <div style="background-color: #565655;"></div>
+                        </label>
+                        <input type="radio" name="bgColor" id="bgColorDR" value="#7c0902">
+                        <label for="bgColorDR" class="color-option">
+                            <div style="background-color: #7c0902;"></div>
+                        </label>
+                        <input type="radio" name="bgColor" id="bgColorGreen" value="#355E3B">
+                        <label for="bgColorGreen" class="color-option">
+                            <div style="background-color: #355E3B;"></div>
+                        </label>
+                        <input type="radio" name="bgColor" id="bgColorDB" value="#26619C">
+                        <label for="bgColorDB" class="color-option">
+                            <div style="background-color: #26619C;"></div>
+                        </label>
+                        <input type="radio" name="bgColor" id="userBgColorInput" value="userBgColor" onclick="document.getElementById('bgColorPicker').click()">
+                        <label for="userBgColorInput" class="color-option" style="position: relative;">
+                            <div id="userBgColorDiv" style="background-color: lightgray;">✎</div>
+                            <input class="colorpicker" type="color" id="bgColorPicker" value="#D3D3D3">
+                        </label>
+                    </div>
+                </div>
+                <div class="control-row">
+                    <div class="number-field">
+                        <label for="brightness">밝기<sub>%</sub></label>
+                        <div class="stepper">
                             <button class="minus" type="button">−</button>
                             <input id="brightness" type="number" value="100" step="10">
                             <button class="plus" type="button">+</button>
                         </div>
                     </div>
-                    <div>
-                        <label>채도<sub>%</sub></label>
-                        <div class="number-input">
+                    <div class="number-field">
+                        <label for="saturate">채도<sub>%</sub></label>
+                        <div class="stepper">
                             <button class="minus" type="button">−</button>
                             <input id="saturate" type="number" value="100" step="10">
                             <button class="plus" type="button">+</button>
                         </div>
                     </div>
-                    <div>
-                        <label>대비<sub>%</sub></label>
-                        <div class="number-input">
+                    <div class="number-field">
+                        <label for="contrast">대비<sub>%</sub></label>
+                        <div class="stepper">
                             <button class="minus" type="button">−</button>
                             <input id="contrast" type="number" value="100" step="10">
                             <button class="plus" type="button">+</button>
                         </div>
                     </div>
-                    <div>
-                        <label>흐리게<sub>px</sub></label>
-                        <div class="number-input">
+                    <div class="number-field">
+                        <label for="blur">흐리게<sub>px</sub></label>
+                        <div class="stepper">
                             <button class="minus" type="button">−</button>
                             <input id="blur" type="number" value="0" step="1">
                             <button class="plus" type="button">+</button>
                         </div>
                     </div>
+                </div>
             </fieldset>
             <fieldset>
-                <div class="flex-container">
-                    <div>
-                        <label>글꼴</label>
+                <div class="control-row">
+                    <div class="control-label-group">
+                      <label for="fontSelect">글꼴</label>
                         <select id="fontSelect">
                             <option value="RIDIBatang" selected>리디바탕</option>
                             <option value="Pretendard">프리텐다드</option>
@@ -157,14 +168,6 @@
                         </select>
                     </div>
                     <input type="file" id="fontInput" accept=".ttf,.otf,.woff,.woff2" style="display: none;">
-                    <div>
-                        <label>글씨 크기<sub>px</sub></label>
-                        <div class="number-input">
-                            <button class="minus" type="button">−</button>
-                            <input id="quoteSize" type="number" value="50" step="1">
-                            <button class="plus" type="button">+</button>
-                        </div>
-                    </div>
                     <div class="color-radio">
                         <input type="radio" name="fontColor" id="fontColor1" value="white" checked>
                         <label for="fontColor1" class="color-option">
@@ -174,9 +177,9 @@
                         <label for="fontColor2" class="color-option">
                             <div style="background-color: black;"></div>
                         </label>
-                        <input type="radio" name="fontColor" id="fontColor3" value="#ff0000">
+                        <input type="radio" name="fontColor" id="fontColor3" value="#E60026">
                         <label for="fontColor3" class="color-option">
-                            <div style="background-color: #ff0000;"></div>
+                            <div style="background-color: #E60026;"></div>
                         </label>
                         <input type="radio" name="fontColor" id="fontColor4" value="#ffbf00">
                         <label for="fontColor4" class="color-option">
@@ -201,34 +204,42 @@
                         </label>
                     </div>
                 </div>
-                <div class="flex-container">
-                    <div>
-                        <label>줄높이</label>
-                        <div class="number-input">
+                <div class="control-row">
+                    <div class="number-field">
+                        <label for="quoteSize">글씨크기<sub>px</sub></label>
+                        <div class="stepper">
+                            <button class="minus" type="button">−</button>
+                            <input id="quoteSize" type="number" value="50" step="1">
+                            <button class="plus" type="button">+</button>
+                        </div>
+                    </div>
+                    <div class="number-field">
+                        <label for="quoteLineHeight">줄높이</label>
+                        <div class="stepper">
                             <button class="minus" type="button">−</button>
                             <input id="quoteLineHeight" type="number" value="1.5" step="0.1">
                             <button class="plus" type="button">+</button>
                         </div>
                     </div>
-                    <div>
-                        <label>문단간격<sub>em</sub></label>
-                        <div class="number-input">
+                    <div class="number-field">
+                        <label for="quoteGap">문단간격<sub>em</sub></label>
+                        <div class="stepper">
                             <button class="minus" type="button">−</button>
                             <input id="quoteGap" type="number" value="0.5" step="0.1">
                             <button class="plus" type="button">+</button>
                         </div>
                     </div>
-                    <div>
-                        <label>자간<sub>px</sub></label>
-                        <div class="number-input">
+                    <div class="number-field">
+                        <label for="quoteLetterSpacing">자간<sub>px</sub></label>
+                        <div class="stepper">
                             <button class="minus" type="button">−</button>
                             <input id="quoteLetterSpacing" type="number" value="-1" step="1">
                             <button class="plus" type="button">+</button>
                         </div>
                     </div>
-                    <div>
-                        <label>어간<sub>px</sub></label>
-                        <div class="number-input">
+                    <div class="number-field">
+                        <label for="quoteWordSpacing">어간<sub>px</sub></label>
+                        <div class="stepper">
                             <button class="minus" type="button">−</button>
                             <input id="quoteWordSpacing" type="number" value="0" step="1">
                             <button class="plus" type="button">+</button>
@@ -237,8 +248,8 @@
                 </div>
             </fieldset>
         </form>
-        <div class="flex-container">
-            <div id="info-text">HTML로 저장 시 사용자 파일 또는 복사한 이미지는 저장되지 않습니다.</div>
+        <div class="control-row">
+            <div id="save-note">HTML로 저장 시 사용자 파일 또는 복사한 이미지는 저장되지 않습니다.</div>
             <button type="button" class="save-button" onclick="saveHTML()">HTML로 저장</button>
             <button type="button" class="save-button" onclick="downloadImage()">이미지로 저장</button>
         </div>
@@ -320,7 +331,7 @@
             ids.forEach(id => $(id).value = '');
         }
 
-        const img = $('background-img');
+        const img = $('result-background');
 
         function saveImageTransformToCookies() {
             Object.entries(transform).forEach(([key, val]) => setCookie(`transform_${key}`, val));
@@ -345,10 +356,10 @@
         function setBgImgSrc(src) {
             img.src = src;
             if (src.startsWith('blob:')) {
-                $('info-text').style.visibility = 'visible';
+                $('save-note').style.visibility = 'visible';
             }
             else {
-                $('info-text').style.visibility = 'hidden';
+                $('save-note').style.visibility = 'hidden';
             }
         }
         function setBgImgSrcColor(color) {
@@ -397,8 +408,8 @@
         }
 
         function calculateOutputPos() {
-            const titleHeight = $('titleOutput').clientHeight;
-            const authorHeight = $('authorOutput').clientHeight;
+            const titleHeight = $('result-title').clientHeight;
+            const authorHeight = $('result-author').clientHeight;
             let quoteHeight = 1020;
             let titleBottom = 0;
 
@@ -410,17 +421,17 @@
                 titleBottom = authorHeight + 10;
             }
 
-            $('quoteOutput').style.height = `${quoteHeight}px`;
-            $('titleOutput').style.bottom = `${titleBottom}px`;
+            $('result-quote').style.height = `${quoteHeight}px`;
+            $('result-title').style.bottom = `${titleBottom}px`;
         }
 
         function formatParagraphs(text) {
             return text.trim().split('\n').map(line => line.trim()).filter(Boolean).map(line => `<p>${line}</p>`).join('\n');
         }
         function changeText() {
-            $('quoteOutput').innerHTML = formatParagraphs($('quote').value);
-            $('titleOutput').textContent = $('title').value.trim();
-            $('authorOutput').textContent = $('author').value.trim();
+            $('result-quote').innerHTML = formatParagraphs($('quote').value);
+            $('result-title').textContent = $('title').value.trim();
+            $('result-author').textContent = $('author').value.trim();
             calculateOutputPos();
         }
 
@@ -436,22 +447,22 @@
             const fontName = $('fontSelect').value;
             const fontURL = fontMap[$('fontSelect').value];
             if (fontURL) $('webfont').innerHTML = buildFontFace(fontName, fontURL);
-            $('quoteOutput').style.fontFamily = fontName;
+            $('result-quote').style.fontFamily = fontName;
         }
 
         function applyQuoteStyles() {
             const color = document.querySelector('input[name="fontColor"]:checked').value;
-            $('container').style.color = (color == 'userFontColor') ? $('fontColorPicker').value : color;
+            $('result-content').style.color = (color == 'userFontColor') ? $('fontColorPicker').value : color;
 
-            $('quoteOutput').style.fontSize = $('quoteSize').value + 'px';
-            $('quoteOutput').style.gap = $('quoteGap').value + 'em';
-            $('quoteOutput').style.lineHeight = $('quoteLineHeight').value;
-            $('quoteOutput').style.letterSpacing = $('quoteLetterSpacing').value + 'px';
-            $('quoteOutput').style.wordSpacing = $('quoteWordSpacing').value + 'px';
+            $('result-quote').style.fontSize = $('quoteSize').value + 'px';
+            $('result-quote').style.gap = $('quoteGap').value + 'em';
+            $('result-quote').style.lineHeight = $('quoteLineHeight').value;
+            $('result-quote').style.letterSpacing = $('quoteLetterSpacing').value + 'px';
+            $('result-quote').style.wordSpacing = $('quoteWordSpacing').value + 'px';
         }
 
         function bindNumberInputButtons() {
-            document.querySelectorAll('.number-input').forEach(wrapper => {
+            document.querySelectorAll('.stepper').forEach(wrapper => {
                 const input = wrapper.querySelector('input');
 
                 wrapper.querySelector('.minus').addEventListener('click', e => {
@@ -468,13 +479,13 @@
 
         // 이미지로 저장
         function downloadImage() {
-            const title = $('titleOutput').innerText.slice(0, 30).trim();
-            const para = $('quoteOutput').innerText.slice(0, 10).trim();
+            const title = $('result-title').innerText.slice(0, 30).trim();
+            const para = $('result-quote').innerText.slice(0, 10).trim();
 
             const saveImage = img.src.startsWith('data:') ? htmlToImage.toPng : htmlToImage.toJpeg;
             const filename = img.src.startsWith('data:') ? `${title}-${para}.png` : `${title}-${para}.jpg`;
 
-            saveImage($('result'), {
+            saveImage($('result-canvas'), {
                 quality: 0.95,
                 width: 1200,
                 height: 1200,
@@ -497,14 +508,14 @@
             let template = await templateRes.text();
             const resultStyle = await resultStyleRes.text();
 
-            const title = $('titleOutput').innerText;
-            const para = $('quoteOutput').innerText;
+            const title = $('result-title').innerText;
+            const para = $('result-quote').innerText;
             const filename = `${title.slice(0, 30).trim()}-${para.slice(0, 10).trim()}`;
 
             const webfontStyleHTML = document.querySelector('#webfont').outerHTML;
             const resultStyleHTML = `<style>\n${resultStyle}\n</style>`;
 
-            let resultHTML = document.querySelector('#result-wrapper').outerHTML;
+            let resultHTML = document.querySelector('#result-stage').outerHTML;
 
             if (img.src.startsWith('blob:')) {
                 resultHTML = resultHTML.replace(/<img\b[^>]*?>/gi, '');
@@ -593,11 +604,11 @@
                 changeText();
             });
             $('title').addEventListener('input', () => {
-                $('titleOutput').textContent = $('title').value.trim();
+                $('result-title').textContent = $('title').value.trim();
                 calculateOutputPos();
             });
             $('author').addEventListener('input', () => {
-                $('authorOutput').textContent = $('author').value.trim();
+                $('result-author').textContent = $('author').value.trim();
                 calculateOutputPos();
             });
 
@@ -614,7 +625,7 @@
                 const fontURL = URL.createObjectURL(file); // Blob URL 생성
                 const fontName = 'localFont'; // 사용할 폰트 이름
                 $('webfont').innerHTML = buildFontFace(fontName, fontURL);
-                $('quoteOutput').style.fontFamily = fontName;
+                $('result-quote').style.fontFamily = fontName;
             });
             $('fontColorPicker').addEventListener('click', () => {
                 $('userFontColorInput').checked = true;
@@ -665,7 +676,7 @@
             });
             $('bgColorPicker').addEventListener('click', () => {
                 setBgImgSrcColor($('bgColorPicker').value);
-                $('userbgcolorInput').checked = true;
+                $('userBgColorInput').checked = true;
                 saveInputsToCookies();
             });
             $('bgColorPicker').addEventListener('input', () => {

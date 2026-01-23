@@ -1,11 +1,14 @@
 @font-face {
-    font-family: 'Pretendard';
+    font-family: 'Pretendard-ExtraLight';
     src: url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/packages/pretendard/dist/web/static/woff2/Pretendard-ExtraLight.woff2') format('woff2');
     font-weight: 200;
     font-style: normal;
 }
 
-html,
+html {
+    font-size: 22px;
+}
+
 body,
 div,
 p {
@@ -19,14 +22,14 @@ body {
     flex-wrap: wrap;
 }
 
-#result-wrapper {
+#result-stage {
     width: 600px;
     height: 600px;
     transform: scale(0.5);
     transform-origin: top left;
 }
 
-#result {
+#result-canvas {
     position: relative;
     width: 1200px;
     height: 1200px;
@@ -37,14 +40,14 @@ body {
     z-index: -1;
 }
 
-#background-img {
+#result-background {
     position: absolute;
     top: 50%;
     left: 50%;
     z-index: 0;
 }
 
-#container {
+#result-content {
     position: absolute;
     top: 90px;
     left: 90px;
@@ -53,14 +56,14 @@ body {
     z-index: 1;
 }
 
-#quoteOutput {
+#result-quote {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-#titleOutput,
-#authorOutput {
+#result-title,
+#result-author {
     position: absolute;
     font-family: 'Pretendard';
     font-size: 48px;
@@ -71,29 +74,7 @@ body {
     word-wrap: break-word;
 }
 
-#authorOutput {
+#result-author {
     bottom: 0;
     opacity: 0.6;
 }
-
-.buttons {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 10px;
-    margin: 10px;
-}
-
-@media (min-width: 720px) {
-    .buttons {
-        flex-direction: column;
-    }
-}
-
-.buttons button {
-    width: 100px;
-    height: 40px;
-
-}
-
-

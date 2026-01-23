@@ -6,12 +6,32 @@
     <title>{{title}}</title>
     {{webfontStyle}}
     {{resultStyle}}
+    <style>
+        .template-actions {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 10px;
+        }
+
+        @media (min-width: 720px) {
+            .template-actions {
+                flex-direction: column;
+            }
+        }
+
+        .template-actions button {
+            width: 100px;
+            height: 40px;
+        }
+    </style>
 </head>
 <body>
     {{result}}
-    <div class="buttons">
-        <button id="downlaod-image" type="submit" onclick="downloadImage()">이미지로 저장</button>
-        <button id="copy-quote" type="submit" onclick="copyQuote()">발췌 문장 복사</button>
+    <div class="template-actions">
+        <button id="download-image" type="button" onclick="downloadImage()">이미지로 저장</button>
+        <button id="copy-quote" type="button" onclick="copyQuote()">발췌 문장 복사</button>
     </div>
     <script>
         const $ = id => document.getElementById(id);
@@ -27,13 +47,13 @@
         }
         function downloadImage() {
             const title = document.title.slice(0, 30).trim();
-            const para = $('quoteOutput').innerText.slice(0, 10).trim();
-            const img = $('background-img');
+            const para = $('result-quote').innerText.slice(0, 10).trim();
+            const img = $('result-background');
 
             const saveImage = img.src.startsWith('data:') ? htmlToImage.toPng : htmlToImage.toJpeg;
             const filename = img.src.startsWith('data:') ? `${title}-${para}.png` : `${title}-${para}.jpg`;
 
-            saveImage($('result'), {
+            saveImage($('result-canvas'), {
                 quality: 0.95,
                 width: 1200,
                 height: 1200,
@@ -46,9 +66,9 @@
             }).catch(error => console.error('이미지 저장 실패:', error));
         }
         function copyQuote() {
-            const title = $('titleOutput').innerText.trim();
-            const author = $('authorOutput').innerText.trim();
-            const quote = $('quoteOutput').innerText.trim();
+            const title = $('result-title').innerText.trim();
+            const author = $('result-author').innerText.trim();
+            const quote = $('result-quote').innerText.trim();
 
             const copiedText = `Share: ${title} - ${author}\n\n${quote}`;
             navigator.clipboard.writeText(copiedText);
