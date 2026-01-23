@@ -57,6 +57,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    text-align: left;
     word-break: keep-all;
     word-wrap: break-word;
 }
@@ -97,3 +98,4 @@ body {
     height: 40px;
 
 }
+
