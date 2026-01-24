@@ -65,7 +65,7 @@ body {
 #result-title,
 #result-author {
     position: absolute;
-    font-family: 'Pretendard';
+    font-family: 'Pretendard-ExtraLight';
     font-size: 48px;
     font-weight: 200;
     line-height: 1.2;
@@ -78,3 +78,4 @@ body {
     bottom: 0;
     opacity: 0.6;
 }
+
