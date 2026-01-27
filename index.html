@@ -44,8 +44,19 @@
             </fieldset>
             <fieldset>
                 <div class="control-stack">
-                    <div class="control-label-group">
-                        <label for="bgUrl">배경 이미지 URL 또는</label><button type="button" id="bg-file-button" onclick="clickFileInput()">파일</button>
+                    <div class="control-row">
+                        <div class="control-label-group">
+                            <label for="bgUrl">배경 이미지 URL 또는</label><button type="button" id="bg-file-button" onclick="clickFileInput()">파일</button>
+                        </div>
+                        <div id="bg-transform-controls">
+                            <button type="button" class="icon-button" onclick="zoom(1.05)">+</button>
+                            <button type="button" class="icon-button" onclick="zoom(0.95)">-</button>
+                            <div style="width:7px;text-align: center;">|</div>
+                            <button type="button" class="icon-button" onclick="move(0, -2)">▲</button>
+                            <button type="button" class="icon-button" onclick="move(0, 2)">▼</button>
+                            <button type="button" class="icon-button" onclick="move(-2, 0)">◀</button>
+                            <button type="button" class="icon-button" onclick="move(2, 0)">▶</button>
+                        </div>
                     </div>
                     <div class="input-group">
                         <input id="bgUrl">
@@ -54,51 +65,11 @@
                     </div>
                 </div>
                 <div class="control-row">
-                    <div id="bg-transform-controls">
-                        <button type="button" class="icon-button" onclick="zoom(1.05)">+</button>
-                        <button type="button" class="icon-button" onclick="zoom(0.95)">-</button>
-                        <div style="width:7px;text-align: center;">|</div>
-                        <button type="button" class="icon-button" onclick="move(0, -2)">▲</button>
-                        <button type="button" class="icon-button" onclick="move(0, 2)">▼</button>
-                        <button type="button" class="icon-button" onclick="move(-2, 0)">◀</button>
-                        <button type="button" class="icon-button" onclick="move(2, 0)">▶</button>
-                    </div>
-                    <div class="color-radio">
-                        <input type="radio" name="bgColor" id="bgColor0" value="no" checked>
-                        <label for="bgColor0" class="color-option">
+                    <label>배경색</label>
+                    <div class="color-radio" id="bgColorRadio">
+                        <input type="radio" name="bgColor" id="bgColorNoneInput" value="no" checked>
+                        <label for="bgColorNoneInput" class="color-option">
                             <div style="text-align: center;">&times;</div>
-                        </label>
-                        <input type="radio" name="bgColor" id="bgColorLG" value="#D7D6D6">
-                        <label for="bgColorLG" class="color-option">
-                            <div style="background-color: #D7D6D6;"></div>
-                        </label>
-                        <input type="radio" name="bgColor" id="bgColorLP" value="#FFE4E1">
-                        <label for="bgColorLP" class="color-option">
-                            <div style="background-color: #FFE4E1;"></div>
-                        </label>
-                        <input type="radio" name="bgColor" id="bgColorYellow" value="#FCF3AB">
-                        <label for="bgColorYellow" class="color-option">
-                            <div style="background-color: #FCF3AB;"></div>
-                        </label>
-                        <input type="radio" name="bgColor" id="bgColorLB" value="#AFDBF5">
-                        <label for="bgColorLB" class="color-option">
-                            <div style="background-color: #AFDBF5;"></div>
-                        </label>
-                        <input type="radio" name="bgColor" id="bgColorDG" value="#575655">
-                        <label for="bgColorDG" class="color-option">
-                            <div style="background-color: #565655;"></div>
-                        </label>
-                        <input type="radio" name="bgColor" id="bgColorDR" value="#7c0902">
-                        <label for="bgColorDR" class="color-option">
-                            <div style="background-color: #7c0902;"></div>
-                        </label>
-                        <input type="radio" name="bgColor" id="bgColorGreen" value="#355E3B">
-                        <label for="bgColorGreen" class="color-option">
-                            <div style="background-color: #355E3B;"></div>
-                        </label>
-                        <input type="radio" name="bgColor" id="bgColorDB" value="#26619C">
-                        <label for="bgColorDB" class="color-option">
-                            <div style="background-color: #26619C;"></div>
                         </label>
                         <input type="radio" name="bgColor" id="userBgColorInput" value="userBgColor" onclick="document.getElementById('bgColorPicker').click()">
                         <label for="userBgColorInput" class="color-option" style="position: relative;">
@@ -145,7 +116,7 @@
             <fieldset>
                 <div class="control-row">
                     <div class="control-label-group">
-                      <label for="fontSelect">글꼴</label>
+                        <label for="fontSelect">글꼴</label>
                         <select id="fontSelect">
                             <option value="RIDIBatang" selected>리디바탕</option>
                             <option value="Pretendard">프리텐다드</option>
@@ -153,50 +124,21 @@
                             <option value="GangwonEduSaeeum">강원교육새음체</option>
                             <option value="GowunDodum">고운돋움</option>
                             <option value="GowunBatang">고운바탕</option>
-                            <option value="KyoboHand">교보 손글씨 2019</option>
-                            <option value="NanumSonPyeonJiCe">나눔손글씨 손편지체</option>
+                            <option value="KyoboHand">교보손글씨2019</option>
+                            <option value="NanumSonPyeonJiCe">나눔손글씨손편지체</option>
                             <option value="DungGeunMo">둥근모꼴+Fixedsys</option>
-                            <option value="BookkMyungjo">부크크 명조</option>
-                            <option value="Ownglyph_kimkonghae">온글잎 김콩해</option>
-                            <option value="Ownglyph_Memo_Okja">온글잎 메모앤옥자체</option>
-                            <option value="Ownglyph_wiseelist">온글잎 위씨리스트</option>
-                            <option value="Ownglyph_corncorn">온글잎 콘콘체</option>
+                            <option value="BookkMyungjo">부크크명조</option>
+                            <option value="Ownglyph_kimkonghae">온글잎김콩해</option>
+                            <option value="Ownglyph_Memo_Okja">온글잎메모앤옥자체</option>
+                            <option value="Ownglyph_wiseelist">온글잎위씨리스트</option>
+                            <option value="Ownglyph_corncorn">온글잎콘콘체</option>
                             <option value="InkLipquid">잉크립퀴드체</option>
-                            <option value="HakgyoansimBunpil">학교안심 분필</option>
                             <option value="Hanbit">KCC한빛</option>
                             <option value="localFont">사용자 파일</option>
                         </select>
                     </div>
                     <input type="file" id="fontInput" accept=".ttf,.otf,.woff,.woff2" style="display: none;">
-                    <div class="color-radio">
-                        <input type="radio" name="fontColor" id="fontColor1" value="white" checked>
-                        <label for="fontColor1" class="color-option">
-                            <div style="background-color: white;"></div>
-                        </label>
-                        <input type="radio" name="fontColor" id="fontColor2" value="black">
-                        <label for="fontColor2" class="color-option">
-                            <div style="background-color: black;"></div>
-                        </label>
-                        <input type="radio" name="fontColor" id="fontColor3" value="#E60026">
-                        <label for="fontColor3" class="color-option">
-                            <div style="background-color: #E60026;"></div>
-                        </label>
-                        <input type="radio" name="fontColor" id="fontColor4" value="#ffbf00">
-                        <label for="fontColor4" class="color-option">
-                            <div style="background-color: #ffbf00;"></div>
-                        </label>
-                        <input type="radio" name="fontColor" id="fontColor5" value="#00356B">
-                        <label for="fontColor5" class="color-option">
-                            <div style="background-color: #00356B;"></div>
-                        </label>
-                        <input type="radio" name="fontColor" id="fontColor6" value="#FEBAD4">
-                        <label for="fontColor6" class="color-option">
-                            <div style="background-color: #FEBAD4;"></div>
-                        </label>
-                        <input type="radio" name="fontColor" id="fontColor7" value="#B4E2DE">
-                        <label for="fontColor7" class="color-option">
-                            <div style="background-color: #B4E2DE;"></div>
-                        </label>
+                    <div class="color-radio" id="fontColorRadio">
                         <input type="radio" name="fontColor" id="userFontColorInput" value="userFontColor" onclick="document.getElementById('fontColorPicker').click()">
                         <label for="userFontColorInput" class="color-option" style="position: relative;">
                             <div id="userFontColorDiv" style="background-color: lightgray;">✎</div>
@@ -276,6 +218,123 @@
         };
 
         const $ = id => document.getElementById(id);
+
+        const BG_COLOR_ITEMS = [
+            "#F2F2ED",
+            "#FBE0E6",
+            "#FFE4D6",
+            "#FFF3D6",
+            "#D6F1E8",
+            "#DBEEFF",
+            "#75726C",
+            "#B83232",
+            "#F7C900",
+            "#256847",
+            "#1E3FAE",
+            "#2F4F3A",
+            "#0B1C3D",
+            "#0F0F0F",
+        ];
+
+        function checkBgColorNone() {
+            const noneRadio = document.querySelector('input[name="bgColor"][value="no"]');
+            if (noneRadio) noneRadio.checked = true;
+        }
+
+        const FONT_COLOR_ITEMS = [
+            "rgba(255, 255, 245, 0.92)",
+            "rgba(15, 23, 42, 0.88)",
+            "rgba(15, 23, 42, 0.65)",
+            "#B32020",
+            "#FFD400",
+            "#2F5E73",
+            "#EF7F73",
+            "#E1C48A",
+            "#BADFCC",
+            "#9FC4E6",
+        ];
+
+        function renderBgColorOptions() {
+            const container = $('bgColorRadio');
+            if (!container) return;
+
+            const userRadio = $('userBgColorInput');
+
+            container.querySelectorAll('input[name="bgColor"]').forEach(radio => {
+                if (radio.id === 'bgColorNoneInput') return;
+                if (radio.id === 'userBgColorInput') return;
+                const label = container.querySelector(`label[for="${radio.id}"]`);
+                radio.remove();
+                if (label) label.remove();
+            });
+
+            for (const [index, color] of BG_COLOR_ITEMS.entries()) {
+                const presetId = `bgColorPreset${index}`;
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'bgColor';
+                input.id = presetId;
+                input.value = color;
+
+                const label = document.createElement('label');
+                label.className = 'color-option';
+                label.htmlFor = presetId;
+
+                const swatchDiv = document.createElement('div');
+                swatchDiv.style.backgroundColor = color;
+
+                label.appendChild(swatchDiv);
+                if (userRadio) {
+                    container.insertBefore(input, userRadio);
+                    container.insertBefore(label, userRadio);
+                } else {
+                    container.appendChild(input);
+                    container.appendChild(label);
+                }
+            }
+        }
+
+        function renderFontColorOptions() {
+            const container = $('fontColorRadio');
+            if (!container) return;
+
+            const userRadio = $('userFontColorInput');
+
+            container.querySelectorAll('input[name="fontColor"]').forEach(radio => {
+                if (radio.id === 'userFontColorInput') return;
+                const label = container.querySelector(`label[for="${radio.id}"]`);
+                radio.remove();
+                if (label) label.remove();
+            });
+
+            for (const [index, color] of FONT_COLOR_ITEMS.entries()) {
+                const presetId = `fontColorPreset${index}`;
+
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'fontColor';
+                input.id = presetId;
+                input.value = color;
+                if (index === 0) input.checked = true;
+
+                const label = document.createElement('label');
+                label.className = 'color-option';
+                label.htmlFor = presetId;
+
+                const swatchDiv = document.createElement('div');
+                swatchDiv.style.backgroundColor = color;
+
+                label.appendChild(swatchDiv);
+
+                if (userRadio) {
+                    container.insertBefore(input, userRadio);
+                    container.insertBefore(label, userRadio);
+                } else {
+                    container.appendChild(input);
+                    container.appendChild(label);
+                }
+            }
+        }
 
         function setCookie(name, value, days = 90) {
             const expires = new Date(Date.now() + days * 864e5).toUTCString();
@@ -651,7 +710,7 @@
                 }
             });
             $('bgUrl').addEventListener('input', () => {
-                document.getElementById("bgColor0").checked = true;
+                checkBgColorNone();
                 $('bgUrl').value = $('bgUrl').value.split(' ')[0];
                 setBgImgSrc($('bgUrl').value);
             });
@@ -670,7 +729,7 @@
                     file = Array.isArray(output) ? output[0] : output;
                 }
 
-                document.getElementById("bgColor0").checked = true;
+                checkBgColorNone();
                 $('bgUrl').value = URL.createObjectURL(file);
                 setBgImgSrc($('bgUrl').value);
             });
@@ -736,6 +795,8 @@
         window.addEventListener('DOMContentLoaded', async () => {
             await fetchCss();
 
+            renderBgColorOptions();
+            renderFontColorOptions();
             loadInputsFromCookies();
             const param = new URLSearchParams(window.location.search).get("param");
             if (param) {
@@ -757,4 +818,3 @@
     </script>
 </body>
 </html>
-

@@ -15,18 +15,26 @@ button,
 textarea,
 input,
 select {
-    padding: 2px;
     vertical-align: middle;
+}
+
+select {
+    font-size: 0.9rem;
 }
 
 label,
 button,
 a {
+    font-size: 0.9rem;
     font-weight: 500;
 }
 
+button {
+    height: 1.2rem;
+}
+
 sub {
-    font-size: 0.7em;
+    font-size: 0.7rem;
     vertical-align: baseline;
     margin-left: 1px;
     font-weight: 300;
@@ -76,16 +84,16 @@ fieldset {
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 11px 0;
+    padding: 12px 0;
     border-color: gray;
     border-width: 0 0 1px 0;
     border-style: solid;
-    gap: 11px;
+    gap: 12px;
     justify-content: space-around;
 }
 
 .control-row {
-    gap: 0.4em;
+    gap: 10px;
     width: 100%;
     box-sizing: border-box;
     justify-content: space-between;
@@ -94,13 +102,13 @@ fieldset {
 .control-stack {
     display: flex;
     flex-direction: column;
-    gap: 0.2em;
+    gap: 6px;
     width: 100%;
     box-sizing: border-box;
 }
 
 .control-label-group {
-    gap: 0.4em;
+    gap: 10px;
     box-sizing: border-box;
 }
 
@@ -113,7 +121,7 @@ fieldset {
 .number-field {
     display: flex;
     flex-direction: column;
-    gap: 0.3em;
+    gap: 6px;
     box-sizing: border-box;
 }
 
@@ -130,11 +138,12 @@ fieldset {
     width: 100%;
     padding-right: 28px;
     box-sizing: border-box;
+    font-size: 0.9rem;
 }
 
 #clearBgUrl {
     position: absolute;
-    right: 0.3em;
+    right: 6px;
     top: 50%;
     transform: translateY(-50%);
     border: none;
@@ -142,20 +151,21 @@ fieldset {
 }
 
 #bg-file-button {
-    padding: 1px;
     margin: 0;
 }
 
 .save-button {
     float: right;
+    font-size: 1rem;
+    height: 2em;
     margin: 10px 0 0 10px;
-    padding: 10px 10px;
+    padding: 0.5rem;
 }
 
 #save-note {
     flex: 1;
     color: #666;
-    font-size: 0.7em;
+    font-size: 0.7rem;
     vertical-align: middle;
     word-break: keep-all;
     visibility: hidden;
@@ -163,20 +173,13 @@ fieldset {
 
 #bg-transform-controls,
 #bg-transform-controls div {
-    gap: 0.2em;
+    gap: 6px;
     box-sizing: border-box;
 }
 
 .icon-button {
     width: 1.2rem;
-    height: 1.2rem;
-    font-size: 0.8em;
-    padding: 0.1em;
-    border: 1px solid gray;
-    border-radius: 15%;
-    background-color: transparent;
-    appearance: none;
-    -webkit-appearance: none;
+    font-size: 0.8rem;
 }
 
 input[type="number"] {
@@ -191,10 +194,11 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .stepper {
-    display: inline-flex;
-    border: 1px solid gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     box-sizing: border-box;
-    height: 1.2em;
+    border: 1px solid gray;
 }
 
 .stepper * {
@@ -202,8 +206,8 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .stepper input[type=number] {
-    width: 2.1em;
-    padding: 0;
+    width: 2.1rem;
+    height: 1.2rem;
     font-family: 'Pretendard-ExtraLight';
     font-feature-settings: "tnum", "lnum";
     text-align: center;
@@ -212,9 +216,8 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .stepper button {
-    width: 1.2em;
-    padding: 0;
-    margin: 0;
+    height: 1.2rem;
+    width: 1.3rem;
     border: none;
     background-color: transparent;
     appearance: none;
@@ -233,8 +236,8 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .color-option div {
-    width: 1em;
-    height: 1em;
+    width: 1rem;
+    height: 1rem;
     border: 1px solid black;
 }
 
