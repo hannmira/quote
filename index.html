@@ -233,26 +233,26 @@
             "#1E55B5",
             "#2F4F3A",
             "#0A2A66",
-            "#0F0F0F",
+            "#121212",
         ];
-
-        function checkBgColorNone() {
-            const noneRadio = document.querySelector('input[name="bgColor"][value="no"]');
-            if (noneRadio) noneRadio.checked = true;
-        }
 
         const FONT_COLOR_ITEMS = [
             "rgba(255, 255, 245, 0.92)",
             "rgba(15, 23, 42, 0.88)",
             "rgba(15, 23, 42, 0.65)",
-            "#B32020",
-            "#F6BF00",
+            "#EF2020",
+            "#FFC94A",
             "#357586",
             "#EF7F73",
             "#F0B8A0",
             "#BADFCC",
             "#9FC4E6",
         ];
+
+        function checkBgColorNone() {
+            const noneRadio = document.querySelector('input[name="bgColor"][value="no"]');
+            if (noneRadio) noneRadio.checked = true;
+        }
 
         function renderBgColorOptions() {
             const container = $('bgColorRadio');
