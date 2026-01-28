@@ -1,5 +1,5 @@
 const fontMap = {
-    BookkMyungjo: 'https://cdn.jsdelivr.net/gh/fonts-archive/BookkMyungjo/BookkMyungjo-Bold.woff2',
+    BookkMyungjo: 'https://cdn.jsdelivr.net/gh/fonts-archive/BookkMyungjo/BookkMyungjo-Light.woff2',
     Cafe24OhsquareAir: 'https://cdn.jsdelivr.net/gh/fonts-archive/Cafe24OhsquareAir/Cafe24OhsquareAir.woff2',
     Cafe24Simplehae: 'https://cdn.jsdelivr.net/gh/fonts-archive/Cafe24Simplehae/Cafe24Simplehae.woff2',
     Cafe24SsurroundAir: 'https://cdn.jsdelivr.net/gh/fonts-archive/Cafe24SsurroundAir/Cafe24SsurroundAir.woff2',
