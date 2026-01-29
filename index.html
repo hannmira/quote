@@ -31,7 +31,7 @@
                         <label for="quote">발췌 문장</label>
                         <a href="#" onclick="clearInputs('quote', 'title', 'author'); changeText();">지우기</a>
                     </div>
-                    <textarea id="quote" rows="5"></textarea>
+                    <textarea id="quote" rows="4"></textarea>
                 </div>
                 <div class="control-row">
                     <label for="title">제목</label>
@@ -138,6 +138,27 @@
                         </select>
                     </div>
                     <input type="file" id="fontInput" accept=".ttf,.otf,.woff,.woff2" style="display: none;">
+                    <div class="control-label-group">
+                        <div class="control-row">
+                            <label for="quoteSize">글씨크기<sub>px</sub></label>
+                            <div class="stepper">
+                                <button class="minus" type="button">−</button>
+                                <input id="quoteSize" type="number" value="50" step="1">
+                                <button class="plus" type="button">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-row">
+                    <div class="control-label-group">
+                        <div class="control-row">
+                            <label for="colorDiff">색diff
+                            </label>
+                            <input type="checkbox" id="colorDiff">
+                        </div>
+                    </div>
+                    <div class="control-label-group">
+                    <label>글씨색</label>
                     <div class="color-radio" id="fontColorRadio">
                         <input type="radio" name="fontColor" id="userFontColorInput" value="userFontColor" onclick="document.getElementById('fontColorPicker').click()">
                         <label for="userFontColorInput" class="color-option" style="position: relative;">
@@ -145,16 +166,9 @@
                             <input class="colorpicker" type="color" id="fontColorPicker" value="#D3D3D3">
                         </label>
                     </div>
+                    </div>
                 </div>
                 <div class="control-row">
-                    <div class="number-field">
-                        <label for="quoteSize">글씨크기<sub>px</sub></label>
-                        <div class="stepper">
-                            <button class="minus" type="button">−</button>
-                            <input id="quoteSize" type="number" value="50" step="1">
-                            <button class="plus" type="button">+</button>
-                        </div>
-                    </div>
                     <div class="number-field">
                         <label for="quoteLineHeight">줄높이</label>
                         <div class="stepper">
@@ -226,14 +240,15 @@
             "#FFF3D6",
             "#D6F1E8",
             "#DBEEFF",
-            "#75726C",
+            "#5F5B58",
             "#A51E1E",
-            "#F7C900",
-            "#136C25",
-            "#1E55B5",
-            "#2F4F3A",
-            "#0A2A66",
-            "#121212",
+            "#F6C800",
+            "#0B6B3A",
+            "#1748A3",
+    "#6A1015",
+    "#174D37",
+    "#0A2A66",
+    "#121212",
         ];
 
         const FONT_COLOR_ITEMS = [
@@ -241,12 +256,15 @@
             "rgba(15, 23, 42, 0.88)",
             "rgba(15, 23, 42, 0.65)",
             "#EF2020",
-            "#FFC94A",
-            "#357586",
-            "#EF7F73",
-            "#F0B8A0",
-            "#BADFCC",
-            "#9FC4E6",
+            "#F6C800",
+            "#1B4F8A",
+            "#E8746A",
+            "#F2A996",
+            "#EFD18A",
+            "#B8D9C8",
+            "#B9D2F2",
+    "#8A7864",
+    "#5F7F85",
         ];
 
         function checkBgColorNone() {
@@ -354,6 +372,7 @@
             });
             setCookie('selectedBgColor', document.querySelector('input[name="bgColor"]:checked').value);
             setCookie('selectedFontColor', document.querySelector('input[name="fontColor"]:checked').value);
+            setCookie('colorDiff', $('colorDiff')?.checked ? '1' : '0');
         }
         function loadInputsFromCookies() {
             document.querySelectorAll('input, select, textarea').forEach(el => {
@@ -383,6 +402,9 @@
             if (getCookie('fontColorPicker')) {
                 $('userFontColorDiv').style.backgroundColor = getCookie('fontColorPicker');
                 $('userFontColorDiv').style.color = fontColorFromBg(getCookie('fontColorPicker'));
+            }
+            if (getCookie('colorDiff')) {
+                $('colorDiff').checked = colorDiffCookie === '1';
             }
         }
 
@@ -512,6 +534,7 @@
         function applyQuoteStyles() {
             const color = document.querySelector('input[name="fontColor"]:checked').value;
             $('result-content').style.color = (color == 'userFontColor') ? $('fontColorPicker').value : color;
+            $('result-content').style.mixBlendMode = $('colorDiff').checked ? 'difference' : 'normal';
 
             $('result-quote').style.fontSize = $('quoteSize').value + 'px';
             $('result-quote').style.gap = $('quoteGap').value + 'em';
@@ -697,6 +720,10 @@
                 $('userFontColorDiv').style.color = fontColorFromBg(color);
                 $('userFontColorDiv').style.backgroundColor = color;
                 applyQuoteStyles();
+            });
+            $('colorDiff').addEventListener('change', () => {
+                applyQuoteStyles();
+                saveInputsToCookies();
             });
 
             $('bgUrl').addEventListener('paste', (event) => {

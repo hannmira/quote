@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>mix-blend-mode preview</title>
+  <style>
+    :root {
+      --cell-w: 240px;
+      --cell-h: 140px;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: #eee;
+      font-family: 'gowun batang', sans-serif;
+    }
+
+    h2 {
+      margin: 24px 0 8px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(var(--cols), var(--cell-w));
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .cell {
+      position: relative;
+      width: var(--cell-w);
+      height: var(--cell-h);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .cell-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      text-align: left;
+    }
+
+    .text {
+      font-size: 16px;
+      line-height: 1.4;
+      font-weight: 600;
+      white-space: pre-line;
+    }
+
+    .blend-difference {
+      mix-blend-mode: difference;
+    }
+
+    .blend-normal {
+      mix-blend-mode: normal;
+    }
+  </style>
+</head>
+<body>
+
+<h2>mix-blend-mode: difference</h2>
+<div id="grid-difference" class="grid"></div>
+
+<h2>mix-blend-mode: normal</h2>
+<div id="grid-normal" class="grid"></div>
+
+<script>
+  /* ===== difference용 색상 ===== */
+  const BG_COLORS_DIFF = [
+    "#F2F2ED",
+    "#FBE0E6",
+    "#FFE4D6",
+    "#FFF3D6",
+    "#D6F1E8",
+    "#DBEEFF",
+  ];
+
+  const TEXT_COLORS_DIFF = [
+    "#5F7F85",
+    "#8A7864",
+  ];
+
+  /* ===== normal용 색상 ===== */
+  const BG_COLORS_NORMAL = [
+            "#5F5B58",
+            "#A51E1E",
+            "#F6C800",
+            "#0B6B3A",
+            "#1748A3",
+    "#6A1015",
+    "#174D37",
+    "#0A2A66",
+    "#121212",
+  ];
+
+  const TEXT_COLORS_NORMAL = [
+            "rgba(15, 23, 42, 0.88)",
+            "rgba(255, 255, 245, 0.92)",
+            "#EF2020",
+            "#F6C800",
+            "#1B4F8A",
+            "#E8746A",
+            "#F2A996",
+            "#EFD18A",
+            "#B8D9C8",
+            "#B9D2F2",
+  ];
+
+  const SAMPLE_TEXT =
+    "‘나만 사랑하는 게 아니야.’\n이 바보 같고 무심한 몽마도 나를 사랑한다.";
+
+  function renderGrid({
+    containerId,
+    bgColors,
+    textColors,
+    blendClass
+  }) {
+    const grid = document.getElementById(containerId);
+    grid.style.setProperty("--cols", textColors.length);
+
+    bgColors.forEach(bg => {
+      textColors.forEach(text => {
+        const cell = document.createElement("div");
+        cell.className = "cell";
+        cell.style.background = bg;
+
+        const inner = document.createElement("div");
+        inner.className = "cell-inner";
+
+        const p = document.createElement("div");
+        p.className = `text ${blendClass}`;
+        p.style.color = text;
+        p.textContent =
+          SAMPLE_TEXT +
+          `\n■ ${bg}` +
+          `\n■ ${text}`;
+
+        inner.appendChild(p);
+        cell.appendChild(inner);
+        grid.appendChild(cell);
+      });
+    });
+  }
+
+  renderGrid({
+    containerId: "grid-difference",
+    bgColors: BG_COLORS_DIFF,
+    textColors: TEXT_COLORS_DIFF,
+    blendClass: "blend-difference",
+  });
+
+  renderGrid({
+    containerId: "grid-normal",
+    bgColors: BG_COLORS_NORMAL,
+    textColors: TEXT_COLORS_NORMAL,
+    blendClass: "blend-normal",
+  });
+</script>
+
+</body>
+</html>
