@@ -408,7 +408,7 @@
                 $('userFontColorDiv').style.color = fontColorFromBg(getCookie('fontColorPicker'));
             }
             if (getCookie('colorDiff')) {
-                $('colorDiff').checked = colorDiffCookie === '1';
+                $('colorDiff').checked = getCookie('colorDiff') === '1';
             }
         }
 
@@ -848,4 +848,5 @@
         });
     </script>
 </body>
+
 </html>
