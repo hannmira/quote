@@ -12,6 +12,8 @@ const fontMap = {
     GowunBatang: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunBatang-Bold.woff',
     GowunDodum: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff',
     GyeonggiBatang: 'https://cdn.jsdelivr.net/gh/fonts-archive/GyeonggiBatang/GyeonggiBatang-Regular.woff2',
+    Hakgyoansim_ChaekgalpiR: 'https://cdn.jsdelivr.net/gh/fonts-archive/HakgyoansimChaekgalpiR/Hakgyoansim_ChaekgalpiR.woff2',
+    Hakgyoansim_NalgaeR: 'https://cdn.jsdelivr.net/gh/fonts-archive/HakgyoansimNalgaeR/Hakgyoansim_NalgaeR.woff2',
     HakgyoansimBadasseugi: 'https://cdn.jsdelivr.net/gh/fonts-archive/HakgyoansimBadasseugi/HakgyoansimBadasseugi-L.woff2',
     HakgyoansimBareonbatang: 'https://cdn.jsdelivr.net/gh/fonts-archive/HakgyoansimBareonbatang/HakgyoansimBareonbatang-Regular.woff2',
     HakgyoansimBunpil: 'https://cdn.jsdelivr.net/gh/fonts-archive/HakgyoansimBunpil/HakgyoansimBunpil.woff2',
