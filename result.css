@@ -54,6 +54,7 @@ body {
     width: 1020px;
     height: 1020px;
     z-index: 1;
+    opacity: 0.92;
 }
 
 #result-quote {
