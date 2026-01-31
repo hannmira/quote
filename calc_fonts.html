@@ -12,7 +12,7 @@
   <script>
     const BASE_FONT = 'Pretendard';
     const BASE_SIZE = 100;
-    const SAMPLE_TEXT = '한끝닭값뛴힘룰가나다라마바사';
+    const SAMPLE_TEXT = '한끝닭값뛴힘룰가나다';
 
 function measureGlyphHeight(fontFamily) {
   const canvas = document.createElement('canvas');
@@ -20,15 +20,14 @@ function measureGlyphHeight(fontFamily) {
   ctx.font = `${BASE_SIZE}px ${fontFamily}`;
 
   // 여러 글자를 평균
-  const text = '베넷씨는못들었다고대답했다';
   let totalHeight = 0;
 
-  for (const char of text) {
+  for (const char of SAMPLE_TEXT) {
     const metrics = ctx.measureText(char);
     totalHeight += metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
   }
 
-  const avgHeight = totalHeight / text.length;
+  const avgHeight = totalHeight / SAMPLE_TEXT.length;
   return avgHeight;
 }
 
