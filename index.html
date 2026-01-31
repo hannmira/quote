@@ -129,12 +129,12 @@
                             <option value="DungGeunMo">둥근모꼴+Fixedsys</option>
                             <option value="BookkMyungjo">부크크명조</option>
                             <option value="YeongdeokSea">영덕바다체</option>
-                            <option value="Ownglyph_kimkonghae">온글잎김콩해</option>
                             <option value="Ownglyph_Memo_Okja">온글잎메모앤옥자체</option>
                             <option value="Ownglyph_wiseelist">온글잎위씨리스트</option>
                             <option value="Ownglyph_corncorn">온글잎콘콘체</option>
                             <option value="InkLipquid">잉크립퀴드체</option>
                             <option value="Hakgyoansim_NalgaeR">학교안심날개</option>
+                            <option value="Hakgyoansim_MindeulleholssiR">학교안심민들레</option>
                             <option value="Hakgyoansim_ChaekgalpiR">학교안심책갈피</option>
                             <option value="localFont">사용자 파일</option>
                         </select>
@@ -214,6 +214,7 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/heic-to@1.1.13/dist/iife/heic-to.js"></script>
     <script src="font.js"></script>
+    <script src="font-scale.js"></script>
     <script>
         function loadHtmlToImageScript() {
             const script = document.createElement("script");
@@ -542,9 +543,9 @@
             $('result-content').style.color = (color == 'userFontColor') ? $('fontColorPicker').value : color;
             $('result-content').style.mixBlendMode = $('colorDiff').checked ? 'difference' : 'normal';
 
-            $('result-quote').style.fontSize = $('quoteSize').value + 'px';
+            $('result-quote').style.fontSize = $('quoteSize').value * fontScaleMap[$('fontSelect').value] + 'px';
             $('result-quote').style.gap = $('quoteGap').value + 'em';
-            $('result-quote').style.lineHeight = $('quoteLineHeight').value;
+            $('result-quote').style.lineHeight = $('quoteLineHeight').value * lineHeightScaleMap[$('fontSelect').value];
             $('result-quote').style.letterSpacing = $('quoteLetterSpacing').value + 'px';
             $('result-quote').style.wordSpacing = $('quoteWordSpacing').value + 'px';
         }

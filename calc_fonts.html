@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Font / Line-height 보정 계수</title>
+</head>
+<body>
+
+  <pre id="output"></pre>
+
+  <script src="font.js"></script>
+  <script>
+    const BASE_FONT = 'Pretendard';
+    const BASE_SIZE = 100;
+    const SAMPLE_TEXT = '룰활값괜됐쌌';
+
+    function measureGlyphHeight(fontFamily) {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      ctx.font = `${BASE_SIZE}px ${fontFamily}`;
+
+      // 여러 글자를 평균
+      let totalHeight = 0;
+
+      for (const char of SAMPLE_TEXT) {
+        const m = ctx.measureText(char);
+        totalHeight += m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
+      }
+
+      const avgHeight = totalHeight / SAMPLE_TEXT.length;
+      return avgHeight;
+    }
+
+    function measureGlyphArea(fontFamily) {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      ctx.font = `${BASE_SIZE}px ${fontFamily}`;
+
+      let totalArea = 0;
+
+      for (const char of SAMPLE_TEXT) {
+        const m = ctx.measureText(char);
+        const height = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
+        const width = m.width; // m.actualBoundingBoxLeft + m.actualBoundingBoxRight;
+        totalArea += height * width;
+      }
+
+      return totalArea / SAMPLE_TEXT.length;
+    }
+
+    function formatMap(constName, map, baseValue) {
+      const lines = [`const ${constName} = {`];
+      lines.push(`  ${BASE_FONT}: ${baseValue},`);
+      for (const [font, value] of Object.entries(map)) {
+        if (font === BASE_FONT) continue;
+        lines.push(`  ${font}: ${value.toFixed(3)},`);
+      }
+      lines.push('};');
+      return lines.join('\n');
+    }
+
+    async function loadFont(name, url) {
+      const font = new FontFace(name, `url(${url})`);
+      await font.load();
+      document.fonts.add(font);
+    }
+
+    async function run() {
+      for (const [name, url] of Object.entries(fontMap)) {
+        await loadFont(name, url);
+      }
+
+      const baseHeight = measureGlyphHeight(BASE_FONT);
+      const baseArea = measureGlyphArea(BASE_FONT);
+
+      const fontScaleMap = {};
+      const lineHeightScaleMap = {};
+
+      fontScaleMap[BASE_FONT] = 1.0;
+      lineHeightScaleMap[BASE_FONT] = 1.0;
+
+      for (const name of Object.keys(fontMap)) {
+        if (name === BASE_FONT) continue;
+
+        const height = measureGlyphHeight(name);
+        const area = measureGlyphArea(name);
+
+        // 🔹 font-size 보정 → 면적 기준
+        fontScaleMap[name] = Math.pow(baseArea / area, 0.5);
+
+        // 🔹 line-height 보정 → 세로 기준
+        lineHeightScaleMap[name] = height / baseHeight;
+      }
+
+      const output =
+        formatMap('fontScaleMap', fontScaleMap, '1.0') + '\n\n' +
+        formatMap('lineHeightScaleMap', lineHeightScaleMap, '1.0');
+
+      document.getElementById('output').textContent = output;
+    }
+
+    run();
+  </script>
+
+</body>
+</html>
