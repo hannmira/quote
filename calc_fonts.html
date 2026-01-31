@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Font / Line-height 보정 계수</title>
+</head>
+<body>
+
+  <pre id="output"></pre>
+
+  <script src="font.js"></script>
+  <script>
+    const BASE_FONT = 'Pretendard';
+    const BASE_SIZE = 100;
+    const SAMPLE_TEXT = '한끝닭값뛴힘룰가나다라마바사';
+
+function measureGlyphHeight(fontFamily) {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  ctx.font = `${BASE_SIZE}px ${fontFamily}`;
+
+  // 여러 글자를 평균
+  const text = '베넷씨는못들었다고대답했다';
+  let totalHeight = 0;
+
+  for (const char of text) {
+    const metrics = ctx.measureText(char);
+    totalHeight += metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
+  }
+
+  const avgHeight = totalHeight / text.length;
+  return avgHeight;
+}
+
+    function formatMap(constName, map, baseValue) {
+      const lines = [`const ${constName} = {`];
+      lines.push(`  ${BASE_FONT}: ${baseValue},`);
+      for (const [font, value] of Object.entries(map)) {
+        if (font === BASE_FONT) continue;
+        lines.push(`  ${font}: ${value.toFixed(3)},`);
+      }
+      lines.push('};');
+      return lines.join('\n');
+    }
+
+    async function loadFont(name, url) {
+      const font = new FontFace(name, `url(${url})`);
+      await font.load();
+      document.fonts.add(font);
+    }
+
+    async function run() {
+      for (const [name, url] of Object.entries(fontMap)) {
+        await loadFont(name, url);
+      }
+
+      const baseHeight = measureGlyphHeight(BASE_FONT);
+      const fontScaleMap = {};
+      const lineHeightScaleMap = {};
+
+      fontScaleMap[BASE_FONT] = 1.0;
+      lineHeightScaleMap[BASE_FONT] = 1.0;
+
+      for (const name of Object.keys(fontMap)) {
+        if (name === BASE_FONT) continue;
+        const height = measureGlyphHeight(name);
+        fontScaleMap[name] = baseHeight / height;
+        lineHeightScaleMap[name] = height / baseHeight;
+      }
+
+      const output = formatMap('fontScaleMap', fontScaleMap, '1.0') + '\n\n' +
+        formatMap('lineHeightScaleMap', lineHeightScaleMap, '1.0');
+
+      document.getElementById('output').textContent = output;
+    }
+
+    run();
+  </script>
+
+</body>
+</html>
