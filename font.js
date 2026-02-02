@@ -38,7 +38,7 @@ const fontMap = {
     NanumBarunpen: 'https://cdn.jsdelivr.net/gh/fonts-archive/NanumBarunpen/NanumBarunpen.woff2',
     NanumGoDigANiGoGoDing: 'https://cdn.jsdelivr.net/gh/fonts-archive/NanumGoDigANiGoGoDing/NanumGoDigANiGoGoDing.woff2',
     NanumSonPyeonJiCe: 'https://cdn.jsdelivr.net/gh/fonts-archive/NanumSonPyeonJiCe/NanumSonPyeonJiCe.woff2',
-    NanumSquareNeo: 'https://cdn.jsdelivr.net/gh/fonts-archive/NanumSquareNeo/NanumSquareNeo.woff2',
+    NanumSquareNeo: 'https://cdn.jsdelivr.net/gh/fonts-archive/NanumSquareNeo/NanumSquareNeoB.woff2',
     omyu_pretty: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2',
     Ownglyph_corncorn: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2412-1@1.0/Ownglyph_corncorn-Rg.woff2',
     Ownglyph_Dailyokja: 'https://fastly.jsdelivr.net/gh/projectnoonnu/2403@1.0/Ownglyph_Dailyokja-Rg.woff2',
