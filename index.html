@@ -514,7 +514,7 @@
         }
 
         function formatParagraphs(text) {
-            return text.trim().split('\n').map(line => line.trim()).filter(Boolean).map(line => `<p>${line}</p>`).join('\n');
+            return text.trim().split('\n').map(line => line.trim()).filter(Boolean).map(line => `<p>${line.replace(/ {4,}/g, '<br>')}</p>`).join('\n');
         }
         function changeText() {
             $('result-quote').innerHTML = formatParagraphs($('quote').value);
