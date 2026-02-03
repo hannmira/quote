@@ -544,7 +544,7 @@
             $('result-content').style.mixBlendMode = $('colorDiff').checked ? 'difference' : 'normal';
 
             $('result-quote').style.fontSize = $('quoteSize').value * fontScaleMap[$('fontSelect').value] + 'px';
-            $('result-quote').style.gap = $('quoteGap').value * $('quoteSize').value + 'px';
+            $('result-quote').style.gap = $('quoteGap').value * $('quoteSize').value * fontScaleMap[$('fontSelect').value] * lineHeightScaleMap[$('fontSelect').value] + 'px';
             $('result-quote').style.lineHeight = $('quoteLineHeight').value * lineHeightScaleMap[$('fontSelect').value];
             $('result-quote').style.letterSpacing = $('quoteLetterSpacing').value + 'px';
             $('result-quote').style.wordSpacing = $('quoteWordSpacing').value + 'px';
