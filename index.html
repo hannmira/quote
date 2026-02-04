@@ -141,6 +141,12 @@
                     <input type="file" id="fontInput" accept=".ttf,.otf,.woff,.woff2" style="display: none;">
                     <div class="control-label-group">
                         <div class="control-row">
+                            <label for="bold">굵게</label>
+                            <input type="checkbox" id="bold">
+                        </div>
+                    </div>
+                    <div class="control-label-group">
+                        <div class="control-row">
                             <label for="quoteSize">글씨크기<sub>px</sub></label>
                             <div class="stepper">
                                 <button class="minus" type="button">−</button>
@@ -153,8 +159,7 @@
                 <div class="control-row">
                     <div class="control-label-group">
                         <div class="control-row">
-                            <label for="colorDiff">색diff
-                            </label>
+                            <label for="colorDiff">색diff</label>
                             <input type="checkbox" id="colorDiff">
                         </div>
                     </div>
@@ -380,6 +385,7 @@
             setCookie('selectedBgColor', document.querySelector('input[name="bgColor"]:checked').value);
             setCookie('selectedFontColor', document.querySelector('input[name="fontColor"]:checked').value);
             setCookie('colorDiff', $('colorDiff')?.checked ? '1' : '0');
+            setCookie('bold', $('bold')?.checked ? '1' : '0');
         }
         function loadInputsFromCookies() {
             document.querySelectorAll('input, select, textarea').forEach(el => {
@@ -412,6 +418,9 @@
             }
             if (getCookie('colorDiff')) {
                 $('colorDiff').checked = getCookie('colorDiff') === '1';
+            }
+            if (getCookie('bold')) {
+                $('bold').checked = getCookie('bold') === '1';
             }
         }
 
@@ -533,8 +542,8 @@
             previousFont = $('fontSelect').value;
 
             const fontName = $('fontSelect').value;
-            const fontURL = fontMap[$('fontSelect').value];
-            if (fontURL) $('webfont').innerHTML = buildFontFace(fontName, fontURL);
+            const fontObj = fontMap[$('fontSelect').value];
+            if (fontObj) $('webfont').innerHTML = buildFontFace(fontName, fontObj);
             $('result-quote').style.fontFamily = fontName;
         }
 
@@ -542,6 +551,7 @@
             const color = document.querySelector('input[name="fontColor"]:checked').value;
             $('result-content').style.color = (color == 'userFontColor') ? $('fontColorPicker').value : color;
             $('result-content').style.mixBlendMode = $('colorDiff').checked ? 'difference' : 'normal';
+            $('result-quote').style.fontWeight = $('bold').checked ? 'bold' : 'normal';
 
             $('result-quote').style.fontSize = $('quoteSize').value * fontScaleMap[$('fontSelect').value] + 'px';
             $('result-quote').style.gap = $('quoteGap').value * $('quoteSize').value * fontScaleMap[$('fontSelect').value] * lineHeightScaleMap[$('fontSelect').value] + 'px';
