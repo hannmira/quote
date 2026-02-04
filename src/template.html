@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <title>{{title}}</title>
+    {{webfontStyle}}
+    {{resultStyle}}
+    <style>
+        .template-actions {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 10px;
+        }
+
+        @media (min-width: 720px) {
+            .template-actions {
+                flex-direction: column;
+            }
+        }
+
+        .template-actions button {
+            width: 100px;
+            height: 40px;
+        }
+    </style>
+</head>
+<body>
+    {{result}}
+    <div class="template-actions">
+        <button id="download-image" type="button" onclick="downloadImage()">이미지로 저장</button>
+        <button id="copy-quote" type="button" onclick="copyQuote()">발췌 문장 복사</button>
+    </div>
+    <script>
+        const $ = id => document.getElementById(id);
+
+        function loadHtmlToImageScript() {
+            const script = document.createElement("script");
+            if (/firefox/i.test(navigator.userAgent)) {
+                script.src = "https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js";
+            } else {
+                script.src = "https://cdn.jsdelivr.net/npm/html-to-image@1.11.13/dist/html-to-image.min.js";
+            }
+            document.head.appendChild(script);
+        }
+        function downloadImage() {
+            const title = document.title.slice(0, 30).trim();
+            const para = $('result-quote').innerText.slice(0, 10).trim();
+            const img = $('result-background');
+
+            const saveImage = img.src.startsWith('data:') ? htmlToImage.toPng : htmlToImage.toJpeg;
+            const filename = img.src.startsWith('data:') ? `${title}-${para}.png` : `${title}-${para}.jpg`;
+
+            saveImage($('result-canvas'), {
+                quality: 0.95,
+                width: 1200,
+                height: 1200,
+                pixelRatio: 1,
+            }).then(dataUrl => {
+                const link = document.createElement('a');
+                link.download = filename;
+                link.href = dataUrl;
+                link.click();
+            }).catch(error => console.error('이미지 저장 실패:', error));
+        }
+        function copyQuote() {
+            const title = $('result-title').innerText.trim();
+            const author = $('result-author').innerText.trim();
+            const quote = $('result-quote').innerText.trim();
+
+            const copiedText = `Share: ${title} - ${author}\n\n${quote}`;
+            navigator.clipboard.writeText(copiedText);
+        }
+        loadHtmlToImageScript();
+    </script>
+</body>
+</html>

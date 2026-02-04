@@ -212,8 +212,8 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/heic-to@1.1.13/dist/iife/heic-to.js"></script>
-    <script src="font.js"></script>
-    <script src="font-scale.js"></script>
+    <script src="src/font.js"></script>
+    <script src="src/font-scale.js"></script>
     <script>
         function loadHtmlToImageScript() {
             const script = document.createElement("script");
@@ -590,8 +590,8 @@
         // HTML 저장
         async function saveHTML() {
             const [templateRes, resultStyleRes] = await Promise.all([
-                fetch('template.html'),
-                fetch('result.css')
+                fetch('src/template.html'),
+                fetch('src/result.css')
             ]);
 
             let template = await templateRes.text();
@@ -816,8 +816,8 @@
 
         async function fetchCss() {
             const [resultStyleRes, controlStyleRes] = await Promise.all([
-                fetch('result.css'),
-                fetch('control.css')
+                fetch('src/result.css'),
+                fetch('src/control.css')
             ]);
 
             const resultStyle = await resultStyleRes.text();
