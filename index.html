@@ -50,30 +50,30 @@
                         </div>
                         <div id="bg-transform-controls">
                             <button type="button" class="icon-button" onclick="zoom(1.05)"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M5 1.2v7.6M1.2 5h7.6" />
-</svg>
-</button>
+                                    <path d="M5 1.2v7.6M1.2 5h7.6" />
+                                </svg>
+                            </button>
                             <button type="button" class="icon-button" onclick="zoom(0.95)"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M1 5h8" />
-</svg>
-</button>
+                                    <path d="M1 5h8" />
+                                </svg>
+                            </button>
                             <div style="width:0;height:1rem;border-left:1px solid #BFBFBF;"></div>
                             <button type="button" class="icon-button" onclick="move(0, -2)"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M1.5 6.5L5 3l3.5 3.5" />
-</svg>
-</button>
+                                    <path d="M1.5 6.5L5 3l3.5 3.5" />
+                                </svg>
+                            </button>
                             <button type="button" class="icon-button" onclick="move(0, 2)"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M1.5 3.5L5 7l3.5-3.5" />
-</svg>
-</button>
+                                    <path d="M1.5 3.5L5 7l3.5-3.5" />
+                                </svg>
+                            </button>
                             <button type="button" class="icon-button" onclick="move(-2, 0)"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M6.5 1.5L3 5l3.5 3.5" />
-</svg>
-</button>
+                                    <path d="M6.5 1.5L3 5l3.5 3.5" />
+                                </svg>
+                            </button>
                             <button type="button" class="icon-button" onclick="move(2, 0)"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M3.5 1.5L7 5l-3.5 3.5" />
-</svg>
-</button>
+                                    <path d="M3.5 1.5L7 5l-3.5 3.5" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
                     <div class="input-group">
@@ -101,58 +101,61 @@
                         <label>밝기<sub>%</sub></label>
                         <div class="stepper">
                             <button class="minus" type="button"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M1 5h8" />
-</svg>
-</button>
+                                    <path d="M1 5h8" />
+                                </svg>
+                            </button>
                             <input id="brightness" type="number" value="100" step="10">
                             <button class="plus" type="button"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M5 1v8M1 5h8" />
-</svg>
-</button>
+                                    <path d="M5 1v8M1 5h8" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
                     <div class="number-field">
                         <label>채도<sub>%</sub></label>
                         <div class="stepper">
                             <button class="minus" type="button"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M1 5h8" />
-</svg>
-</button>
+                                    <path d="M1 5h8" />
+                                </svg>
+                            </button>
                             <input id="saturate" type="number" value="100" step="10">
                             <button class="plus" type="button"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M5 1v8M1 5h8" />
-</svg>
-</button>
+                                    <path d="M5 1v8M1 5h8" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
                     <div class="number-field">
                         <label>대비<sub>%</sub></label>
                         <div class="stepper">
                             <button class="minus" type="button"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M1 5h8" />
-</svg>
-</button>
+                                    <path d="M1 5h8" />
+                                </svg>
+                            </button>
                             <input id="contrast" type="number" value="100" step="10">
                             <button class="plus" type="button"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M5 1v8M1 5h8" />
-</svg>
-</button>
+                                    <path d="M5 1v8M1 5h8" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
                     <div class="number-field">
                         <label>흐리게<sub>px</sub></label>
                         <div class="stepper">
                             <button class="minus" type="button"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M1 5h8" />
-</svg>
-</button>
+                                    <path d="M1 5h8" />
+                                </svg>
+                            </button>
                             <input id="blur" type="number" value="0" step="1">
                             <button class="plus" type="button"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M5 1v8M1 5h8" />
-</svg>
-</button>
+                                    <path d="M5 1v8M1 5h8" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
+                    <button id="resetFilter" class="reset" type="button">
+                        <svg viewBox='0 0 20 18' aria-hidden="true"><path d='M 10 16 A 7 7 90 1 0 3 9 M 3 9 V 14 M 1 12 L 3 14 L 5 12' /></svg>
+                    </button>
                 </div>
             </fieldset>
             <fieldset>
@@ -179,8 +182,8 @@
                             <option value="Hakgyoansim_ChaekgalpiR">학교안심책갈피</option>
                             <option value="localFont">사용자 파일</option>
                         </select>
-                            <label for="bold">굵게</label>
-                            <input type="checkbox" id="bold">
+                        <label for="bold">굵게</label>
+                        <input type="checkbox" id="bold">
                     </div>
                     <input type="file" id="fontInput" accept=".ttf,.otf,.woff,.woff2" style="display: none;">
                     <div class="control-label-group">
@@ -188,14 +191,14 @@
                             <label>글씨크기<sub>px</sub></label>
                             <div class="stepper">
                                 <button class="minus" type="button"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M1 5h8" />
-</svg>
-</button>
+                                        <path d="M1 5h8" />
+                                    </svg>
+                                </button>
                                 <input id="quoteSize" type="number" value="50" step="1">
                                 <button class="plus" type="button"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M5 1v8M1 5h8" />
-</svg>
-</button>
+                                        <path d="M5 1v8M1 5h8" />
+                                    </svg>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -208,14 +211,14 @@
                         </div>
                     </div>
                     <div class="control-label-group">
-                    <label>글씨색</label>
-                    <div class="color-radio" id="fontColorRadio">
-                        <input type="radio" name="fontColor" id="userFontColorInput" value="userFontColor" onclick="document.getElementById('fontColorPicker').click()">
-                        <label for="userFontColorInput" class="color-option" style="position: relative;">
-                            <div id="userFontColorDiv" style="background-color: lightgray;">✎</div>
-                            <input class="colorpicker" type="color" id="fontColorPicker" value="#D3D3D3">
-                        </label>
-                    </div>
+                        <label>글씨색</label>
+                        <div class="color-radio" id="fontColorRadio">
+                            <input type="radio" name="fontColor" id="userFontColorInput" value="userFontColor" onclick="document.getElementById('fontColorPicker').click()">
+                            <label for="userFontColorInput" class="color-option" style="position: relative;">
+                                <div id="userFontColorDiv" style="background-color: lightgray;">✎</div>
+                                <input class="colorpicker" type="color" id="fontColorPicker" value="#D3D3D3">
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="control-row">
@@ -223,58 +226,61 @@
                         <label>줄높이</label>
                         <div class="stepper">
                             <button class="minus" type="button"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M1 5h8" />
-</svg>
-</button>
+                                    <path d="M1 5h8" />
+                                </svg>
+                            </button>
                             <input id="quoteLineHeight" type="number" value="1.5" step="0.1">
                             <button class="plus" type="button"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M5 1v8M1 5h8" />
-</svg>
-</button>
+                                    <path d="M5 1v8M1 5h8" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
                     <div class="number-field">
                         <label>문단간격<sub>em</sub></label>
                         <div class="stepper">
                             <button class="minus" type="button"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M1 5h8" />
-</svg>
-</button>
+                                    <path d="M1 5h8" />
+                                </svg>
+                            </button>
                             <input id="quoteGap" type="number" value="0.5" step="0.1">
                             <button class="plus" type="button"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M5 1v8M1 5h8" />
-</svg>
-</button>
+                                    <path d="M5 1v8M1 5h8" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
                     <div class="number-field">
                         <label>자간<sub>px</sub></label>
                         <div class="stepper">
                             <button class="minus" type="button"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M1 5h8" />
-</svg>
-</button>
+                                    <path d="M1 5h8" />
+                                </svg>
+                            </button>
                             <input id="quoteLetterSpacing" type="number" value="-1" step="1">
                             <button class="plus" type="button"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M5 1v8M1 5h8" />
-</svg>
-</button>
+                                    <path d="M5 1v8M1 5h8" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
                     <div class="number-field">
                         <label>어간<sub>px</sub></label>
                         <div class="stepper">
                             <button class="minus" type="button"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M1 5h8" />
-</svg>
-</button>
+                                    <path d="M1 5h8" />
+                                </svg>
+                            </button>
                             <input id="quoteWordSpacing" type="number" value="1" step="1">
                             <button class="plus" type="button"><svg class="icon" viewBox="0 0 10 10" aria-hidden="true">
-  <path d="M5 1v8M1 5h8" />
-</svg>
-</button>
+                                    <path d="M5 1v8M1 5h8" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
+                    <button id="resetStyle" class="reset" type="button"">
+                        <svg viewBox='0 0 20 18' aria-hidden="true"><path d='M 10 16 A 7 7 90 1 0 3 9 M 3 9 V 14 M 1 12 L 3 14 L 5 12' /></svg>
+                    </button>
                 </div>
             </fieldset>
         </form>
@@ -869,6 +875,20 @@
                 });
             });
 
+            $('resetFilter').addEventListener('click', () => {
+                $('brightness').value = 100;
+                $('saturate').value = 100;
+                $('contrast').value = 100;
+                $('blur').value = 0;
+            });
+
+            $('resetStyle').addEventListener('click', () => {
+                $('quoteLineHeight').value = 1.5;
+                $('quoteGap').value = 0.5;
+                $('quoteLetterSpacing').value = -1;
+                $('quoteWordSpacing').value = 1;
+            });
+
             bindNumberInputButtons();
 
             document.querySelectorAll('form button, a').forEach(btn =>
@@ -931,5 +951,3 @@
 </body>
 
 </html>
-
-
