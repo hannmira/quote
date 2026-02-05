@@ -7,7 +7,7 @@ label {
     margin: 0;
     padding: 0;
     font-size: 1rem;
-    font-family: sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Pretendard, sans-serif;
     line-height: 1;
 }
 
@@ -16,10 +16,7 @@ textarea,
 input,
 select {
     vertical-align: middle;
-}
-
-select {
-    font-size: 0.9rem;
+    padding: 1px 2px;
 }
 
 label,
@@ -31,6 +28,16 @@ a {
 
 button {
     height: 1.2rem;
+}
+
+.icon {
+    width: 0.6rem;
+    height: 0.6rem;
+    stroke: currentColor;
+    stroke-width: 1;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 sub {
@@ -84,11 +91,11 @@ fieldset {
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 12px 0;
-    border-color: gray;
+    padding: 0.5rem 0;
+    border-color: #B3B3B3;
     border-width: 0 0 1px 0;
     border-style: solid;
-    gap: 12px;
+    gap: 0.5rem;
     justify-content: space-around;
 }
 
@@ -179,7 +186,7 @@ fieldset {
 
 .icon-button {
     width: 1.2rem;
-    font-size: 0.8rem;
+    height: 1.2rem;
 }
 
 input[type="number"] {
@@ -198,7 +205,7 @@ input[type=number]::-webkit-outer-spin-button {
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    border: 1px solid gray;
+    border: 1px solid #BFBFBF;
 }
 
 .stepper * {
@@ -211,7 +218,7 @@ input[type=number]::-webkit-outer-spin-button {
     font-family: 'Pretendard-ExtraLight';
     font-feature-settings: "tnum", "lnum";
     text-align: center;
-    border: solid gray;
+    border: solid #BFBFBF;
     border-width: 0 1px;
 }
 
@@ -254,4 +261,3 @@ input[type="radio"]:checked+label {
     inset: 0;
     opacity: 0;
 }
-
