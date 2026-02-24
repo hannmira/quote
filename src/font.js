@@ -35,7 +35,7 @@ const fontMap = {
     MapoFlowerIsland: { normal: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff' },
     MaruBuri: { normal: 'https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff2' },
     NanumBaeEunHyeCe: { normal: 'https://cdn.jsdelivr.net/gh/fonts-archive/NanumBaeEunHyeCe/NanumBaeEunHyeCe.woff2' },
-    NanumBarunpen: { normal: 'https://cdn.jsdelivr.net/gh/fonts-archive/NanumBarunpen/NanumBarunpen.woff2' },
+    NanumBarunpen: { normal: 'https://cdn.jsdelivr.net/gh/fonts-archive/NanumBarunpen/NanumBarunpen.woff2', bold: 'https://cdn.jsdelivr.net/gh/fonts-archive/NanumBarunpen/NanumBarunpenBold.woff2' },
     NanumGoDigANiGoGoDing: { normal: 'https://cdn.jsdelivr.net/gh/fonts-archive/NanumGoDigANiGoGoDing/NanumGoDigANiGoGoDing.woff2' },
     NanumSonPyeonJiCe: { normal: 'https://cdn.jsdelivr.net/gh/fonts-archive/NanumSonPyeonJiCe/NanumSonPyeonJiCe.woff2' },
     NanumSquareNeo: { normal: 'https://cdn.jsdelivr.net/gh/fonts-archive/NanumSquareNeo/NanumSquareNeo.woff2', bold: 'https://cdn.jsdelivr.net/gh/fonts-archive/NanumSquareNeo/NanumSquareNeoB.woff2' },
