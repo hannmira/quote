@@ -8,7 +8,7 @@
 
   <pre id="output"></pre>
 
-  <script src="font.js"></script>
+  <script src="../src/font.js"></script>
   <script>
     const BASE_FONT = 'Pretendard';
     const BASE_SIZE = 100;
@@ -66,8 +66,8 @@
     }
 
     async function run() {
-      for (const [name, url] of Object.entries(fontMap)) {
-        await loadFont(name, url);
+      for (const [name, fontData] of Object.entries(fontMap)) {
+        await loadFont(name, fontData.normal);
       }
 
       const baseHeight = measureGlyphHeight(BASE_FONT);
