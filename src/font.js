@@ -1,4 +1,5 @@
 const fontMap = {
+    Bazzi: { normal: 'https://cdn.jsdelivr.net/gh/fonts-archive/Bazzi/Bazzi.woff2' },
     BookkMyungjo: { normal: 'https://cdn.jsdelivr.net/gh/fonts-archive/BookkMyungjo/BookkMyungjo-Light.woff2', bold: 'https://cdn.jsdelivr.net/gh/fonts-archive/BookkMyungjo/BookkMyungjo-Bold.woff2' },
     Cafe24OhsquareAir: { normal: 'https://cdn.jsdelivr.net/gh/fonts-archive/Cafe24OhsquareAir/Cafe24OhsquareAir.woff2' },
     Cafe24Simplehae: { normal: 'https://cdn.jsdelivr.net/gh/fonts-archive/Cafe24Simplehae/Cafe24Simplehae.woff2' },
@@ -32,6 +33,7 @@ const fontMap = {
     KOTRAHOPE: { normal: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/KOTRAHOPE.woff2' },
     KyoboHand: { normal: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff' },
     Manse: { normal: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Manse.woff' },
+    Maplestory: { normal: 'https://cdn.jsdelivr.net/gh/fonts-archive/Maplestory/Maplestory-Light.woff2', bold: 'https://cdn.jsdelivr.net/gh/fonts-archive/Maplestory/Maplestory-Bold.woff2' },
     MapoFlowerIsland: { normal: 'https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff' },
     MaruBuri: { normal: 'https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff2' },
     NanumBaeEunHyeCe: { normal: 'https://cdn.jsdelivr.net/gh/fonts-archive/NanumBaeEunHyeCe/NanumBaeEunHyeCe.woff2' },
